@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import moment from "moment";
 import PushNotification from 'react-native-push-notification';
-
+import TimeTable from "./components/TimeTable";
 import store from 'react-native-simple-store';
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -76,8 +76,8 @@ function getRepeatType(pushType) {
 export default class App extends Component {
   componentWillMount = async()=>{
     console.log("enterd will mount");
-    PushNotification.cancelLocalNotifications({id: '111'});
-    console.log(PushNotification);
+    //PushNotification.cancelLocalNotifications({id: '111'});
+    
 /*
 
 scheduleLocalNotification(
@@ -155,7 +155,7 @@ scheduleLocalNotification(
     
         // Should the initial notification be popped automatically
         // default: true
-        popInitialNotification: true,
+        //popInitialNotification: true,
     
         /**
           * (optional) default: true
@@ -169,15 +169,7 @@ scheduleLocalNotification(
 
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+        <TimeTable/>
       </View>
     );
   }
@@ -186,8 +178,6 @@ scheduleLocalNotification(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
   welcome: {

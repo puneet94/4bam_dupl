@@ -3065,7 +3065,7 @@ minimist@~0.0.1:
   dependencies:
     minimist "0.0.8"
 
-moment@^2.20.1:
+moment@2.x.x, moment@^2.20.1:
   version "2.20.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
 
@@ -3578,6 +3578,12 @@ react-devtools-core@3.0.0:
 react-native-background-timer@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-background-timer/-/react-native-background-timer-2.0.0.tgz#afdac10b7441952d570acea4a8dbb065107b5461"
+
+react-native-datepicker@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.6.0.tgz#3a40dc9b112023c49d60ba2a0789d440b7e3d97c"
+  dependencies:
+    moment "2.x.x"
 
 react-native-push-notification@^3.0.2:
   version "3.0.2"
