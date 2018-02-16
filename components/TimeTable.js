@@ -78,26 +78,45 @@ export default class TimeTable extends PureComponent{
             });
         }
     }
-
     changeTime(dayName,keyName,valueName){
         const index = this.state.timeTables.findIndex(timeTable => timeTable.dayName === dayName);
         const oldTimeTable = this.state.timeTables[index];
-        cancelNotification(oldTimeTable.dayID);
-        cancelNotification(oldTimeTable.dayID2);
+        
         const newTimeTable = {...oldTimeTable,[keyName]:valueName};
         const alarmDate1 = moment(getNearestDay(oldTimeTable.dayName)).format( NOTIFICATION_DATE_TIME_FORMAT)+" "+newTimeTable.firstTime;
         const alarmDate2 = moment(getNearestDay(oldTimeTable.dayName)).format( NOTIFICATION_DATE_TIME_FORMAT)+" "+newTimeTable.secondTime;
         const newTimeTable2 = {...newTimeTable,alarmDate1,alarmDate2}
-        this.setState((prevState)=>{
-            return {
-                timeTables : [...prevState.timeTables.slice(0,index),newTimeTable2,...prevState.timeTables.slice(index+1)]
-            }
-        },()=>{
-            store.delete('TIME_TABLES');
-            store.save('TIME_TABLES',this.state.timeTables);
-            scheduleLocalNotification(newTimeTable2.text,newTimeTable2.alarmDate1,newTimeTable2.dayID,"week");
-            scheduleLocalNotification(newTimeTable2.text,newTimeTable2.alarmDate2,newTimeTable2.dayID2,"week");
-        });
+
+        if(oldTimeTable.alarmDate1 !== newTimeTable2.alarmDate1){
+            console.log("first date cancelled");
+            cancelNotification(oldTimeTable.dayID);
+        }
+        if(oldTimeTable.alarmDate2 !== newTimeTable2.alarmDate2){
+            console.log("second date cancelled");
+            cancelNotification(oldTimeTable.dayID2);
+        }
+
+        if(oldTimeTable.text!==newTimeTable2.text || oldTimeTable.alarmDate1 !== newTimeTable2.alarmDate1 || oldTimeTable.alarmDate2 !== newTimeTable2.alarmDate2){
+            this.setState((prevState)=>{
+                return {
+                    timeTables : [...prevState.timeTables.slice(0,index),newTimeTable2,...prevState.timeTables.slice(index+1)]
+                }
+            },()=>{
+                store.delete('TIME_TABLES');
+                store.save('TIME_TABLES',this.state.timeTables);
+                if(oldTimeTable.alarmDate1 !== newTimeTable2.alarmDate1){
+                    console.log("first date scheduled");
+                    scheduleLocalNotification(newTimeTable2.text,newTimeTable2.alarmDate1,newTimeTable2.dayID,"week");
+                }
+                if(oldTimeTable.alarmDate2 !== newTimeTable2.alarmDate2){
+                    console.log("second date scheduled");
+                    scheduleLocalNotification(newTimeTable2.text,newTimeTable2.alarmDate2,newTimeTable2.dayID2,"week");
+                }
+                
+                
+            });
+        }
+        
         
     }
     openTimeTableTextModal(timeTable){

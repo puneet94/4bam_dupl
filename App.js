@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
+  Alert,
   Text,
   View,Linking,PushNotificationIOS
   
@@ -139,7 +140,7 @@ scheduleLocalNotification(
         // (required) Called when a remote or local notification is opened or received
         onNotification: function(notification) {
             console.log( 'NOTIFICATION:', notification );
-    
+            Alert.alert(notification.message);
             // process the notification
             
             // required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
@@ -155,7 +156,7 @@ scheduleLocalNotification(
     
         // Should the initial notification be popped automatically
         // default: true
-        popInitialNotification: false,
+        popInitialNotification: true,
     
         /**
           * (optional) default: true

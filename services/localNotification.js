@@ -27,7 +27,7 @@ export function scheduleLocalNotification(message, date, id, repeatType,payload)
     number: 0, //necessary for iOS cancellation (not sure why)
     date: fireDate,
     repeatType: repeatType,
-    popInitialNotification: false,
+    popInitialNotification: true,
     //for ios only
     userInfo: {
       id: id, //for ios cancel notfication (can be any string)
