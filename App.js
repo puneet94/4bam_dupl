@@ -170,7 +170,7 @@ scheduleLocalNotification(
 
     return (
       <View style={styles.container}>
-        <TimeTable/>
+        <TimeTable name="person1"/>
       </View>
     );
   }

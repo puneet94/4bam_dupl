@@ -1,5 +1,4 @@
 import moment from "moment";
-
 export function getNearestDay(day,date){
     let currentDate = date || moment();//.add(1,'days');
     let currentDay = currentDate.format("dddd").toUpperCase();
