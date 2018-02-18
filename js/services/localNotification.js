@@ -4,16 +4,12 @@ import {
   } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import moment from 'moment';
-
-
-
-
 const NOTIFICATION_DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm';
 
 export function scheduleLocalNotification(message, date, id, repeatType,payload) {
 
   //message: type String
-  console.log("called schedule",arguments);
+  
   //date: type String  format 'YYYY-MM-DD HH:mm' (NOTIFICATION_DATE_TIME_FORMAT)
 
   //construct the notification parameters
@@ -36,7 +32,8 @@ export function scheduleLocalNotification(message, date, id, repeatType,payload)
     //for android only
     data: JSON.stringify(payload),
   };
-
+  console.log("called schedule",arguments);
+  console.log("called schedule2",notification);
   //schedule the notification
   PushNotification.localNotificationSchedule(notification);
 }

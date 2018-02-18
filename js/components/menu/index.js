@@ -6,6 +6,7 @@ import { DrawerNavigator } from 'react-navigation';
 
 import TimeTableScreen from "../timetable";
 import TrainingScreen from "../training";
+import LocalNotificationScreen from "../localnotification";
 import HomeScreen from "../home";
 import DrawerContainer from "./DrawerContainer";
 import appVars from '../../appVars';
@@ -31,7 +32,12 @@ const Menu = DrawerNavigator({
       headerTitle: appVars.labeleTraining.toUpperCase(),
     }),
   },
-
+  LocalNotification: {
+    screen: LocalNotificationScreen,
+    navigationOptions : ({ navigation, screenProps }) => ({
+      headerTitle: "notification".toUpperCase(),
+    }),
+  },
 },
 {
   contentComponent: DrawerContainer,

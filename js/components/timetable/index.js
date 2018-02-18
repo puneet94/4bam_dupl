@@ -70,9 +70,9 @@ export default class TimeTable extends PureComponent{
         }
     }
     async componentWillMount(){
-        console.log("called mount");
+        
         let timeTables = await store.get('TIME_TABLES');
-        console.log(timeTables);
+        
         if(timeTables && timeTables.length){
             this.setState({
                 timeTables
@@ -82,7 +82,6 @@ export default class TimeTable extends PureComponent{
     changeTime(dayName,keyName,valueName){
         const index = this.state.timeTables.findIndex(timeTable => timeTable.dayName === dayName);
         const oldTimeTable = this.state.timeTables[index];
-        
         const newTimeTable = {...oldTimeTable,[keyName]:valueName};
         const alarmDate1 = moment(getNearestDay(oldTimeTable.dayName)).format( NOTIFICATION_DATE_TIME_FORMAT)+" "+newTimeTable.firstTime;
         const alarmDate2 = moment(getNearestDay(oldTimeTable.dayName)).format( NOTIFICATION_DATE_TIME_FORMAT)+" "+newTimeTable.secondTime;
@@ -107,11 +106,11 @@ export default class TimeTable extends PureComponent{
                 store.save('TIME_TABLES',this.state.timeTables);
                 if(oldTimeTable.alarmDate1 !== newTimeTable2.alarmDate1){
                     console.log("first date scheduled");
-                    scheduleLocalNotification(newTimeTable2.text,newTimeTable2.alarmDate1,newTimeTable2.dayID,"week");
+                    scheduleLocalNotification(newTimeTable2.text,newTimeTable2.alarmDate1,newTimeTable2.dayID,"week",newTimeTable2);
                 }
                 if(oldTimeTable.alarmDate2 !== newTimeTable2.alarmDate2){+
                     console.log("second date scheduled");
-                    scheduleLocalNotification(newTimeTable2.text,newTimeTable2.alarmDate2,newTimeTable2.dayID2,"week");
+                    scheduleLocalNotification(newTimeTable2.text,newTimeTable2.alarmDate2,newTimeTable2.dayID2,"week",newTimeTable2);
                 }
             });
         }
