@@ -38,7 +38,7 @@ export default class LoginScreen extends PureComponent{
             <Button
             onPress={()=>this.logIn()}
             title="Log IN"
-            color="#841584"
+            color="#09437f"
                 />
                 </View>}
         </View>);

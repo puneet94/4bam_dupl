@@ -71,7 +71,7 @@ import {
     //colors
     colorWhite: "#ffffff",
     colorBlack: "#000000",
-    colorMain: "#c00e0e",
+    colorMain: "#09437f",
     colorActive: "#cc0000",
     colorLightGray: "#cccccc",
     colorDarkGray: "#333333",

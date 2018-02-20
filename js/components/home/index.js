@@ -14,7 +14,7 @@ export default class Home extends Component{
                 <Button
             onPress={()=>this.logOut()}
             title="Log OUT"
-            color="#841584"
+            color="#09437f"
                 />
             </View>
         )

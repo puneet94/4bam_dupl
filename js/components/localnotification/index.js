@@ -48,13 +48,13 @@ export default class LocalNotificationScreen extends PureComponent{
                 <Button
                     onPress={()=>this.redirectTraining()}
                     title="Start Training"
-                    color="#841584"
+                    color="#09437f"
                     />
                 <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
                     <Button style={{width:100}}
                         onPress={()=>this.snoozeAlarm()}
                         title="Snooze"
-                        color="#841584"
+                        color="#09437f"
                     />
 
                     <Picker style={{width:150}}

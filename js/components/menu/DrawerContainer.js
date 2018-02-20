@@ -8,6 +8,8 @@ import { NavigationActions } from 'react-navigation'
 import PushNotification from 'react-native-push-notification';
 import OneSignal from 'react-native-onesignal';
 import store from 'react-native-simple-store';
+import FontAwesome, { Icons } from 'react-native-fontawesome';
+
 class DrawerContainer extends React.Component {
 	handleURL = (url)=>{
 		const route = url.replace(/.*?:\/\//g, '');
@@ -154,8 +156,10 @@ class DrawerContainer extends React.Component {
 
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('Home')} >
 				<View style={[appStyles.drawerItem,this.isActiveClass('home')]}>
-                <Text name="cog" style={appStyles.drawerIcon}>{"&"}</Text>
-                    <Text style={appStyles.drawerLabel}>{appVars.labelHome.toUpperCase()}</Text>
+				<FontAwesome style={appStyles.drawerIcon}>
+				{Icons.home}
+				</FontAwesome>
+				<Text style={appStyles.drawerLabel}>{appVars.labelHome.toUpperCase()}</Text>
 				</View>
 			</TouchableWithoutFeedback>
 
@@ -164,8 +168,10 @@ class DrawerContainer extends React.Component {
 
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('Training')} style={this.isActiveClass('settings')}>
 				<View style={[appStyles.drawerItem,this.isActiveClass('training')]}>
-					<Text name="cog" style={appStyles.drawerIcon}>{"@"}</Text>
-					<Text style={appStyles.drawerLabel}>{appVars.labeleTraining.toUpperCase()}</Text>
+				<FontAwesome style={appStyles.drawerIcon}>
+				{Icons.play}
+				</FontAwesome>
+				<Text style={appStyles.drawerLabel}>{appVars.labeleTraining.toUpperCase()}</Text>
 				</View>
 			</TouchableWithoutFeedback>
 
@@ -173,8 +179,10 @@ class DrawerContainer extends React.Component {
 
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('TimeTable')} style={this.isActiveClass('imprint')}>
 				<View style={[appStyles.drawerItem,this.isActiveClass('timetable')]}>
-					<Text name="balance-scale" style={appStyles.drawerIcon}>{"#"}</Text>
-					<Text style={appStyles.drawerLabel}>{appVars.labelTimeTable.toUpperCase()}</Text>
+				<FontAwesome style={appStyles.drawerIcon}>
+				{Icons.calendar}
+				</FontAwesome>
+				<Text style={appStyles.drawerLabel}>{appVars.labelTimeTable.toUpperCase()}</Text>
 				</View>
 			</TouchableWithoutFeedback>
 		</ScrollView>

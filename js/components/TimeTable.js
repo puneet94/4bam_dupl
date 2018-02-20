@@ -137,7 +137,8 @@ export default class TimeTable extends PureComponent{
             <View style={{flex:1}}>{
         this.state.timeTables.map((timeTable)=>{
             return (
-            <View style={{flex:1,flexDirection:"row"}} key={timeTable.dayName}>
+
+            <View style={{flex:1, flexDirection:"row"}} key={timeTable.dayName}>
                 <View style={{flex:1}}>
                     <Text>{timeTable.dayName}</Text>
                 </View>

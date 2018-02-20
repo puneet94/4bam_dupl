@@ -134,7 +134,7 @@ export default class TimeTable extends PureComponent{
     render(){
         
         return (
-            <View style={{flex:1}}>{
+            <View style={{flex:1, padding: 20}}>{
         this.state.timeTables.map((timeTable)=>{
             return (
             <View style={{flex:1,flexDirection:"row"}} key={timeTable.dayName}>
@@ -191,7 +191,7 @@ export default class TimeTable extends PureComponent{
                     <Button
                         onPress={()=>this.openTimeTableTextModal(timeTable)}
                         title="Edit"
-                        color="#841584"
+                        color="#09437f"
                     />
                 </View>
             </View>
@@ -215,7 +215,8 @@ export default class TimeTable extends PureComponent{
                 />
                 <Button
                     onPress={() => this.closeModal()}
-                    title="Close modal"
+                    title="Close"
+                    color="#09437f"
                 >
                 </Button>
               </View>
