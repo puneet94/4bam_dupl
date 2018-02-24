@@ -70,9 +70,7 @@ export default class TimeTable extends PureComponent{
         }
     }
     async componentWillMount(){
-        
         let timeTables = await store.get('TIME_TABLES');
-        
         if(timeTables && timeTables.length){
             this.setState({
                 timeTables
@@ -128,7 +126,7 @@ export default class TimeTable extends PureComponent{
         this.changeTime(
             this.state.temporaryDay,"text",this.state.temporaryText
         );
-        this.setState({modalVisible:false})
+        this.setState({modalVisible:false});
     }
     
     render(){
