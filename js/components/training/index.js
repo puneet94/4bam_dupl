@@ -59,7 +59,7 @@ export default class Training extends PureComponent{
                     <View>
                         <Text>{"Training Screen"}</Text>
                         {!this.state.timerCountdown && <Button style={{width:100}}
-                            onPress={()=>this.startCountDown()}
+                            onPress={()=>this.toggleCountDown(true)}
                             title="Start Count Down"
                             color="#09437f"
                         />}
