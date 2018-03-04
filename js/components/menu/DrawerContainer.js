@@ -38,7 +38,7 @@ class DrawerContainer extends React.Component {
 					console.log( 'NOTIFICATION:', notification );
 			
 					const { navigation } = this.props;
-					navigation.navigate('LocalNotification',{localNotification:true,dayName:notification.userInfo.dayName});
+					navigation.navigate('LocalNotification',{localNotification:true,dayName:notification.userInfo.dayName,actualID:notification.userInfo.actualID});
 					// process the notification
 					// required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
 					notification.finish(PushNotificationIOS.FetchResult.NoData);

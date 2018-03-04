@@ -11,17 +11,18 @@ export default class LocalNotificationScreen extends PureComponent{
         super(props);
         this.state = {
            timeTable: {},
-           snoozeTime: 1
+           snoozeTime: 1,
+           actualID: ""
         }
     }
     componentWillMount = async()=>{
-        const {localNotification,dayName} = this.props.navigation.state.params;
+        const {localNotification,dayName,actualID} = this.props.navigation.state.params;
         if(localNotification){
             let timeTables = await store.get("TIME_TABLES");
             if(timeTables){
                 const timeTable = timeTables.find(timeTable => timeTable.dayName === dayName);
                 
-                this.setState({timeTable});
+                this.setState({timeTable,actualID});
                 const { navigation } = this.props;
                 //navigation.navigate('Menu');
             }
@@ -29,13 +30,12 @@ export default class LocalNotificationScreen extends PureComponent{
     }
     redirectTraining(){
         const { navigation } = this.props;
-        navigation.navigate('Training',{localNotification:true,dayName:this.state.timeTable.dayName});
+        navigation.navigate('Training',{localNotification:true,dayName:this.state.timeTable.dayName,actualID:this.state.actualID});
     }
     snoozeAlarm(){
         let alarmDate = moment().add(this.state.snoozeTime,"minutes");
         let alarmID = alarmDate.valueOf();
-        
-        scheduleLocalNotification(this.state.timeTable.text,alarmDate,alarmID,null,this.state.timeTable);
+        scheduleLocalNotification(this.state.timeTable.text,alarmDate,alarmID,null,{...this.state.timeTable,actualID:this.state.actualID});
         
         const { navigation } = this.props;
 

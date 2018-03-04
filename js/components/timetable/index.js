@@ -104,11 +104,11 @@ export default class TimeTable extends PureComponent{
                 store.save('TIME_TABLES',this.state.timeTables);
                 if(oldTimeTable.alarmDate1 !== newTimeTable2.alarmDate1){
                     console.log("first date scheduled");
-                    scheduleLocalNotification(newTimeTable2.text,newTimeTable2.alarmDate1,newTimeTable2.dayID,"week",newTimeTable2);
+                    scheduleLocalNotification(newTimeTable2.text,newTimeTable2.alarmDate1,newTimeTable2.dayID,"week",{...newTimeTable2,actualID:newTimeTable2.dayID});
                 }
-                if(oldTimeTable.alarmDate2 !== newTimeTable2.alarmDate2){+
+                if(oldTimeTable.alarmDate2 !== newTimeTable2.alarmDate2){
                     console.log("second date scheduled");
-                    scheduleLocalNotification(newTimeTable2.text,newTimeTable2.alarmDate2,newTimeTable2.dayID2,"week",newTimeTable2);
+                    scheduleLocalNotification(newTimeTable2.text,newTimeTable2.alarmDate2,newTimeTable2.dayID2,"week",{...newTimeTable2,actualID:newTimeTable2.dayID2});
                 }
             });
         }
