@@ -11,7 +11,6 @@ import appVars from './appVars';
 import appStyles from './appStyles';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 
-
 import MenuScreen from './components/menu';
 import LoginScreen from "./components/login";
 const bamApp = StackNavigator({
