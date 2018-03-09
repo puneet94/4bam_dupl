@@ -80,7 +80,7 @@ import {
     colorDrawerSeperatorBackgroundColor: "rgba(0, 0, 0, 0.1)",
   
     //fonts
-    fontMain: "digital",
+    fontMain: "System",
     fontSub: "GothamNarrow-Book",
     fontHeadline: fontHeadline,
     fontText: "frutigerweb",
