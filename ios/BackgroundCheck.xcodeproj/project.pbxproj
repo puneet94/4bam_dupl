@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -51,6 +50,8 @@
 		FD312D692052AC830065151D /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD312D5E2052AC830065151D /* SimpleLineIcons.ttf */; };
 		FD312D6A2052AC830065151D /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD312D5F2052AC830065151D /* MaterialIcons.ttf */; };
 		FDB7C28F2052A36000E7E911 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD47BFA22052A0B5002D8A76 /* libRCTPushNotification.a */; };
+		312BFC8347764635B74DA0EB /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 06BDAC0FEF864D6DAAC0B46C /* OpenSans-Bold.ttf */; };
+		40387A17E5BC4E87B70CCDDC /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1131CD49F32A45FE84CD8E02 /* OpenSans-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -392,6 +393,8 @@
 		FD312D5E2052AC830065151D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		FD312D5F2052AC830065151D /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		FD47BF8F2052A0B5002D8A76 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
+		06BDAC0FEF864D6DAAC0B46C /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; name = "OpenSans-Bold.ttf"; path = "../assets/fonts/OpenSans-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1131CD49F32A45FE84CD8E02 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; name = "OpenSans-Regular.ttf"; path = "../assets/fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -663,6 +666,8 @@
 			isa = PBXGroup;
 			children = (
 				2BDFC3493BBB4F71BADFDE6D /* FontAwesome.ttf */,
+				06BDAC0FEF864D6DAAC0B46C /* OpenSans-Bold.ttf */,
+				1131CD49F32A45FE84CD8E02 /* OpenSans-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1198,6 +1203,8 @@
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				F0A46919ED794C05A815CBD4 /* FontAwesome.ttf in Resources */,
 				FD312D632052AC830065151D /* MaterialCommunityIcons.ttf in Resources */,
+				312BFC8347764635B74DA0EB /* OpenSans-Bold.ttf in Resources */,
+				40387A17E5BC4E87B70CCDDC /* OpenSans-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
