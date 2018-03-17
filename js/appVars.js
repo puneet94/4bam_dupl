@@ -15,7 +15,7 @@ import {
   
     } else {
       // ios
-      var fontHeadline = "Mafra Condensed Deck";
+      var fontHeadline = "OpenSans-Regular";//"MafraCondensedDeck"; //cause error in ios
       var adArchives = '7';
     }
   
@@ -30,7 +30,7 @@ import {
     ];
   
     const APP_CONSTANTS =   {
-  
+      STORAGE_KEY : 'TOKEN',
     objLocationCategories : ObjLocationCategories,
     LocationsFallback: "1",
   
@@ -83,7 +83,7 @@ import {
     fontMain: "OpenSans-Regular",
     fontSub: "GothamNarrow-Book",
     fontHeadline: fontHeadline,
-    fontText: "frutigerweb",
+    fontText: "OpenSans-Regular",//"frutigerweb",
   
     //labels
     labelNewsList: "Nachrichten",
@@ -119,7 +119,7 @@ import {
     labelFromCamera: "Kamera",
     labelFromLib: "Album",
     labelMsg: "Nachricht",
-  
+      
     //text
     textDownloadAllreadRunning: "Bitte warten Sie bis der aktuelle Download abgeschlossen ist.",
     textNoIssueSelected: "Es wurde keine Ausgabe ausgewählt",
@@ -131,7 +131,7 @@ import {
     textFontsize: "Hier können Sie die Schriftgröße nach Ihren Bedürfnissen anpassen.",
   
     textLogin: "Anmelden",
-    textLoginFollowup: "Um auf unsere DigitalPlus-Inhalte zugreifen zu können, melden Sie sich bitte mit Ihrem Nutzerkonto an.",
+    textLoginFollowup: "Um auf die 4BAM-App zuzugreifen, loggen Sie sich bitte mit Ihrer Benutzer-E-Mail-Adresse und Ihrem Passwort ein.",
     textLogout: "Sie sind angemeldet!",
     textLogutFollowup: "Sie können auf alle DigitalPlus-Inhalte zugreifen.",
     textErrorLogin: "Es ist ein Fehler aufgetreten. Überprüfen Sie Ihre Eingabe.",
