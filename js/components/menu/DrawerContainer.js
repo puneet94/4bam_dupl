@@ -27,19 +27,29 @@ class DrawerContainer extends React.Component {
 	configureLocalNotification(){
 		
 		PushNotification.configure({
-			
 				// (optional) Called when Token is generated (iOS and Android)
 				onRegister: function(token) {
 					console.log( 'TOKEN:', token );
 				},
-			
 				// (required) Called when a remote or local notification is opened or received
 				onNotification: (notification)=> {
-					console.log( 'NOTIFICATION:', notification );
+					
 					const { navigation } = this.props;
-					notification.userInfo = notification.userInfo || notification.data;
-					navigation.navigate('LocalNotification',{localNotification:true,dayName:notification.userInfo.dayName,actualID:notification.userInfo.actualID});
+					
+					
+					Alert.alert(" IGNORE THIS ALERT ",notification.id+ " " +" "+ notification.data.alarmID);
+					//Alert.alert("USER INFO",);
+					
+					
+					
+					navigation.navigate('LocalNotification',
+						{
+							localNotification:true,
+							alarmID:notification.id || notification.data.id || notification.data.alarmID}
+						);
+					
 					// process the notification
+					
 					// required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
 					notification.finish(PushNotificationIOS.FetchResult.NoData);
 				},
@@ -64,6 +74,8 @@ class DrawerContainer extends React.Component {
 			});
 	}
 	componentWillMount = async ()=> {
+		
+		
 		this.configureLocalNotification();
 		/*OneSignal.addEventListener('received', this.onReceived);
 		OneSignal.addEventListener('opened', this.onOpened);
@@ -164,8 +176,18 @@ class DrawerContainer extends React.Component {
 			</TouchableWithoutFeedback>
 
 			<View style={appStyles.drawerSeperator} />
+			
+			<TouchableWithoutFeedback onPress={() => navigation.navigate('Alarms')} >
+				<View style={[appStyles.drawerItem,this.isActiveClass('Alarms')]}>
+				<FontAwesome style={appStyles.drawerIcon}>
+				{Icons.calendar}
+				</FontAwesome>
+				<Text style={appStyles.drawerLabel}>{"Alarms".toUpperCase()}</Text>
+				</View>
+			</TouchableWithoutFeedback>
 
-
+			<View style={appStyles.drawerSeperator} />
+			
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('Training')} style={this.isActiveClass('settings')}>
 				<View style={[appStyles.drawerItem,this.isActiveClass('training')]}>
 				<FontAwesome style={appStyles.drawerIcon}>
@@ -175,19 +197,11 @@ class DrawerContainer extends React.Component {
 				</View>
 			</TouchableWithoutFeedback>
 
-			<View style={appStyles.drawerSeperator} />
-
-			<TouchableWithoutFeedback onPress={() => navigation.navigate('TimeTable')} style={this.isActiveClass('imprint')}>
-				<View style={[appStyles.drawerItem,this.isActiveClass('timetable')]}>
-				<FontAwesome style={appStyles.drawerIcon}>
-				{Icons.calendar}
-				</FontAwesome>
-				<Text style={appStyles.drawerLabel}>{appVars.labelTimeTable.toUpperCase()}</Text>
-				</View>
-			</TouchableWithoutFeedback>
+			
 		</ScrollView>
 		)
 	}
 }
-
 export default DrawerContainer;
+
+//adb shell input keyevent 82

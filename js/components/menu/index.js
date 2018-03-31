@@ -2,10 +2,8 @@
 import React, { Component } from 'react';
 import{Image,ScrollView} from "react-native";
 import { DrawerNavigator } from 'react-navigation';
-
-
-import TimeTableScreen from "../timetable";
 import TrainingScreen from "../training";
+import AlarmScreen from "../alarm";
 import TrainingFinishScreen from "../trainingfinish";
 import LocalNotificationScreen from "../localnotification";
 import HomeScreen from "../home";
@@ -21,10 +19,10 @@ const Menu = DrawerNavigator({
       headerTitle: appVars.labelHome.toUpperCase(),
     }),
   },
-  TimeTable: {
-    screen: TimeTableScreen,
+  Alarms: {
+    screen: AlarmScreen,
     navigationOptions : ({ navigation, screenProps }) => ({
-      headerTitle: appVars.labelTimeTable.toUpperCase(),
+      headerTitle: "ALARM",
     }),
   },
   Training: {

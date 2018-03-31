@@ -9,7 +9,8 @@ const NOTIFICATION_DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm';
 export function scheduleLocalNotification(message, date, id, repeatType,payload) {
 
   //message: type String
-  
+
+  console.log("payload enterd scheduled",payload);
   //date: type String  format 'YYYY-MM-DD HH:mm' (NOTIFICATION_DATE_TIME_FORMAT)
 
   //construct the notification parameters
@@ -18,13 +19,14 @@ export function scheduleLocalNotification(message, date, id, repeatType,payload)
     //.add(3, 'seconds')
     .toDate();*/
   const notification = {
-    id: id, //for android cancel notification (must be stringified number)
+    id: id+"", //for android cancel notification (must be stringified number)
     message,
-    number: 0, //necessary for iOS cancellation (not sure why)
+    number: 100, //necessary for iOS cancellation (not sure why)
     date: fireDate,
     repeatType: repeatType,
     popInitialNotification: true,
     //for ios only
+    
     userInfo: {
       id: id, //for ios cancel notfication (can be any string)
       ...payload,
@@ -32,8 +34,9 @@ export function scheduleLocalNotification(message, date, id, repeatType,payload)
     //for android only
     data: JSON.stringify(payload),
   };
-  console.log("called schedule",arguments);
+  
   console.log("called schedule2",notification);
+  console.log("payload",payload);
   //schedule the notification
   PushNotification.localNotificationSchedule(notification);
 }
