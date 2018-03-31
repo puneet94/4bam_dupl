@@ -6,7 +6,7 @@ export default class Training extends PureComponent{
     constructor(props){
         super(props);
         this.state = {
-            timeTable: {},
+            alarmValue: {},
             localNotification: false,
         }
     }
@@ -14,12 +14,14 @@ export default class Training extends PureComponent{
     componentWillMount = async ()=>{
         if(this.props.navigation.state.params){
             const localNotification = this.props.navigation.state.params.localNotification;
-            const dayName = this.props.navigation.state.params.dayName;
+            const alarmID = this.props.navigation.state.params.alarmID;
+            
             if(localNotification){
-                let timeTables = await store.get("TIME_TABLES");
-                if(timeTables){
-                    const timeTable = timeTables.find(timeTable => timeTable.dayName === dayName);
-                    this.setState({timeTable,localNotification,timeTables});
+                let ALARM_TIMES = await store.get("ALARM_TIMES");
+                if(ALARM_TIMES){
+                    const alarmValue = ALARM_TIMES[alarmID];
+                    
+                    this.setState({alarmValue,localNotification});
                 }
             }
         }        
@@ -27,16 +29,16 @@ export default class Training extends PureComponent{
 
     onTimerFinish=()=>{        
         const { navigation } = this.props;
-        navigation.navigate('TrainingFinish',{actualID:navigation.state.params.actualID});
+        navigation.navigate('TrainingFinish',{alarmID:navigation.state.params.alarmID});
     }
     
-    render(){
+    render=()=>{
         return (
             <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"white"}}>
                 {
                     this.state.localNotification?
                     <View>
-                        <Text style={styles.trainingMessage}>{this.state.timeTable.text}</Text>    
+                        <Text style={styles.trainingMessage}>{this.state.alarmValue.alarmText}</Text>    
                         <StopWatch onTimerFinish={this.onTimerFinish}/>
                     </View>:
                     <View>

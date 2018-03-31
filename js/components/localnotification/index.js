@@ -2,10 +2,10 @@ import React,{PureComponent} from "react";
 import {
     View,Text,Button,Picker
 } from "react-native";
-
 import store from "react-native-simple-store"
 import {scheduleLocalNotification} from "../../services/localNotification";
 import moment from "moment";
+const NOTIFICATION_DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm';
 export default class LocalNotificationScreen extends PureComponent{
     constructor(props){
         super(props);
@@ -16,27 +16,35 @@ export default class LocalNotificationScreen extends PureComponent{
         }
     }
     componentWillMount = async()=>{
-        const {localNotification,dayName,actualID} = this.props.navigation.state.params;
+        const {localNotification,alarmID} = this.props.navigation.state.params;
         if(localNotification){
-            let timeTables = await store.get("TIME_TABLES");
-            if(timeTables){
-                const timeTable = timeTables.find(timeTable => timeTable.dayName === dayName);
+            this.alarmTimes = await store.get("ALARM_TIMES");
+            if(this.alarmTimes){
+                this.alarmValue = this.alarmTimes[alarmID];
                 
-                this.setState({timeTable,actualID});
-                const { navigation } = this.props;
-                //navigation.navigate('Menu');
+                /*const { navigation } = this.props;
+                //navigation.navigate('Menu');*/
             }
         }
     }
     redirectTraining(){
         const { navigation } = this.props;
-        navigation.navigate('Training',{localNotification:true,dayName:this.state.timeTable.dayName,actualID:this.state.actualID});
+        navigation.navigate('Training',{localNotification:true,alarmID:this.alarmValue.alarmID});
     }
-    snoozeAlarm(){
-        let alarmDate = moment().add(this.state.snoozeTime,"minutes");
-        let alarmID = alarmDate.valueOf();
-        scheduleLocalNotification(this.state.timeTable.text,alarmDate,alarmID,null,{...this.state.timeTable,actualID:this.state.actualID});
+    async snoozeAlarm(){
+        let alarmDate = moment().add(this.state.snoozeTime,"minutes").format(NOTIFICATION_DATE_TIME_FORMAT);
         
+        let alarmID  = await store.get("ALARM_ID");
+        alarmID  = alarmID?(Number(alarmID)+1) : 1;
+        store.save("ALARM_ID",alarmID);
+        console.log(alarmID);
+
+        const newAlarmValue = {...this.alarmValue,alarmDate,alarmID,snooze:true}
+        scheduleLocalNotification(newAlarmValue.alarmText,alarmDate,alarmID,null,{...newAlarmValue,alarmID});
+        
+        store.delete("ALARM_TIMES");
+        store.save("ALARM_TIMES",{...this.alarmTimes,[alarmID]:newAlarmValue});
+
         const { navigation } = this.props;
 
         navigation.navigate('Home');
