@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import {Text,View,Button,Alert} from "react-native";
 import store from "react-native-simple-store";
 import Rating from "../rating";
-import {getNextAlarm2} from "../../services/dateService";
+import {getNextAlarm2,getNextAlarm} from "../../services/dateService";
 export default class TrainingFinish extends PureComponent{
     constructor(props){
         super(props);
@@ -20,7 +20,8 @@ export default class TrainingFinish extends PureComponent{
             const alarmID = this.props.navigation.state.params.alarmID;
                 let ALARM_TIMES = await store.get("ALARM_TIMES");
                 let ALARM_DAYS = await store.get("ALARM_DAYS");
-                const {alarmTime,dayName}=getNextAlarm2(alarmID,ALARM_DAYS,ALARM_TIMES);
+                //alarmID?getNextAlarm2(alarmID,ALARM_DAYS,ALARM_TIMES):
+                const {alarmTime,dayName}=getNextAlarm(ALARM_DAYS,ALARM_TIMES);
                 this.setState({time:alarmTime,day:dayName});             
         }        
     }

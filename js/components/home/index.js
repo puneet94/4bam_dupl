@@ -3,10 +3,11 @@ import {Text,View,Button,BackHandler} from "react-native";
 import store from "react-native-simple-store";
 import appVars from "../../appVars";
 import Toast, {DURATION} from 'react-native-easy-toast'
-
+import {getNextAlarm} from "../../services/dateService";
 export default class Home extends Component{
     constructor(props){
         super(props);
+
         this.backButtonListener = null;
         this.exitApp = 0;
         this.state = {
@@ -39,7 +40,12 @@ export default class Home extends Component{
     attachBackHandler = ()=>{
         this.backButtonListener = BackHandler.addEventListener('hardwareBackPress', this.backHandlerListener);
     }
-    componentWillMount = ()=>{
+    componentWillMount = async()=>{
+        let ALARM_TIMES = await store.get("ALARM_TIMES");
+                let ALARM_DAYS = await store.get("ALARM_DAYS");
+                
+                const {alarmTime,dayName}=getNextAlarm(ALARM_DAYS,ALARM_TIMES);
+                console.log("result",alarmTime,dayName);
         this.attachBackHandler();
     }
     componentWillUnmount = ()=>{

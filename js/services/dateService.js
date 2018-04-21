@@ -37,6 +37,27 @@ function fetchNextTime(alarmID,alarmsIDs,alarmsHash){
     }
     return mappedIDs.find((element)=>element.alarmTime>alarmValue.alarmTime);
   }
+  function fetchNextTime2(alarmTime,alarmDay,alarmsIDs,alarmsHash){
+    const mappedIDs =  alarmsIDs.map((alarmID)=>alarmsHash[alarmID]);
+    if(!mappedIDs.length){
+      return;
+    }
+     
+      mappedIDs.sort((a,b)=>{
+              if(b.alarmTime>a.alarmTime){
+                  return -1;
+              }
+              else if(b.alarmTime<a.alarmTime){
+                  return 1;
+              }
+              return 0;
+          });
+    
+    if(mappedIDs[0].dayName!=alarmDay){
+      return mappedIDs[0];
+    }
+    return mappedIDs.find((element)=>element.alarmTime>alarmTime);
+  }
 export function getNextAlarm2(alarmID, alarmDays, alarmTimes){
     const daysArray = ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"];
     const alarmValue = alarmTimes[alarmID];
@@ -57,34 +78,24 @@ export function getNextAlarm2(alarmID, alarmDays, alarmTimes){
     }
     return alarmValue;    
 }
-export function getNextAlarm(currentId,timeTables){
-    let timeTableIndex = timeTables.findIndex(timeTable => timeTable.dayID === currentId);
-    let timeTable;
-    if(timeTableIndex> -1){
+export function getNextAlarm(alarmDays, alarmTimes){
+    const daysArray = ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"];
+    const alarmValue = moment();
+    const alarmDay = alarmValue.format('dddd').toUpperCase();
+    const alarmTime  = alarmValue.format('HH:mm');
+    const dayIndex = daysArray.indexOf(alarmDay);
+    const daysArray2 = [...daysArray.slice(dayIndex),...daysArray.slice(0,dayIndex)];
+    console.log("chck alarms",alarmDay,alarmTime);
+    let count = 0;
+    while(count<daysArray2.length){
+        let currentDayName = daysArray2[count];
         
-        timeTable = timeTables[timeTableIndex];
-        if(getTimeDiff(timeTable.alarmDate2,timeTable.alarmDate1)>0){
-            return {date:timeTables[timeTableIndex].alarmDate2,day: timeTables[timeTableIndex].dayName}
-        }
-    }
-    else{
+        const nextAlarm = fetchNextTime2(alarmTime,alarmDay,alarmDays[currentDayName],alarmTimes);
         
-
-        timeTableIndex = timeTables.findIndex(timeTable => timeTable.dayID2 === currentId);
-        if(timeTableIndex> -1){
-            timeTable = timeTables[timeTableIndex];
-            if(getTimeDiff (timeTable.alarmDate1, timeTable.alarmDate2)>0){
-                return {date:timeTable.alarmDate1, day: timeTable.dayName};
-            }
+        if(nextAlarm){
+            return nextAlarm;
         }
+        count++;
     }
-    let nextIndex = timeTableIndex+1;
-    nextIndex = nextIndex==timeTables.length?0:nextIndex;
-    const secondTimeTable = timeTables[nextIndex];
-    const secondDate = moment(secondTimeTable.alarmDate2);
-    const firstDate = moment(secondTimeTable.alarmDate1);
-    if(secondDate.diff(firstDate, 'seconds')>0){
-        return {date:secondTimeTable.alarmDate1,day:secondTimeTable.dayName};
-    }
-    return {date:secondTimeTable.alarmDate2,day:secondTimeTable.dayName}    
+    return alarmValue;       
 }
