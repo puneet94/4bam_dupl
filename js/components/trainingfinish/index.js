@@ -8,7 +8,8 @@ export default class TrainingFinish extends PureComponent{
         super(props);
         this.state = {
             time: "",
-            day: ""
+            day: "",
+            totalDuration: 0
         }
     }
     onRating=(rating)=>{
@@ -16,13 +17,12 @@ export default class TrainingFinish extends PureComponent{
     }
     componentWillMount = async ()=>{
         if(this.props.navigation.state.params){
-            const localNotification = this.props.navigation.state.params.localNotification;
-            const alarmID = this.props.navigation.state.params.alarmID;
+            const totalDuration = this.props.navigation.state.params.totalDuration;
                 let ALARM_TIMES = await store.get("ALARM_TIMES");
                 let ALARM_DAYS = await store.get("ALARM_DAYS");
-                //alarmID?getNextAlarm2(alarmID,ALARM_DAYS,ALARM_TIMES):
                 const {alarmTime,dayName}=getNextAlarm(ALARM_DAYS,ALARM_TIMES);
-                this.setState({time:alarmTime,day:dayName});             
+                this.setState({time:alarmTime,day:dayName,totalDuration});             
+                Alert.alert("total duration",totalDuration+"-");
         }        
     }
     render(){

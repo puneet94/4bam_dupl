@@ -10,10 +10,13 @@ export default class Training extends PureComponent{
         super(props);
         this.state = {
             alarmValue: {},
-            localNotification: false,stopwatchStart: false,
+            localNotification: false,
+            exerciseRestart:false,
+            stopwatchStart: false,
             stopwatchReset: false,
             currentExercise: 0,
-            exercises: getExercises()
+            exercises: getExercises(),
+            totalDuration: 0
         }
     }
     static navigationOptions = ({ navigation }) => {
@@ -32,12 +35,27 @@ export default class Training extends PureComponent{
         };
       };
       selectNextExercise = ()=>{
-          if((this.state.currentExercise+1)==this.state.exercises.length){
-            this.onTimerFinish();
-          }else{
-              Alert.alert("TIME",this.currentTime);
+        let exerciseTime = parseInt(this.currentTime.split(":")[0],10)*60 +  parseInt(this.currentTime.split(":")[1],10);
+        
+        
+        //Store only when user opens pending exercise. Using localNotification-true from DraweContainer
+        (this.state.localNotification || this.state.exerciseRestart) && store.save("PENDING_EXERCISE",{
+            totalDuration: this.state.totalDuration+exerciseTime,
+            currentExercise: this.state.currentExercise+1
+        });
+
+        // If this exercise is the last. Then navigate to next page. There we use totalDuration to display.
+        // Else start next exercise, adding duration and increment current exercise number
+        
+        if((this.state.currentExercise+1)==this.state.exercises.length){
+            store.delete("PENDING_EXERCISE");
+            this.onTimerFinish(this.state.totalDuration+exerciseTime);
+        }else{
+            Alert.alert("TIME",this.currentTime);
+              
               this.setState({
-                  currentExercise: this.state.currentExercise+1
+                  currentExercise: this.state.currentExercise+1,
+                  totalDuration: this.state.totalDuration + exerciseTime
               });
               this.resetStopwatch();
           }
@@ -45,8 +63,8 @@ export default class Training extends PureComponent{
     componentWillMount = async ()=>{
         if(this.props.navigation.state.params){
             const localNotification = this.props.navigation.state.params.localNotification;
+            const exerciseRestart = this.props.navigation.state.params.exerciseRestart;
             const alarmID = this.props.navigation.state.params.alarmID;
-            
             if(localNotification){
                 let ALARM_TIMES = await store.get("ALARM_TIMES");
                 if(ALARM_TIMES){
@@ -54,13 +72,25 @@ export default class Training extends PureComponent{
                     
                     this.setState({alarmValue,localNotification});
                 }
+
+                store.save("PENDING_EXERCISE",{currentExercise:0,totalDuration:0});
+            }
+            if(exerciseRestart){
+                const pendingExercise = await store.get("PENDING_EXERCISE");
+                if(pendingExercise){
+                    this.setState({
+                        currentExercise: pendingExercise.currentExercise,
+                        totalDuration: pendingExercise.totalDuration,
+                        exerciseRestart: true
+                    });
+                }
             }
         }        
     }
 
-    onTimerFinish=()=>{        
+    onTimerFinish=(totalDuration)=>{        
         const { navigation } = this.props;
-        navigation.navigate('TrainingFinish',{alarmID:navigation.state.params.alarmID});
+        navigation.navigate('TrainingFinish',{totalDuration});
     }
 
   toggleStopwatch=() =>{
@@ -93,22 +123,22 @@ export default class Training extends PureComponent{
     render=()=>{
         
         return (
-            <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"white"}}>
+            <View style={{flex:1,backgroundColor:"brown"}}>
                 {
-                    <View>
-                        {this.state.localNotification?<Text style={styles.trainingMessage}>{this.state.alarmValue.alarmText}</Text>:<Text style={styles.trainingMessage}>{"Training Screen"}</Text>}
+                    <View style={{flex:1}}>
+                        {/*this.state.localNotification?<Text style={styles.trainingMessage}>{this.state.alarmValue.alarmText}</Text>:<Text style={styles.trainingMessage}>{"Training Screen"}</Text>*/}
                         <Exercise exercise = {this.state.exercises[this.state.currentExercise]}/>
                         <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10}}> 
-                        <TouchableHighlight onPress={this.toggleStopwatch} style={{backgroundColor:"green",padding:10,width:90,borderRadius:5}}>
-                            <Text style={{fontSize: 24,color:"white",textAlign:"center"}}>{!this.state.stopwatchStart ? "Start" : "Stop"}</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight onPress={this.selectNextExercise} style={{backgroundColor:"yellow",padding:10,width:90,borderRadius:5}}>
-                            <Text style={{fontSize: 24,color:"black",textAlign:"center"}}>Next</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight onPress={this.resetStopwatch} style={{backgroundColor:"yellow",padding:10,width:90,borderRadius:5}}>
-                            <Text style={{fontSize: 24,color:"black",textAlign:"center"}}>Reset</Text>
-                        </TouchableHighlight>
-                    </View>
+                            <TouchableHighlight onPress={this.toggleStopwatch} style={{backgroundColor:"green",padding:10,width:90,borderRadius:5}}>
+                                <Text style={{fontSize: 24,color:"white",textAlign:"center"}}>{!this.state.stopwatchStart ? "Start" : "Stop"}</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight onPress={this.selectNextExercise} style={{backgroundColor:"yellow",padding:10,width:90,borderRadius:5}}>
+                                <Text style={{fontSize: 24,color:"black",textAlign:"center"}}>Next</Text>
+                            </TouchableHighlight>
+                            <TouchableHighlight onPress={this.resetStopwatch} style={{backgroundColor:"yellow",padding:10,width:90,borderRadius:5}}>
+                                <Text style={{fontSize: 24,color:"black",textAlign:"center"}}>Reset</Text>
+                            </TouchableHighlight>
+                        </View>
                     </View>
                     
                 }

@@ -1,6 +1,6 @@
 import StarRating from 'react-native-star-rating';
 import React,{PureComponent} from 'react';
-import {View, StyleSheet, Dimensions, Platform,Text,Image} from "react-native";
+import {View, StyleSheet, Dimensions, Platform,Text,Image,ScrollView} from "react-native";
 import VideoPlayer from 'react-native-video-player';
 import Carousel from 'react-native-snap-carousel';
 
@@ -30,42 +30,7 @@ export default  class Exercise extends PureComponent {
     };
   }
   componentDidMount = ()=>{
-      setTimeout(()=>{
-        this.setState({
-            entries:[
-                {
-                    title: 'Beautiful and dramatic Antelope Canyon',
-                    subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-                    illustration: 'https://i.imgur.com/UYiroysl.jpg'
-                },
-                {
-                    title: 'Earlier this morning, NYC',
-                    subtitle: 'Lorem ipsum dolor sit amet',
-                    illustration: 'https://i.imgur.com/UPrs1EWl.jpg'
-                },
-                {
-                    title: 'White Pocket Sunset',
-                    subtitle: 'Lorem ipsum dolor sit amet et nuncat ',
-                    illustration: 'https://i.imgur.com/MABUbpDl.jpg'
-                },
-                {
-                    title: 'Acrocorinth, Greece',
-                    subtitle: 'Lorem ipsum dolor sit amet et nuncat mergitur',
-                    illustration: 'https://i.imgur.com/KZsmUi2l.jpg'
-                },
-                {
-                    title: 'The lone tree, majestic landscape of New Zealand',
-                    subtitle: 'Lorem ipsum dolor sit amet',
-                    illustration: 'https://i.imgur.com/2nCt3Sbl.jpg'
-                },
-                {
-                    title: 'Middle Earth, Germany',
-                    subtitle: 'Lorem ipsum dolor sit amet',
-                    illustration: 'https://i.imgur.com/lceHsT6l.jpg'
-                }
-            ]    
-        })
-      },3000)
+     
   }
 
   _renderItem ({item, index}) {
@@ -77,22 +42,28 @@ export default  class Exercise extends PureComponent {
     );
 }
   render() {
-      console.log("got exercie",this.props.exercise);
+      
     return (
         this.props.exercise?
-        <View style={{flex:1, backgroundColor: "white",     borderTopColor: "blue", borderTopWidth: 1 }} >
-        <Text>{this.props.exercise.text}</Text>
-        {!this.props.exercise.containsImage?<VideoPlayer
-                         video={{uri: "http://62.113.221.2/einbeckermorgenpost-live/_definst_/mp4:livestream/playlist.m3u8"}}
-                     />:
-                     <Carousel
-              ref={(c) => { this._carousel = c; }}
-              data={this.props.exercise.images}
-              renderItem={this._renderItem}
-              sliderWidth={sliderWidth}
-              itemWidth={itemWidth}
-            />}
-     </View>:null
+        <View style={{flex:1, backgroundColor: "red" }} >
+            
+            <View style={{flex:4,justifyContent:"flex-start",alignItems:"center",backgroundColor:"green",height:200}}>
+            {
+                !this.props.exercise.containsImage?
+                    <VideoPlayer video={{uri: this.props.exercise.video}} style={{width:sliderWidth,height:slideHeight*1.7}}/>:
+                    <Carousel
+                        ref={(c) => { this._carousel = c; }}
+                        data={this.props.exercise.images}
+                        renderItem={this._renderItem}
+                        sliderWidth={sliderWidth}
+                        itemWidth={itemWidth}
+                    />
+            }
+            </View>
+            <ScrollView contentContainerStyle={{flex:1,backgroundColor:"yellow",maxHeight:100}}>
+                <Text>{this.props.exercise.text}</Text>
+            </ScrollView>
+        </View>:null
     );
   }
 }
