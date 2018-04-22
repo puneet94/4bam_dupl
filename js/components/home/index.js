@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import {Text,View,Button,BackHandler} from "react-native";
+import {Text,View,Button,BackHandler,Platform} from "react-native";
 import store from "react-native-simple-store";
 import appVars from "../../appVars";
 import Toast, {DURATION} from 'react-native-easy-toast'
 import {getNextAlarm} from "../../services/dateService";
+
 export default class Home extends Component{
     constructor(props){
         super(props);
@@ -38,18 +39,21 @@ export default class Home extends Component{
         return true;
     }
     attachBackHandler = ()=>{
-        this.backButtonListener = BackHandler.addEventListener('hardwareBackPress', this.backHandlerListener);
+        if(Platform.OS === 'android') {
+            this.backButtonListener = BackHandler.addEventListener('hardwareBackPress', this.backHandlerListener);
+        }
     }
     componentWillMount = async()=>{
         let ALARM_TIMES = await store.get("ALARM_TIMES");
                 let ALARM_DAYS = await store.get("ALARM_DAYS");
-                
                 const {alarmTime,dayName}=getNextAlarm(ALARM_DAYS,ALARM_TIMES);
-                console.log("result",alarmTime,dayName);
+               
         this.attachBackHandler();
     }
     componentWillUnmount = ()=>{
-        this.backButtonListener.remove();
+        if(Platform.OS === 'android' && this.backButtonListener) {
+            this.backButtonListener.remove();
+        }
     }
     logOut = ()=>{
         store.save("LOGGED_IN",false);
