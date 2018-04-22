@@ -41,7 +41,7 @@ class DrawerContainer extends React.Component {
 					//Alert.alert("USER INFO",);
 					
 					
-					
+					store.delete("PENDING_EXERCISE");
 					navigation.navigate('LocalNotification',
 						{
 							localNotification:true,
@@ -52,6 +52,7 @@ class DrawerContainer extends React.Component {
 					
 					// required on iOS only (see fetchCompletionHandler docs: https://facebook.github.io/react-native/docs/pushnotificationios.html)
 					notification.finish(PushNotificationIOS.FetchResult.NoData);
+					return;
 				},
 			
 				
@@ -77,6 +78,7 @@ class DrawerContainer extends React.Component {
 		
 		
 		this.configureLocalNotification();
+		
 		/*OneSignal.addEventListener('received', this.onReceived);
 		OneSignal.addEventListener('opened', this.onOpened);
 		OneSignal.addEventListener('registered', this.onRegistered);
@@ -102,7 +104,15 @@ class DrawerContainer extends React.Component {
 				});
 			}
 	}
-
+	componentDidMount = async ()=>{
+		let pendingExercise = await store.get("PENDING_EXERCISE");
+		if(pendingExercise){
+			Alert.alert("Found exercise",pendingExercise.totalDuration+"--"+pendingExercise.currentExercise);
+			const { navigation } = this.props;
+			navigation.navigate("Training",{exerciseRestart: true});
+			return;
+		}
+	}
 	componentWillUnmount=()=> {
 			/*OneSignal.removeEventListener('received', this.onReceived);
 			OneSignal.removeEventListener('opened', this.onOpened);

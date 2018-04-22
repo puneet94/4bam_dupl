@@ -8,14 +8,13 @@ import {getNextAlarm} from "../../services/dateService";
 export default class Home extends Component{
     constructor(props){
         super(props);
-
         this.backButtonListener = null;
         this.exitApp = 0;
         this.state = {
             position: 'bottom',
         }
     }
-    onClick(text, position, duration,withStyle) {
+    onClick=(text, position, duration,withStyle)=>{
         this.setState({
             position: position,
         });

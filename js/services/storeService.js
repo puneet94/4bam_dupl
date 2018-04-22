@@ -6,7 +6,6 @@ export function getAlarmDays(){
     return store.get(ALARM_DAYS);
 }
 
-
 export function getAlarmTimes(){
     return store.get(ALARM_TIMES);
 }
@@ -33,5 +32,5 @@ export function getExercises(){
         text: "Exercise3",
         containsImage: false,
         video: "https://files.mopo-server.de/files/em/epaper/demofiles/murph.mp4"
-    }]
+    }];
 }
