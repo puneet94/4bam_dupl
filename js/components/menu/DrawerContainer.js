@@ -75,10 +75,6 @@ class DrawerContainer extends React.Component {
 	}
 	componentWillMount = async ()=> {
 		
-		PushNotificationIOS.getScheduledLocalNotifications((data)=>{
-			console.log("scheduled data",data);
-		});
-		
 		
 		this.configureLocalNotification();
 		/*OneSignal.addEventListener('received', this.onReceived);
