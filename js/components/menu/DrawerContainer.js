@@ -37,7 +37,7 @@ class DrawerContainer extends React.Component {
 					const { navigation } = this.props;
 					
 					
-					Alert.alert(" IGNORE THIS ALERT ",notification.id+ " " +" "+ notification.data.alarmID);
+					//Alert.alert(" IGNORE THIS ALERT ",notification.id+ " " +" "+ notification.data.alarmID);
 					//Alert.alert("USER INFO",);
 					
 					

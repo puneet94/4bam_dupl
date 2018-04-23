@@ -1,9 +1,12 @@
 import StarRating from 'react-native-star-rating';
 import React,{PureComponent} from 'react';
-import {View, StyleSheet, Dimensions, Platform,Text,Image,ScrollView} from "react-native";
+import {View, Alert,StyleSheet, Dimensions, Platform,Text,Image,ScrollView,TouchableOpacity} from "react-native";
 import VideoPlayer from 'react-native-video-player';
 import Carousel from 'react-native-snap-carousel';
-
+import PinchZoomView from 'react-native-pinch-zoom-view';
+import PhotoView from 'react-native-photo-view';
+import ImageViewer from "../imageviewer";
+import Gallery from "../imageviewer/Gallery";
 const IS_IOS = Platform.OS === 'ios';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -25,24 +28,17 @@ const entryBorderRadius = 8;
 export default  class Exercise extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      entries: []
-    };
-  }
-  componentDidMount = ()=>{
-     
   }
 
   _renderItem ({item, index}) {
     return (
-        <View style={{flex:1}}>
-            <View style={styles.imageContainer}>
-            <Image source={{uri:item}} style={styles.image}/></View>
-        </View>
+        <PinchZoomView style={styles.imageContainer}>
+            <Image source={{uri:item}} style={styles.image}/>
+        </PinchZoomView>
     );
 }
   render() {
-      
+    
     return (
         this.props.exercise?
         <View style={{flex:1, backgroundColor: "red" }} >
@@ -51,18 +47,28 @@ export default  class Exercise extends PureComponent {
             {
                 !this.props.exercise.containsImage?
                     <VideoPlayer video={{uri: this.props.exercise.video}} style={{width:sliderWidth,height:slideHeight*1.7}}/>:
-                    <Carousel
+                    
+                    this.props.exercise.images ?<View style={{flex:1}}>
+                <Gallery
+                style={{flex: 1, backgroundColor: 'black'}}
+                images={this.props.exercise.images.map((image)=>{return {source:{uri:image}}})}
+                initialPage = {0}
+              />
+              </View>:null
+                    /*<Carousel
                         ref={(c) => { this._carousel = c; }}
                         data={this.props.exercise.images}
                         renderItem={this._renderItem}
                         sliderWidth={sliderWidth}
                         itemWidth={itemWidth}
-                    />
+                    />*/
             }
             </View>
-            <ScrollView contentContainerStyle={{flex:1,backgroundColor:"yellow",maxHeight:100}}>
+            <View style={{flex:1,backgroundColor:"yellow"}}>
+            <ScrollView>
+
                 <Text>{this.props.exercise.text}</Text>
-            </ScrollView>
+            </ScrollView></View>
         </View>:null
     );
   }
@@ -86,10 +92,12 @@ const styles=  StyleSheet.create({
         borderTopRightRadius: entryBorderRadius
     },imageContainer: {
         flex: 1,
+        
         marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
-        backgroundColor: 'white',
+        //backgroundColor: 'white',
         borderTopLeftRadius: entryBorderRadius,
         borderTopRightRadius: entryBorderRadius
+
     },
 });
 

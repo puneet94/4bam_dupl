@@ -23,9 +23,9 @@ export function getExercises(){
     return [{
         text: "Exercise1",
         containsImage: true,
-        images: ["https://files.mopo-server.de/files/em/epaper/demofiles/dummy01.jpg","https://files.mopo-server.de/files/em/epaper/demofiles/dummy02.jpg","https://files.mopo-server.de/files/em/epaper/demofiles/dummy03.jpg"]
+        images: ["https://www.gstatic.com/webp/gallery/4.jpg","https://files.mopo-server.de/files/em/epaper/demofiles/dummy02.jpg","https://files.mopo-server.de/files/em/epaper/demofiles/dummy03.jpg"]
     },{
-        text: "Exercise2",
+        text: "Exercise22222",
         containsImage: true,
         images: ["https://files.mopo-server.de/files/em/epaper/demofiles/dummy01.jpg","https://files.mopo-server.de/files/em/epaper/demofiles/dummy02.jpg","https://files.mopo-server.de/files/em/epaper/demofiles/dummy03.jpg"]
     },{

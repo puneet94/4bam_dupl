@@ -37,7 +37,6 @@ export default class Training extends PureComponent{
       selectNextExercise = ()=>{
         let exerciseTime = parseInt(this.currentTime.split(":")[0],10)*60 +  parseInt(this.currentTime.split(":")[1],10);
         
-        
         //Store only when user opens pending exercise. Using localNotification-true from DraweContainer
         (this.state.localNotification || this.state.exerciseRestart) && store.save("PENDING_EXERCISE",{
             totalDuration: this.state.totalDuration+exerciseTime,
@@ -51,7 +50,7 @@ export default class Training extends PureComponent{
             store.delete("PENDING_EXERCISE");
             this.onTimerFinish(this.state.totalDuration+exerciseTime);
         }else{
-            Alert.alert("TIME",this.currentTime);
+            
               
               this.setState({
                   currentExercise: this.state.currentExercise+1,
