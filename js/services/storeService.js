@@ -21,15 +21,15 @@ export function setAlarmTimes(alarmTimes){
 
 export function getExercises(){
     return [{
-        text: "Exercise1",
+        text: "Übung 1",
         containsImage: true,
-        images: ["https://www.gstatic.com/webp/gallery/4.jpg","https://files.mopo-server.de/files/em/epaper/demofiles/dummy02.jpg","https://files.mopo-server.de/files/em/epaper/demofiles/dummy03.jpg"]
+        images: ["https://files.mopo-server.de/files/em/epaper/demofiles/u1-1.png","https://files.mopo-server.de/files/em/epaper/demofiles/u1-2.png"]
     },{
-        text: "Exercise22222",
+        text: "Übung 2",
         containsImage: true,
-        images: ["https://files.mopo-server.de/files/em/epaper/demofiles/dummy01.jpg","https://files.mopo-server.de/files/em/epaper/demofiles/dummy02.jpg","https://files.mopo-server.de/files/em/epaper/demofiles/dummy03.jpg"]
+        images: ["https://files.mopo-server.de/files/em/epaper/demofiles/u2-0.png","https://files.mopo-server.de/files/em/epaper/demofiles/u2-1.png","https://files.mopo-server.de/files/em/epaper/demofiles/u2-2.png","https://files.mopo-server.de/files/em/epaper/demofiles/u2-3.png"]
     },{
-        text: "Exercise3",
+        text: "Übung 3",
         containsImage: false,
         video: "https://files.mopo-server.de/files/em/epaper/demofiles/murph.mp4"
     }];

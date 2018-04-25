@@ -4,6 +4,7 @@ import store from "react-native-simple-store";
 import StopWatch from '../stopwatch/timer';
 import Exercise from "../exercise";
 import appVars from "../../appVars";
+import appStyles from '../../appStyles';
 import {getExercises} from "../../services/storeService";
 export default class Training extends PureComponent{
     constructor(props){
@@ -24,8 +25,7 @@ export default class Training extends PureComponent{
         
         return {
           headerRight: <View>
-          
-          <StopWatch  start={params.stopwatchStart}
+          <StopWatch start={params.stopwatchStart}
           reset={params.stopwatchReset}
           
           getTime={params.getFormattedTime} 
@@ -122,20 +122,22 @@ export default class Training extends PureComponent{
     render=()=>{
         
         return (
-            <View style={{flex:1,backgroundColor:"brown"}}>
+            <View style={{flex:1,backgroundColor:appVars.colorWhite}}>
                 {
                     <View style={{flex:1}}>
                         {/*this.state.localNotification?<Text style={styles.trainingMessage}>{this.state.alarmValue.alarmText}</Text>:<Text style={styles.trainingMessage}>{"Training Screen"}</Text>*/}
                         <Exercise exercise = {this.state.exercises[this.state.currentExercise]}/>
-                        <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10}}> 
-                            <TouchableHighlight onPress={this.toggleStopwatch} style={{backgroundColor:"green",padding:10,width:90,borderRadius:5}}>
-                                <Text style={{fontSize: 24,color:"white",textAlign:"center"}}>{!this.state.stopwatchStart ? "Start" : "Stop"}</Text>
+                        <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10,marginBottom:10, paddingTop: 10,
+    borderColor: '#ddd',
+    borderTopWidth: 1, }}> 
+                            <TouchableHighlight onPress={this.toggleStopwatch} style={{backgroundColor:appVars.colorMain,marginLeft: 15,padding:10,width:90, borderRadius:5}}>
+                                <Text style={{fontSize: 18,color:"white",textAlign:"center"}}>{!this.state.stopwatchStart ? "Start" : "Stop"}</Text>
                             </TouchableHighlight>
-                            <TouchableHighlight onPress={this.selectNextExercise} style={{backgroundColor:"yellow",padding:10,width:90,borderRadius:5}}>
-                                <Text style={{fontSize: 24,color:"black",textAlign:"center"}}>Next</Text>
+                            <TouchableHighlight onPress={this.selectNextExercise} style={{backgroundColor:appVars.colorLightGray,padding:10,width:90,borderRadius:5}}>
+                                <Text style={{fontSize: 18,color:"black",textAlign:"center"}}>Next</Text>
                             </TouchableHighlight>
-                            <TouchableHighlight onPress={this.resetStopwatch} style={{backgroundColor:"yellow",padding:10,width:90,borderRadius:5}}>
-                                <Text style={{fontSize: 24,color:"black",textAlign:"center"}}>Reset</Text>
+                            <TouchableHighlight onPress={this.resetStopwatch} style={{backgroundColor:appVars.colorLightGray,padding:10,width:90,marginRight: 15, borderRadius:5}}>
+                                <Text style={{fontSize: 18,color:"black",textAlign:"center"}}>Reset</Text>
                             </TouchableHighlight>
                         </View>
                     </View>
@@ -148,14 +150,12 @@ export default class Training extends PureComponent{
 
 const options = {
     container: {
-      backgroundColor: appVars.colorMain,
-      padding: 5,
-      borderRadius: 5,
-      width: 70,
     },
     text: {
       fontSize: 18,
-      color: '#FFF'
+      color: appVars.colorMain,
+      textAlign: 'right',
+      marginRight: 10,
     }
   };
 

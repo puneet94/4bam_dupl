@@ -50,7 +50,7 @@ export default  class Exercise extends PureComponent {
                     
                     this.props.exercise.images ?<View style={{flex:1}}>
                 <Gallery
-                style={{flex: 1, backgroundColor: 'black'}}
+                style={{flex: 1, backgroundColor: 'white'}}
                 images={this.props.exercise.images.map((image)=>{return {source:{uri:image}}})}
                 initialPage = {0}
               />
@@ -64,9 +64,8 @@ export default  class Exercise extends PureComponent {
                     />*/
             }
             </View>
-            <View style={{flex:1,backgroundColor:"yellow"}}>
+            <View style={{flex:1,backgroundColor:"white"}}>
             <ScrollView>
-
                 <Text>{this.props.exercise.text}</Text>
             </ScrollView></View>
         </View>:null
