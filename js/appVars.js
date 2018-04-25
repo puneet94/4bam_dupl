@@ -71,7 +71,7 @@ import {
     //colors
     colorWhite: "#ffffff",
     colorBlack: "#000000",
-    colorMain: "#055AA4",
+    colorMain: "#155aa4",
     colorActive: "#cc0000",
     colorLightGray: "#cccccc",
     colorDarkGray: "#333333",
@@ -80,7 +80,7 @@ import {
     colorDrawerSeperatorBackgroundColor: "rgba(0, 0, 0, 0.1)",
   
     //fonts
-    fontMain: "OpenSans-Regular",
+    fontMain: "OpenSans-Bold",
     fontSub: "GothamNarrow-Book",
     fontHeadline: fontHeadline,
     fontText: "OpenSans-Regular",//"frutigerweb",

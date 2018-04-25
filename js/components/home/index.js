@@ -62,8 +62,7 @@ export default class Home extends Component{
     }
     render(){
         return (
-            <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                <Text>{"Home Screen"}</Text>
+            <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor: appVars.colorWhite}}>
                 <Button
             onPress={()=>this.logOut()}
             title="Log OUT"

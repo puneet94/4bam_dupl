@@ -6,7 +6,8 @@ import {
     TextInput,
     Button, Alert, Image,          
 	ActivityIndicator,
-    Linking
+		Linking,
+		Dimensions
 } from "react-native";
 import appStyles from '../../appStyles';
 import appVars from '../../appVars';
@@ -156,8 +157,9 @@ export default class LoginScreen extends PureComponent{
 	  return (
 		<View style={appStyles.contenContainer}>
 		  <ScrollView ref='_scrollView'>
-			<View  style={{alignItems:"center",marginVertical:60}}>
-				<Image style={[appStyles.contentElement]} source={require('../../../assets/images/app_icon.png')} />
+			<View  style={{alignItems:"center"}}>
+				<Image style={{'width': Dimensions.get('window').width-20, 'height': 300, }}
+                  resizeMode='contain' source={require('../../../assets/images/app_logo.png')} />
 		  	</View>
 			<View style={appStyles.contentElement}>
 		  		<Text style={appStyles.settingsColStart}>{appVars.labelEmail.toUpperCase()}</Text>
