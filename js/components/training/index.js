@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent,Component } from 'react';
 import {Text,Alert,View,Button,StyleSheet,TouchableHighlight} from "react-native";
 import store from "react-native-simple-store";
 import StopWatch from '../stopwatch/timer';
@@ -22,7 +22,6 @@ export default class Training extends PureComponent{
     }
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
-        
         return {
           headerRight: <View>
           <StopWatch start={params.stopwatchStart}
@@ -50,13 +49,11 @@ export default class Training extends PureComponent{
             store.delete("PENDING_EXERCISE");
             this.onTimerFinish(this.state.totalDuration+exerciseTime);
         }else{
-            
-              
-              this.setState({
-                  currentExercise: this.state.currentExercise+1,
-                  totalDuration: this.state.totalDuration + exerciseTime
-              });
-              this.resetStopwatch();
+            this.setState({
+                currentExercise: this.state.currentExercise+1,
+                totalDuration: this.state.totalDuration + exerciseTime
+            });
+            this.resetStopwatch();
           }
       }
     componentWillMount = async ()=>{

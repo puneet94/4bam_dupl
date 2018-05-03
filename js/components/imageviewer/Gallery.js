@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, ViewPropTypes } from 'react-native';
+import { View, ViewPropTypes,Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { createResponder } from './library/GestureResponder';
 import TransformableImage from './library/TransformableImage';
@@ -148,6 +148,7 @@ export default class Gallery extends PureComponent {
 
     componentDidMount () {
         this._isMounted = true;
+        Alert.alert("called will mount");
     }
 
     componentWillUnmount () {
