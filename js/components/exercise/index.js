@@ -2,9 +2,6 @@ import StarRating from 'react-native-star-rating';
 import React,{PureComponent} from 'react';
 import {View, Alert,StyleSheet, Dimensions, Platform,Text,Image,ScrollView,TouchableOpacity} from "react-native";
 import VideoPlayer from 'react-native-video-player';
-import Carousel from 'react-native-snap-carousel';
-import PinchZoomView from 'react-native-pinch-zoom-view';
-import PhotoView from 'react-native-photo-view';
 import ImageViewer from "../imageviewer";
 import Gallery from "../imageviewer/Gallery";
 const IS_IOS = Platform.OS === 'ios';
@@ -30,13 +27,7 @@ export default  class Exercise extends PureComponent {
     super(props);
   }
 
-  _renderItem ({item, index}) {
-    return (
-        <PinchZoomView style={styles.imageContainer}>
-            <Image source={{uri:item}} style={styles.image}/>
-        </PinchZoomView>
-    );
-}
+  
   render() {
     
     return (
@@ -51,8 +42,10 @@ export default  class Exercise extends PureComponent {
                     this.props.exercise.images ?<View style={{flex:1}}>
                 <Gallery
                 style={{flex: 1, backgroundColor: 'white'}}
+                key={this.props.exercise.text}
                 images={this.props.exercise.images.map((image)=>{return {source:{uri:image}}})}
                 initialPage = {0}
+                
               />
               </View>:null
                     /*<Carousel
