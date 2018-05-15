@@ -148,7 +148,7 @@ export default class Gallery extends PureComponent {
 
     componentDidMount () {
         this._isMounted = true;
-        Alert.alert("called will mount");
+        
     }
 
     componentWillUnmount () {

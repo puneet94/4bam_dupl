@@ -43,9 +43,12 @@ export default class Home extends Component{
         }
     }
     componentWillMount = async()=>{
-        let ALARM_TIMES = await store.get("ALARM_TIMES");
+        /*let ALARM_TIMES = await store.get("ALARM_TIMES");
                 let ALARM_DAYS = await store.get("ALARM_DAYS");
-                const {alarmTime,dayName}=getNextAlarm(ALARM_DAYS,ALARM_TIMES);
+                if(ALARM_DAYS && ALARM_TIMES){
+                    const {alarmTime,dayName}=getNextAlarm(ALARM_DAYS,ALARM_TIMES);
+                }*/
+                
                
         this.attachBackHandler();
     }
