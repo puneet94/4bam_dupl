@@ -8,7 +8,9 @@ import { NavigationActions } from 'react-navigation'
 import PushNotification from 'react-native-push-notification';
 import OneSignal from 'react-native-onesignal';
 import store from 'react-native-simple-store';
-import FontAwesome, { Icons } from 'react-native-fontawesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
 
 class DrawerContainer extends React.Component {
 	handleURL = (url)=>{
@@ -178,9 +180,9 @@ class DrawerContainer extends React.Component {
 
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('Home')} >
 				<View style={[appStyles.drawerItem,this.isActiveClass('home')]}>
-				<FontAwesome style={appStyles.drawerIcon}>
-				{Icons.home}
-				</FontAwesome>
+				<MaterialIcons style={appStyles.drawerIcon} name="home">
+				
+				</MaterialIcons>
 				<Text style={appStyles.drawerLabel}>{appVars.labelHome.toUpperCase()}</Text>
 				</View>
 			</TouchableWithoutFeedback>
@@ -189,8 +191,8 @@ class DrawerContainer extends React.Component {
 			
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('Alarms')} >
 				<View style={[appStyles.drawerItem,this.isActiveClass('Alarms')]}>
-				<FontAwesome style={appStyles.drawerIcon}>
-				{Icons.calendar}
+				<FontAwesome name="calendar" style={appStyles.drawerIcon} >
+				
 				</FontAwesome>
 				<Text style={appStyles.drawerLabel}>{"Alarms".toUpperCase()}</Text>
 				</View>
@@ -200,9 +202,10 @@ class DrawerContainer extends React.Component {
 			
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('Training')} style={this.isActiveClass('settings')}>
 				<View style={[appStyles.drawerItem,this.isActiveClass('training')]}>
-				<FontAwesome style={appStyles.drawerIcon}>
-				{Icons.play}
-				</FontAwesome>
+				<MaterialIcons style={appStyles.drawerIcon} name="play-arrow">
+				
+				</MaterialIcons>
+				
 				<Text style={appStyles.drawerLabel}>{appVars.labeleTraining.toUpperCase()}</Text>
 				</View>
 			</TouchableWithoutFeedback>

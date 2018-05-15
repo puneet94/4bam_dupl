@@ -9,7 +9,7 @@ import {
 import { StackNavigator } from 'react-navigation';
 import appVars from './appVars';
 import appStyles from './appStyles';
-import FontAwesome, { Icons } from 'react-native-fontawesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import MenuScreen from './components/menu';
 import LoginScreen from "./components/login";
@@ -33,12 +33,12 @@ const bamApp = StackNavigator({
         }}>
           <View style={appStyles.iconWrapper} >
           {(navigation.state.index === 0)?
-            <FontAwesome style={appStyles.headerIcon}>
-            {Icons.bars}
-            </FontAwesome>:
-            <FontAwesome style={appStyles.headerIcon}>
-            {Icons.close}
-            </FontAwesome> }
+            <MaterialIcons name="menu" style={appStyles.headerIcon}>
+            
+            </MaterialIcons>:
+            <MaterialIcons name="close" style={appStyles.headerIcon}>
+            
+            </MaterialIcons> }
           </View>
         </TouchableWithoutFeedback>
     }),
