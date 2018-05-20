@@ -69,14 +69,14 @@ export default class LoginScreen extends PureComponent{
         this.setState({
             loading: true,
         })
-        let apiHitPoint = appVars.apiUrl+"?authtoken="+appVars.apiKey+"&username="+this.state.email+"&password="+this.state.pass;
+        let apiHitPoint = appVars.apiUrl+"/user.html?authtoken="+appVars.apiKey+"&username="+this.state.email+"&password="+this.state.pass;
         
         try{
             const response = await fetch(apiHitPoint);
             const json = await response.json();
             if(json["@status"] === "OK"){
                 
-				await this.storeToken(json["response"].userkey);
+				await this.storeToken(json["response"].id);
 				this.logIn();
 			}
 			
@@ -115,6 +115,7 @@ export default class LoginScreen extends PureComponent{
 	onSubmitEditing = ()=>{
 		this.refs.SecondInput.focus();
 	}
+
 	onForgot=  ()=>{
 		Linking.canOpenURL(appVars.forgotpasswordurl).then(supported => {
 			  if (supported) {
