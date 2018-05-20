@@ -1,6 +1,7 @@
 import StarRating from 'react-native-star-rating';
 import React,{PureComponent} from 'react';
 import {View, Alert,StyleSheet, Dimensions, Platform,Text,Image,ScrollView,TouchableOpacity} from "react-native";
+import appVars from '../../appVars';
 import VideoPlayer from 'react-native-video-player';
 import ImageViewer from "../imageviewer";
 import Gallery from "../imageviewer/Gallery";
@@ -27,26 +28,25 @@ export default  class Exercise extends PureComponent {
     super(props);
   }
 
-  
   render() {
-    
     return (
+        
         this.props.exercise?
         <View style={{flex:1, backgroundColor: "red" }} >
             
-            <View style={{flex:4,justifyContent:"flex-start",alignItems:"center",backgroundColor:"green",height:200}}>
+            <View style={{flex:4,justifyContent:"flex-start",alignItems:"center",backgroundColor:"pink",height:200}}>
             {
-                !this.props.exercise.containsImage?
+                this.props.exercise.video?
                     <VideoPlayer video={{uri: this.props.exercise.video}} style={{width:sliderWidth,height:slideHeight*1.7}}/>:
                     
-                    this.props.exercise.images ?<View style={{flex:1}}>
-                <Gallery
+                    this.props.exercise.pictures ?<View style={{flex:1}}>
+                {<Gallery
                 style={{flex: 1, backgroundColor: 'white'}}
                 key={this.props.exercise.text}
-                images={this.props.exercise.images.map((image)=>{return {source:{uri:image}}})}
+                images={this.props.exercise.pictures.map((temp)=>{return {source:{uri:appVars.serverUrl+'/'+temp.sources[0].src}}})}
                 initialPage = {0}
                 
-              />
+                />}
               </View>:null
                     /*<Carousel
                         ref={(c) => { this._carousel = c; }}

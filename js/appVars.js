@@ -33,7 +33,7 @@ import {
     apiUrl: "https://www.app-4bam.de/api",
     apiKey: "d57629ce9b5ec4e2c0b14dafc3af9056",
   
-    serverurl: "https://www.app4bam.de/",
+    serverUrl: "https://www.app-4bam.de",
   
     // icons
     shareIcon: "share-alt",

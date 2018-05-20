@@ -20,7 +20,7 @@ export default class Training extends PureComponent{
             stopwatchStart: false,
             stopwatchReset: false,
             currentExercise: 0,
-            exercises: getExercises(),
+            exercises: this.fetchExercises(),
             totalDuration: 0
         }
     }
@@ -62,6 +62,7 @@ export default class Training extends PureComponent{
           }
       }
     componentWillMount = async ()=>{
+
         if(this.props.navigation.state.params){
             const localNotification = this.props.navigation.state.params.localNotification;
             const exerciseRestart = this.props.navigation.state.params.exerciseRestart;
@@ -121,8 +122,17 @@ export default class Training extends PureComponent{
             });
         }
       }
+
+      async fetchExercises() {
+
+        let apiHitPoint = appVars.apiUrl+"/exercise.html?authtoken="+appVars.apiKey+"&userid=1";
+        const response = await fetch(apiHitPoint);
+        const json = await response.json();
+        this.setState({exercises: json.response});
+      }
+
     render=()=>{
-        
+                
         return (
             <View style={{flex:1,backgroundColor:appVars.colorWhite}}>
                 {
