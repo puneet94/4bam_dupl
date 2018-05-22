@@ -43,7 +43,7 @@ export default class LoginScreen extends PureComponent{
 
 
 	}
-
+	
 	logOut = ()=>{
 		this.setState({
 			loggedIn: false,
@@ -75,10 +75,9 @@ export default class LoginScreen extends PureComponent{
             const response = await fetch(apiHitPoint);
             const json = await response.json();
             if(json["@status"] === "OK"){
-                
-				await this.storeToken(json["response"].id);
-				this.logIn();
-			}
+							await this.storeToken(json["response"].id);
+							this.logIn();
+						}
 			
             else{
                 this.setState({

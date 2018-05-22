@@ -1,5 +1,5 @@
 import React, { PureComponent,Component } from 'react';
-import {Text,Alert,View,Button,StyleSheet,TouchableHighlight} from "react-native";
+import {Text,Alert,View,Button,StyleSheet,TouchableHighlight,ActivityIndicator} from "react-native";
 import store from "react-native-simple-store";
 import StopWatch from '../stopwatch/timer';
 import Exercise from "../exercise";
@@ -20,6 +20,7 @@ export default class Training extends PureComponent{
             stopwatchStart: false,
             stopwatchReset: false,
             currentExercise: 0,
+            exerciseLoading: true,
             exercises: this.fetchExercises(),
             totalDuration: 0
         }
@@ -122,26 +123,44 @@ export default class Training extends PureComponent{
             });
         }
       }
-
+      logout = ()=>{
+		
+        store.delete(appVars.STORAGE_KEY);
+        const { navigation } = this.props;
+        navigation.navigate('Login');
+	}
       async fetchExercises() {
-
-        let apiHitPoint = appVars.apiUrl+"/exercise.html?authtoken="+appVars.apiKey+"&userid=1";
+        let userStoredID  = await store.get(appVars.STORAGE_KEY);
+        let apiHitPoint = appVars.apiUrl+"/exercise.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
         const response = await fetch(apiHitPoint);
         const json = await response.json();
-        this.setState({exercises: json.response});
+        if(json["@status"]=="OK"){
+            this.setState({exercises: json.response,exerciseLoading:false});
+        }else{
+            
+            this.logout();
+        }
+        
       }
 
     render=()=>{
-                
+        if(this.state.exerciseLoading){
+            return(
+
+                <View style={{flex:1,justifyContent:"center"}}>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                </View>
+            )
+        }  else{
+
+        
         return (
             <View style={{flex:1,backgroundColor:appVars.colorWhite}}>
                 {
                     <View style={{flex:1}}>
                         {/*this.state.localNotification?<Text style={styles.trainingMessage}>{this.state.alarmValue.alarmText}</Text>:<Text style={styles.trainingMessage}>{"Training Screen"}</Text>*/}
                         <Exercise exercise = {this.state.exercises[this.state.currentExercise]}/>
-                        <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10,marginBottom:10, paddingTop: 10,
-    borderColor: '#ddd',
-    borderTopWidth: 1, }}> 
+                        <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10,marginBottom:10, paddingTop: 10,borderColor: '#ddd',borderTopWidth: 1}}> 
                             <TouchableHighlight onPress={this.toggleStopwatch} style={{backgroundColor:appVars.colorMain,marginLeft: 15,padding:10,width:90, borderRadius:5}}>
                                 <View style={{flex:1,flexDirection:"row"}}>
                                     <Entypo name="stopwatch" style={{color:"white",fontSize:18,marginRight:5}}/>
@@ -165,7 +184,7 @@ export default class Training extends PureComponent{
                     
                 }
             </View>
-        )
+        )}
     }
 }
 

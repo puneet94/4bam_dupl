@@ -151,11 +151,34 @@ class DrawerContainer extends React.Component {
 	}
 
 	onRegistered(notifData) {
-
-
 		
 	}
+	logout = ()=>{
+		
+        store.delete(appVars.STORAGE_KEY)
+        const { navigation } = this.props;
+        navigation.navigate('Login');
+	}
+	checkUserAuthenticated = async (pageUrl)=>{
+		let APIKEY = appVars.apiKey;
+		let userStoredID  = await store.get(appVars.STORAGE_KEY);
+		console.log("user stored id",userStoredID);
+		if(userStoredID){
+			let authFetch  = await fetch(`https://www.app-4bam.de/api/user.html?authtoken=${[APIKEY]}&userid=${userStoredID}`);
+			let authResponse = await authFetch.json();
+			console.log("authresponse",authResponse);
+			if(authResponse["@status"]=="OK"){
+				const { navigation } = this.props;
+				navigation.navigate(pageUrl);
+			}else{
+				this.logout();
+			}
+		}else{
+			this.logout();
+		}
+		
 
+	}
 	onIds(device) {
 		
 		store.save("PUSH_TOKEN",device.pushToken);
@@ -200,7 +223,7 @@ class DrawerContainer extends React.Component {
 
 			<View style={appStyles.drawerSeperator} />
 			
-			<TouchableWithoutFeedback onPress={() => navigation.navigate('Training')} style={this.isActiveClass('settings')}>
+			<TouchableWithoutFeedback onPress={() => this.checkUserAuthenticated('Training')} style={this.isActiveClass('settings')}>
 				<View style={[appStyles.drawerItem,this.isActiveClass('training')]}>
 				<MaterialIcons style={appStyles.drawerIcon} name="play-arrow">
 				
