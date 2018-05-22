@@ -5,6 +5,8 @@ import appVars from '../../appVars';
 import VideoPlayer from 'react-native-video-player';
 import ImageViewer from "../imageviewer";
 import Gallery from "../imageviewer/Gallery";
+import HTMLView from 'react-native-htmlview';
+
 const IS_IOS = Platform.OS === 'ios';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -57,16 +59,41 @@ export default  class Exercise extends PureComponent {
                     />*/
             }
             </View>
-            <View style={{flex:1,backgroundColor:"white"}}>
+            <View style={{flex:1,backgroundColor:"white", paddingLeft: 15, paddingRight: 15}}>
             <ScrollView>
-                <Text>{this.props.exercise.text}</Text>
-            </ScrollView></View>
+                <HTMLView
+                    value={this.props.exercise.text}
+                    stylesheet={styles}
+                    onLinkPress={(url) => console.log('clicked link: ', url)}
+                />
+            </ScrollView>
+            </View>
+            <View style={{flexDirection:"row", backgroundColor:"white", paddingLeft: 15, paddingRight: 15}} >
+                <Text style={{fontFamily: appVars.fontMain, color: appVars.colorBlack, fontSize: 11, paddingRight:10 }}>Intensität:</Text>
+                <Text style={{fontFamily: appVars.fontText, color: appVars.colorBlack, fontSize: 11}}>{this.props.exercise.intent}</Text>
+            </View>
         </View>:null
     );
   }
 }
 const styles=  StyleSheet.create({
     
+    //HTML things
+    p: {
+        fontFamily: appVars.fontText,
+        color: appVars.colorBlack,
+        fontSize: 13,
+    },
+    strong: {
+        fontFamily: appVars.fontMain,
+        color: appVars.colorBlack,
+        fontSize: 13,
+    },
+    h3: {
+        fontSize: 16,
+        fontFamily: appVars.fontMain,
+    },
+
     // image's border radius is buggy on iOS; let's hack it!   
     title: {
         color: "black",

@@ -164,19 +164,19 @@ export default class Training extends PureComponent{
                             <TouchableHighlight onPress={this.toggleStopwatch} style={{backgroundColor:appVars.colorMain,marginLeft: 15,padding:10,width:90, borderRadius:5}}>
                                 <View style={{flex:1,flexDirection:"row"}}>
                                     <Entypo name="stopwatch" style={{color:"white",fontSize:18,marginRight:5}}/>
-                                    <Text style={{fontSize: 18,color:"white",textAlign:"center"}}>{!this.state.stopwatchStart ? "START" : "STOP"}</Text>
+                                    <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain, textAlign:"center"}}>{!this.state.stopwatchStart ? "START" : "STOP"}</Text>
                                 </View>
                             </TouchableHighlight>
                             <TouchableHighlight onPress={this.selectNextExercise} style={{backgroundColor:appVars.colorLightGray,padding:10,width:100,borderRadius:5}}>
                                 <View style={{flex:1,flexDirection:"row"}}>
                                     <Octicons name="arrow-right" style={{fontSize:18,color:appVars.colorMain}}/>
-                                    <Text style={{fontSize: 18,color:"black",textAlign:"center",color:appVars.colorMain}}>WEITER</Text>
+                                    <Text style={{fontSize: 16,color:"black", fontFamily: appVars.fontMain, textAlign:"center",color:appVars.colorMain}}>WEITER</Text>
                                 </View>
                             </TouchableHighlight>
                             <TouchableHighlight onPress={this.resetStopwatch} style={{backgroundColor:appVars.colorLightGray,padding:10,width:90,marginRight: 15, height:40,borderRadius:5}}>
                                 <View style={{flex:1,flexDirection:"row"}}>
                                     <MaterialIcons name="replay" style={{fontSize:18}}/>
-                                    <Text style={{fontSize: 18,color:"black",textAlign:"center"}}>RESET</Text>
+                                    <Text style={{fontSize: 16,color:"black", fontFamily: appVars.fontMain, textAlign:"center"}}>RESET</Text>
                                 </View>
                             </TouchableHighlight>
                         </View>
