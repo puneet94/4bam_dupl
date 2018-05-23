@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import {Text,View,Button,BackHandler,Platform} from "react-native";
+import {Text,View,Button,BackHandler,Platform,Alert} from "react-native";
 import store from "react-native-simple-store";
 import appVars from "../../appVars";
 import Toast, {DURATION} from 'react-native-easy-toast'
 import {getNextAlarm} from "../../services/dateService";
+import HTMLView from 'react-native-htmlview';
 
 export default class Home extends Component{
     constructor(props){
@@ -12,6 +13,8 @@ export default class Home extends Component{
         this.exitApp = 0;
         this.state = {
             position: 'bottom',
+            dayMessages: [],
+            weekPlan: {}
         }
     }
     onClick=(text, position, duration,withStyle)=>{
@@ -42,13 +45,20 @@ export default class Home extends Component{
             this.backButtonListener = BackHandler.addEventListener('hardwareBackPress', this.backHandlerListener);
         }
     }
+
+
     componentWillMount = async()=>{
+        this.fetchWeekView();
+        this.fetchDayMessage();
         /*let ALARM_TIMES = await store.get("ALARM_TIMES");
                 let ALARM_DAYS = await store.get("ALARM_DAYS");
                 if(ALARM_DAYS && ALARM_TIMES){
                     const {alarmTime,dayName}=getNextAlarm(ALARM_DAYS,ALARM_TIMES);
                 }*/
-                
+        let firstName = await store.get("FIRSTNAME");
+        this.setState({
+            firstName
+        });
                
         this.attachBackHandler();
     }
@@ -64,28 +74,76 @@ export default class Home extends Component{
         const { navigation } = this.props;
         navigation.navigate('Login');
     }
+    async fetchDayMessage(){
+        let userStoredID  = await store.get(appVars.STORAGE_KEY);
+        let apiHitPoint = appVars.apiUrl+"/motd.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
+        const response = await fetch(apiHitPoint);
+        const json = await response.json();
+        
+        this.setState({dayMessages:json.response});
+        
+    }
 
+    async fetchWeekView() {
+        let userStoredID  = await store.get(appVars.STORAGE_KEY);
+        let apiHitPoint = appVars.apiUrl+"/weekview.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
+        const response = await fetch(apiHitPoint);
+        const json = await response.json();
+        this.setState({weekPlan: json.response});
+        
+    }
+    renderWeekPlan = ()=>{
+        if(Object.keys(this.state.weekPlan).length){
+            const weekDays = Object.keys(this.state.weekPlan).sort();
+            return weekDays.map((weekDay)=>{
+                const dayPlans = this.state.weekPlan[weekDay];
+                return <View style={{flex:1}} key={weekDay}>
+                    <Text>{weekDay}</Text>
+                   {
+                        dayPlans.map((dayPlan,index)=>{
+                            return <View style={{flex:1}} key={index}>
+                                
+                                <Text>{dayPlan.title}</Text>
+                            </View>
+                        })
+                    }
+                </View>
+            });
+        }
+    }
     render(){
         return (
-            
             <View style={{flex:1,backgroundColor: appVars.colorWhite}}>
-            <Text>Hallo !GET FIRSTNAME FROM STORE!</Text>
-
-            <Text>Nachricht des Tages</Text>
-
-
-            <Text>Dein Wochenübungsplan</Text>
-                
-                
-            <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor: appVars.colorWhite}}>
-
-            <Button
-            onPress={()=>this.logOut()}
-            title="Log OUT"
-            color={appVars.colorMain}
-            />
+                <Text>Hallo {this.state.firstName}</Text>    
+                <View style={{flex:1}}>
+                    {
+                        this.state.dayMessages.map((dayMessage)=>{
+                        
+                        
+                            
+                        return <View style={{flex:1}} key={dayMessage.id}>
+                                
+                                <Text>{dayMessage.title}</Text>
+                                <HTMLView
+                                    value={dayMessage.text}
+                                />
+                            </View>
+                        })
+                    }
+                    
                 </View>
-
+                <View style={{flex:6}}>
+                        {
+                            this.renderWeekPlan()
+                        }
+                    </View>
+                    <View style={{flex:1}}>
+                        <Button
+                        onPress={()=>this.logOut()}
+                        title="Log OUT"
+                        color={appVars.colorMain}
+                        />
+                    </View>
                 <Toast ref="toast" position={this.state.position}/>
             </View>
         )
