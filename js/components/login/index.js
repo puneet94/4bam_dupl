@@ -62,7 +62,8 @@ export default class LoginScreen extends PureComponent{
         } catch (e) {
           console.log(e)
         }
-      }
+			}
+	
 
     onSubmit=async  ()=>{
         //Alert.alert("email: "+ this.state.email + "pass: " + this.state.pass);
@@ -76,6 +77,9 @@ export default class LoginScreen extends PureComponent{
             const json = await response.json();
             if(json["@status"] === "OK"){
 							await this.storeToken(json["response"].id);
+							store.save("FIRSTNAME",json["response"].firstname);
+							store.save("GROUPS",json["response"].groups);
+
 							this.logIn();
 						}
 			

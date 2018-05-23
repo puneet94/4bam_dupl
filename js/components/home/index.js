@@ -52,6 +52,7 @@ export default class Home extends Component{
                
         this.attachBackHandler();
     }
+
     componentWillUnmount = ()=>{
         if(Platform.OS === 'android' && this.backButtonListener) {
             this.backButtonListener.remove();
@@ -63,11 +64,12 @@ export default class Home extends Component{
         const { navigation } = this.props;
         navigation.navigate('Login');
     }
+
     render(){
         return (
             
             <View style={{flex:1,backgroundColor: appVars.colorWhite}}>
-            <Text>Hallo  NAME </Text>
+            <Text>Hallo !GET FIRSTNAME FROM STORE!</Text>
 
             <Text>Nachricht des Tages</Text>
 
