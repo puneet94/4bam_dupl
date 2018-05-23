@@ -65,12 +65,25 @@ export default class Home extends Component{
     }
     render(){
         return (
+            
+            <View style={{flex:1,backgroundColor: appVars.colorWhite}}>
+            <Text>Hallo  NAME </Text>
+
+            <Text>Nachricht des Tages</Text>
+
+
+            <Text>Dein Wochenübungsplan</Text>
+                
+                
             <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor: appVars.colorWhite}}>
-                <Button
+
+            <Button
             onPress={()=>this.logOut()}
             title="Log OUT"
-            color="#09437f"
-                />
+            color={appVars.colorMain}
+            />
+                </View>
+
                 <Toast ref="toast" position={this.state.position}/>
             </View>
         )

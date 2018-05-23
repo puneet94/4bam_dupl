@@ -41,11 +41,11 @@ export default  class Exercise extends PureComponent {
                 this.props.exercise.video?
                     <VideoPlayer video={{uri: this.props.exercise.video}} style={{width:sliderWidth,height:slideHeight*1.7}}/>:
                     
-                    this.props.exercise.pictures ?<View style={{flex:1}}>
+                    this.props.exercise.picture ?<View style={{flex:1}}>
                 {<Gallery
                 style={{flex: 1, backgroundColor: 'white'}}
                 key={this.props.exercise.text}
-                images={this.props.exercise.pictures.map((temp)=>{return {source:{uri:appVars.serverUrl+'/'+temp.sources[0].src}}})}
+                images={this.props.exercise.picture.map((temp)=>{return {source:{uri:appVars.serverUrl+'/'+temp.sources[0].src}}})}
                 initialPage = {0}
                 
                 />}
