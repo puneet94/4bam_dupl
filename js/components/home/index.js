@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import {Text,View,Button,BackHandler,Platform,Alert} from "react-native";
+import {StyleSheet,Text,View,ScrollView,Button,BackHandler,Platform,Alert,TouchableOpacity, PixelRatio} from "react-native";
 import store from "react-native-simple-store";
 import appVars from "../../appVars";
+import appStyles from "../../appStyles";
+import Entypo from "react-native-vector-icons/Entypo";
 import Toast, {DURATION} from 'react-native-easy-toast'
 import {getNextAlarm} from "../../services/dateService";
 import HTMLView from 'react-native-htmlview';
@@ -17,6 +19,19 @@ export default class Home extends Component{
             weekPlan: {}
         }
     }
+
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state;
+        return {
+          headerRight: <View style={{flex:1,flexDirection:"row",alignItems:"center"}}>
+          <TouchableOpacity onPress={() => params.handleLogout()}>
+              <Entypo name="log-out" style={{color: appVars.colorMain,fontSize:18,marginRight:10}}/>
+              </TouchableOpacity>
+        </View>
+        };
+      };       
+
+        
     onClick=(text, position, duration,withStyle)=>{
         this.setState({
             position: position,
@@ -27,6 +42,7 @@ export default class Home extends Component{
             this.refs.toast.show(text, duration);
         }
     }
+
     backHandlerListener = ()=>{
         // this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
         // Typically you would use the navigator here to go to the last state.
@@ -46,7 +62,6 @@ export default class Home extends Component{
         }
     }
 
-
     componentWillMount = async()=>{
         this.fetchWeekView();
         this.fetchDayMessage();
@@ -61,6 +76,11 @@ export default class Home extends Component{
         });
                
         this.attachBackHandler();
+
+        this.props.navigation.setParams({ 
+            handleLogout: this.logOut
+        });    
+
     }
 
     componentWillUnmount = ()=>{
@@ -68,19 +88,40 @@ export default class Home extends Component{
             this.backButtonListener.remove();
         }
     }
+
     logOut = ()=>{
-        store.save("LOGGED_IN",false);
-        store.delete(appVars.STORAGE_KEY)
-        const { navigation } = this.props;
-        navigation.navigate('Login');
+
+        Alert.alert(
+            'Abmelden?',
+            'Möchtest Du dich wirklich abmelden?',
+            [
+              {text: 'Abbrechen', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+              {text: 'Abmelden', onPress: () => this.performLogout()},
+            ],
+            { cancelable: false }
+          )
     }
+
+    start(){
+        const { navigation } = this.props;
+        navigation.navigate('Training');
+    }
+
+    performLogout = ()=> {
+        store.save("LOGGED_IN",false);
+            store.delete(appVars.STORAGE_KEY)
+            const { navigation } = this.props;
+            navigation.navigate('Login');
+    }
+
     async fetchDayMessage(){
         let userStoredID  = await store.get(appVars.STORAGE_KEY);
         let apiHitPoint = appVars.apiUrl+"/motd.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
         const response = await fetch(apiHitPoint);
         const json = await response.json();
-        
-        this.setState({dayMessages:json.response});
+        if(json.response.length) {
+            this.setState({dayMessages:json.response});
+        }
         
     }
 
@@ -92,19 +133,33 @@ export default class Home extends Component{
         this.setState({weekPlan: json.response});
         
     }
+
+    day(name) {
+        var days = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Sonnabend', 'Sonntag'];
+        var dayName = days[name];
+        return dayName;
+    }
+
     renderWeekPlan = ()=>{
         if(Object.keys(this.state.weekPlan).length){
             const weekDays = Object.keys(this.state.weekPlan).sort();
             return weekDays.map((weekDay)=>{
                 const dayPlans = this.state.weekPlan[weekDay];
-                return <View style={{flex:1}} key={weekDay}>
-                    <Text>{weekDay}</Text>
+                return <View style={{flex:1, marginLeft: 15, marginRight: 15}} key={weekDay}>
+                    <Text style={{
+                    fontSize: 14,
+                    fontFamily: appVars.fontMain,
+                    color: appVars.colorMain,
+                    marginBottom: 3,
+                    }}>{this.day(weekDay)}</Text>
                    {
                         dayPlans.map((dayPlan,index)=>{
                             return <View style={{flex:1}} key={index}>
-                                
-                                <Text>{dayPlan.title}</Text>
-                            </View>
+                                    <Text style={{fontFamily: appVars.fontText,
+        color: appVars.colorBlack,
+        fontSize: 12,
+        marginBottom: 5,}}>{dayPlan.title}</Text>
+                                </View>
                         })
                     }
                 </View>
@@ -113,39 +168,84 @@ export default class Home extends Component{
     }
     render(){
         return (
-            <View style={{flex:1,backgroundColor: appVars.colorWhite}}>
-                <Text>Hallo {this.state.firstName}</Text>    
-                <View style={{flex:1}}>
+            <View style={{flex:1, backgroundColor: appVars.colorWhite}}>
+                
+                
+                <View style={{height:150, borderBottomColor: appVars.colorSeperatorColor, borderBottomWidth: 5, marginBottom: 5}}>
+                
+                <Text style={{fontFamily: appVars.fontMain,  color: appVars.colorBlack, fontSize: 24, marginLeft: 15, marginTop:10, marginBottom: 15, marginRight: 15, }}>Hallo {this.state.firstName}</Text>
+
+                
                     {
-                        this.state.dayMessages.map((dayMessage)=>{
-                        
-                        
-                            
-                        return <View style={{flex:1}} key={dayMessage.id}>
+                        this.state.dayMessages.map((dayMessage)=>{    
+                         
+
+                        return <ScrollView key={dayMessage.id}>
                                 
-                                <Text>{dayMessage.title}</Text>
+                                <Text style={{fontFamily: appVars.fontMain,  color: appVars.colorBlack, fontSize: 16, marginLeft: 15, marginRight: 15, }}>{dayMessage.title}</Text>
                                 <HTMLView
+                                    addLineBreaks={false}
+                                    stylesheet={htmlStyles}
+                                    style={{fontFamily: appVars.fontMain,  color: appVars.colorMain, marginLeft: 15, marginRight: 15, }}
                                     value={dayMessage.text}
                                 />
-                            </View>
-                        })
+                            </ScrollView>
+                        }
+                        
+                        )
                     }
                     
                 </View>
-                <View style={{flex:6}}>
+                <View style={{flex:1,backgroundColor:"white"}}>
+
+                <Text style={{fontFamily: appVars.fontMain,  color: appVars.colorBlack, fontSize: 24, marginLeft: 15, marginRight: 15, }}>Dein Wochenplan</Text>
+
+                <ScrollView>
                         {
                             this.renderWeekPlan()
                         }
-                    </View>
-                    <View style={{flex:1}}>
+                </ScrollView>
+                </View>
+                
+                <View style={{marginLeft: 15, marginTop:10, marginBottom: 10, marginRight: 15}}>
                         <Button
-                        onPress={()=>this.logOut()}
-                        title="Log OUT"
+                        onPress={this.start.bind(this)}
+                        title="JETZT TRAINIEREN"
                         color={appVars.colorMain}
                         />
-                    </View>
+                </View>
+
                 <Toast ref="toast" position={this.state.position}/>
             </View>
         )
     }
 }
+
+const htmlStyles=  StyleSheet.create({
+    
+    //HTML things
+    p: {
+        fontFamily: appVars.fontText,
+        color: appVars.colorBlack,
+        fontSize: 12,
+        marginBottom: 5,
+    },
+    strong: {
+        fontFamily: appVars.fontMain,
+        color: appVars.colorBlack,
+        fontSize: 12,
+    },
+    h3: {
+        fontSize: 14,
+        fontFamily: appVars.fontMain,
+        color: appVars.colorMain,
+        marginBottom: 3,
+    },
+    li: {
+        fontSize: 12,
+        fontFamily: appVars.fontText,
+        color: appVars.colorMain,
+        marginBottom: 3,
+    }
+
+});

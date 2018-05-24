@@ -34,9 +34,9 @@ export default  class Exercise extends PureComponent {
     return (
         
         this.props.exercise?
-        <View style={{flex:1, backgroundColor: "red" }} >
+        <View style={{flex:1, backgroundColor: "white" }} >
             
-            <View style={{flex:4,justifyContent:"flex-start",alignItems:"center",backgroundColor:"pink",height:200}}>
+            <View style={{flex:4,justifyContent:"flex-start",alignItems:"center",backgroundColor:"white",height:200}}>
             {
                 this.props.exercise.video?
                     <VideoPlayer video={{uri: this.props.exercise.video}} style={{width:sliderWidth,height:slideHeight*1.7}}/>:
@@ -62,6 +62,7 @@ export default  class Exercise extends PureComponent {
             <View style={{flex:1,backgroundColor:"white", paddingLeft: 15, paddingRight: 15}}>
             <ScrollView>
                 <HTMLView
+                    addLineBreaks={false}
                     value={this.props.exercise.text}
                     stylesheet={styles}
                     onLinkPress={(url) => console.log('clicked link: ', url)}
@@ -82,16 +83,25 @@ const styles=  StyleSheet.create({
     p: {
         fontFamily: appVars.fontText,
         color: appVars.colorBlack,
-        fontSize: 13,
+        fontSize: 12,
+        marginBottom: 5,
     },
     strong: {
         fontFamily: appVars.fontMain,
         color: appVars.colorBlack,
-        fontSize: 13,
+        fontSize: 12,
     },
     h3: {
-        fontSize: 16,
+        fontSize: 14,
         fontFamily: appVars.fontMain,
+        color: appVars.colorMain,
+        marginBottom: 3,
+    },
+    li: {
+        fontSize: 12,
+        fontFamily: appVars.fontText,
+        color: appVars.colorMain,
+        marginBottom: 3,
     },
 
     // image's border radius is buggy on iOS; let's hack it!   
