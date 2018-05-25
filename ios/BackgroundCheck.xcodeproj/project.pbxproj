@@ -66,6 +66,7 @@
 		FD312D682052AC830065151D /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD312D5D2052AC830065151D /* EvilIcons.ttf */; };
 		FD312D692052AC830065151D /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD312D5E2052AC830065151D /* SimpleLineIcons.ttf */; };
 		FD312D6A2052AC830065151D /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD312D5F2052AC830065151D /* MaterialIcons.ttf */; };
+		FD6F6FD920B71AAF00FF112E /* GothamNarrow-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD6F6FAC20B71AAF00FF112E /* GothamNarrow-Book.ttf */; };
 		FDB7C28F2052A36000E7E911 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD47BFA22052A0B5002D8A76 /* libRCTPushNotification.a */; };
 /* End PBXBuildFile section */
 
@@ -455,6 +456,7 @@
 		FD312D5E2052AC830065151D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		FD312D5F2052AC830065151D /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
 		FD47BF8F2052A0B5002D8A76 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
+		FD6F6FAC20B71AAF00FF112E /* GothamNarrow-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GothamNarrow-Book.ttf"; path = "../../../Library/Mobile Documents/com~apple~CloudDocs/Desktop/eulenfest/assets/fonts/GothamNarrow-Book.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -731,6 +733,7 @@
 		D6A355484C9347F18300136E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FD6F6FAC20B71AAF00FF112E /* GothamNarrow-Book.ttf */,
 				06BDAC0FEF864D6DAAC0B46C /* OpenSans-Bold.ttf */,
 				1131CD49F32A45FE84CD8E02 /* OpenSans-Regular.ttf */,
 				F6F4741F21634D5C88877DD0 /* Entypo.ttf */,
@@ -1344,6 +1347,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				FD312D642052AC830065151D /* Foundation.ttf in Resources */,
 				FD312D682052AC830065151D /* EvilIcons.ttf in Resources */,
+				FD6F6FD920B71AAF00FF112E /* GothamNarrow-Book.ttf in Resources */,
 				FD312D612052AC830065151D /* Feather.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				FD312D632052AC830065151D /* MaterialCommunityIcons.ttf in Resources */,

@@ -61,7 +61,7 @@ import {
   
     //fonts
     fontMain: "OpenSans-Bold",
-    fontSub: "GothamNarrow-Book",
+    fontSub: "OpenSans-Bold",//"GothamNarrow-Book",
     fontHeadline: fontHeadline,
     fontText: "OpenSans-Regular",
   
@@ -81,7 +81,7 @@ import {
     labelPassword: "Passwort",
     labelTermsofuse: "Nutzungsbedingungen gelesen?",
     labelSubmit: "Absenden",
-  
+    labelNews: "News",
     labelDelete: "Löschen",
     labelCancel: "Abbrechen",
     labelHome: "Home",
