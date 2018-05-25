@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Text,
-  View,
-  TouchableWithoutFeedback
+  View
 } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
+// https://github.com/GeekyAnts/react-native-hamburger
+
+import Hamburger from 'react-native-hamburger';
 import appVars from './appVars';
 import appStyles from './appStyles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MenuScreen from './components/menu';
 import LoginScreen from "./components/login";
 import NewsDetailScreen from './components/newsdetail';
+
 const bamApp = StackNavigator({
     Login: {
         screen: LoginScreen,
@@ -24,23 +27,21 @@ const bamApp = StackNavigator({
         headerStyle: {
           backgroundColor: appVars.colorWhite,
         },
-        headerLeft: <TouchableWithoutFeedback  onPress={() => {
-          if (navigation.state.index === 0) {
-            navigation.navigate('DrawerOpen')
-          } else {
-            navigation.navigate('DrawerClose')
-          }
-        }}>
+        headerLeft:
           <View style={appStyles.iconWrapper} >
-          {(navigation.state.index === 0)?
-            <MaterialIcons name="menu" style={appStyles.headerIcon}>
-            
-            </MaterialIcons>:
-            <MaterialIcons name="close" style={appStyles.headerIcon}>
-            
-            </MaterialIcons> }
+          <Hamburger active={navigation.state.index}
+          type="spinCross"
+          color={appVars.colorMain}
+          onPress={() => 
+            {
+            if (navigation.state.index === 0) {
+              navigation.navigate('DrawerOpen');
+            } else {
+              navigation.navigate('DrawerClose')
+              navigation.state.index === 0;
+            }
+          }}/>
           </View>
-        </TouchableWithoutFeedback>
     }),
   },
   NewsDetail: {

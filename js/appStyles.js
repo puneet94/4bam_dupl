@@ -228,6 +228,8 @@ drawerLabel: {
   
   headerTitle: {
     fontFamily: appVars.fontMain,
+    color: appVars.colorBlack,
+    fontSize: 18,
   },
 
   iconWrapper: {

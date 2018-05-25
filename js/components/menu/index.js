@@ -1,6 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
-import{Image,ScrollView} from "react-native";
+import{Image,ScrollView,Text} from "react-native";
 import { DrawerNavigator } from 'react-navigation';
 import TrainingScreen from "../training";
 import AlarmScreen from "../alarm";
@@ -17,37 +17,37 @@ const Menu = DrawerNavigator({
     screen: HomeScreen,
     navigationOptions : ({ navigation, screenProps }) => ({
       headerTitleStyle: appStyles.headerTitle,    
-      headerTitle: appVars.labelHome.toUpperCase(),
+      headerTitle:  <Text style={ appStyles.headerTitle }>{appVars.labelHome.toUpperCase()}</Text>,
     }),
   },
   Alarms: {
     screen: AlarmScreen,
     navigationOptions : ({ navigation, screenProps }) => ({
-      headerTitle: "ALARM",
+      headerTitle:  <Text style={ appStyles.headerTitle }>ALARM</Text>,
     }),
   },
   Training: {
     screen: TrainingScreen,
     navigationOptions : ({ navigation, screenProps }) => ({
-      headerTitle: appVars.labeleTraining.toUpperCase(),
+      headerTitle: <Text style={ appStyles.headerTitle }>{appVars.labeleTraining.toUpperCase()}</Text>,
     }),
   },
   TrainingFinish: {
     screen: TrainingFinishScreen,
     navigationOptions : ({ navigation, screenProps }) => ({
-      headerTitle: appVars.labeleTraining.toUpperCase(),
+      headerTitle:  <Text style={ appStyles.headerTitle }>{appVars.labeleTraining.toUpperCase()}</Text>,
     }),
   },
   News: {
     screen: NewsScreen,
     navigationOptions : ({ navigation, screenProps }) => ({
-      headerTitle: appVars.labelNews.toUpperCase(),
+      headerTitle:  <Text style={ appStyles.headerTitle }>{appVars.labelNews.toUpperCase()}</Text>,
     }),
   },
   LocalNotification: {
     screen: LocalNotificationScreen,
     navigationOptions : ({ navigation, screenProps }) => ({
-      headerTitle: "notification".toUpperCase(),
+      headerTitle:  <Text style={ appStyles.headerTitle }>{"notification".toUpperCase()}</Text>,
     }),
   },
 },
