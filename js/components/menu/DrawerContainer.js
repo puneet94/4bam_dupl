@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, PushNotificationIOS,ScrollView, Image, TouchableWithoutFeedback, Platform, Linking,Alert} from 'react-native';
+import { StyleSheet, Text, View, PushNotificationIOS,ScrollView, Image, TouchableWithoutFeedback, Platform, Linking, Alert, ImageBackground} from 'react-native';
 
 import appVars from '../../appVars';
 import appStyles from '../../appStyles';
@@ -8,8 +8,7 @@ import { NavigationActions } from 'react-navigation'
 import PushNotification from 'react-native-push-notification';
 import OneSignal from 'react-native-onesignal';
 import store from 'react-native-simple-store';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 class DrawerContainer extends React.Component {
@@ -198,19 +197,18 @@ class DrawerContainer extends React.Component {
 		const { navigation } = this.props
 		return (
 		<ScrollView style={appStyles.drawerContainer}>
+			<ImageBackground source={require ('../../../assets/images/app_bg_drawer.png')} style={{width: '100%', height: '100%'}} >
+
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('Home')} >
-				<View style={[appStyles.drawerItem,this.isActiveClass('home')]}>
-				<MaterialIcons style={appStyles.drawerIcon} name="home">
-				</MaterialIcons>
+				<View style={[appStyles.drawerItem,this.isActiveClass('Home')]}>
+				<MaterialCommunityIcons style={appStyles.drawerIcon} name="home-account" />
 				<Text style={appStyles.drawerLabel}>{appVars.labelHome.toUpperCase()}</Text>
 				</View>
 			</TouchableWithoutFeedback>
 			<View style={appStyles.drawerSeperator} />
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('Alarms')} >
 				<View style={[appStyles.drawerItem,this.isActiveClass('Alarms')]}>
-				<FontAwesome name="calendar" style={appStyles.drawerIcon} >
-				
-				</FontAwesome>
+				<MaterialCommunityIcons name="alarm-multiple" style={appStyles.drawerIcon} />
 				<Text style={appStyles.drawerLabel}>{"Alarms".toUpperCase()}</Text>
 				</View>
 			</TouchableWithoutFeedback>
@@ -219,9 +217,7 @@ class DrawerContainer extends React.Component {
 			
 			<TouchableWithoutFeedback onPress={() => this.checkUserAuthenticated('Training')} style={this.isActiveClass('settings')}>
 				<View style={[appStyles.drawerItem,this.isActiveClass('training')]}>
-				<MaterialIcons style={appStyles.drawerIcon} name="play-arrow">
-				
-				</MaterialIcons>
+				<MaterialCommunityIcons style={appStyles.drawerIcon} name="view-carousel" />
 				
 				<Text style={appStyles.drawerLabel}>{appVars.labeleTraining.toUpperCase()}</Text>
 				</View>
@@ -231,16 +227,16 @@ class DrawerContainer extends React.Component {
 			
 			<TouchableWithoutFeedback onPress={() => this.checkUserAuthenticated('News')} style={this.isActiveClass('settings')}>
 				<View style={[appStyles.drawerItem,this.isActiveClass('news')]}>
-				<MaterialIcons style={appStyles.drawerIcon} name="play-arrow">
-				
-				</MaterialIcons>
+				<MaterialCommunityIcons style={appStyles.drawerIcon} name="view-list" />
 				
 				<Text style={appStyles.drawerLabel}>{appVars.labelNews.toUpperCase()}</Text>
 				</View>
 			</TouchableWithoutFeedback>
 
-			
+		</ImageBackground>	
 		</ScrollView>
+		
+		
 		)
 	}
 }

@@ -3,8 +3,7 @@ import {StyleSheet,Text,View,ScrollView,Button,BackHandler,Platform,Alert,Toucha
 import store from "react-native-simple-store";
 import appVars from "../../appVars";
 import appStyles from "../../appStyles";
-import Entypo from "react-native-vector-icons/Entypo";
-import Toast, {DURATION} from 'react-native-easy-toast'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';import Toast, {DURATION} from 'react-native-easy-toast'
 import {getNextAlarm} from "../../services/dateService";
 import HTMLView from 'react-native-htmlview';
 
@@ -26,7 +25,7 @@ export default class Home extends Component{
         return {
           headerRight: <View style={{flex:1,flexDirection:"row",alignItems:"center"}}>
           <TouchableOpacity onPress={() => params.handleLogout()}>
-              <Entypo name="log-out" style={{color: appVars.colorMain,fontSize:18,marginRight:10}}/>
+              <MaterialCommunityIcons name="power-settings" style={{color: appVars.colorMain,fontSize:24,marginRight:10}} />
               </TouchableOpacity>
         </View>
         };
