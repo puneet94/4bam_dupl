@@ -18,7 +18,9 @@ export function setAlarmTimes(alarmTimes){
     store.delete(ALARM_TIMES);
     return store.save(ALARM_TIMES,alarmTimes);
 }
-
+export function getNewsList(authtoken,userid,page_n4){
+    return fetch(`https://www.app-4bam.de/api/news.html?authtoken=${authtoken}&userid=${userid}&page_n4=${page_n4}`);
+}
 export function getExercises(){
     return [{
         text: "Übung 1",

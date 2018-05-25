@@ -198,20 +198,14 @@ class DrawerContainer extends React.Component {
 		const { navigation } = this.props
 		return (
 		<ScrollView style={appStyles.drawerContainer}>
-
-
-
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('Home')} >
 				<View style={[appStyles.drawerItem,this.isActiveClass('home')]}>
 				<MaterialIcons style={appStyles.drawerIcon} name="home">
-				
 				</MaterialIcons>
 				<Text style={appStyles.drawerLabel}>{appVars.labelHome.toUpperCase()}</Text>
 				</View>
 			</TouchableWithoutFeedback>
-
 			<View style={appStyles.drawerSeperator} />
-			
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('Alarms')} >
 				<View style={[appStyles.drawerItem,this.isActiveClass('Alarms')]}>
 				<FontAwesome name="calendar" style={appStyles.drawerIcon} >
@@ -230,6 +224,18 @@ class DrawerContainer extends React.Component {
 				</MaterialIcons>
 				
 				<Text style={appStyles.drawerLabel}>{appVars.labeleTraining.toUpperCase()}</Text>
+				</View>
+			</TouchableWithoutFeedback>
+
+			<View style={appStyles.drawerSeperator} />
+			
+			<TouchableWithoutFeedback onPress={() => this.checkUserAuthenticated('News')} style={this.isActiveClass('settings')}>
+				<View style={[appStyles.drawerItem,this.isActiveClass('news')]}>
+				<MaterialIcons style={appStyles.drawerIcon} name="play-arrow">
+				
+				</MaterialIcons>
+				
+				<Text style={appStyles.drawerLabel}>{appVars.labelNews.toUpperCase()}</Text>
 				</View>
 			</TouchableWithoutFeedback>
 

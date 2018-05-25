@@ -10,9 +10,9 @@ import { StackNavigator } from 'react-navigation';
 import appVars from './appVars';
 import appStyles from './appStyles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
 import MenuScreen from './components/menu';
 import LoginScreen from "./components/login";
+import NewsDetailScreen from './components/newsdetail';
 const bamApp = StackNavigator({
     Login: {
         screen: LoginScreen,
@@ -42,6 +42,9 @@ const bamApp = StackNavigator({
           </View>
         </TouchableWithoutFeedback>
     }),
+  },
+  NewsDetail: {
+    screen: NewsDetailScreen
   }
 },);
 

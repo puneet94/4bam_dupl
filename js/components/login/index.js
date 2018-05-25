@@ -14,6 +14,7 @@ import appVars from '../../appVars';
 import store from "react-native-simple-store";
 import {NavigationActions} from "react-navigation";
 
+
 export default class LoginScreen extends PureComponent{
 	static navigationOptions = {
 		header: null  

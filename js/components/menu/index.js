@@ -7,6 +7,7 @@ import AlarmScreen from "../alarm";
 import TrainingFinishScreen from "../trainingfinish";
 import LocalNotificationScreen from "../localnotification";
 import HomeScreen from "../home";
+import NewsScreen from "../newslist";
 import DrawerContainer from "./DrawerContainer";
 import appVars from '../../appVars';
 import appStyles from '../../appStyles';
@@ -35,6 +36,12 @@ const Menu = DrawerNavigator({
     screen: TrainingFinishScreen,
     navigationOptions : ({ navigation, screenProps }) => ({
       headerTitle: appVars.labeleTraining.toUpperCase(),
+    }),
+  },
+  News: {
+    screen: NewsScreen,
+    navigationOptions : ({ navigation, screenProps }) => ({
+      headerTitle: appVars.labelNews.toUpperCase(),
     }),
   },
   LocalNotification: {

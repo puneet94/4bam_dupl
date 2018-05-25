@@ -12,6 +12,7 @@ export default class Home extends Component{
     constructor(props){
         super(props);
         this.backButtonListener = null;
+        this.days = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Sonnabend', 'Sonntag'];
         this.exitApp = 0;
         this.state = {
             position: 'bottom',
@@ -135,12 +136,13 @@ export default class Home extends Component{
     }
 
     day(name) {
-        var days = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Sonnabend', 'Sonntag'];
-        var dayName = days[name];
-        return dayName;
+        
+        return  this.days[name];
+        
     }
 
     renderWeekPlan = ()=>{
+        console.log(this.state.weekPlan);
         if(Object.keys(this.state.weekPlan).length){
             const weekDays = Object.keys(this.state.weekPlan).sort();
             return weekDays.map((weekDay)=>{
@@ -151,14 +153,14 @@ export default class Home extends Component{
                     fontFamily: appVars.fontMain,
                     color: appVars.colorMain,
                     marginBottom: 3,
-                    }}>{this.day(weekDay)}</Text>
+                    }}>{this.day(weekDay-1    )} {weekDay}</Text>
                    {
                         dayPlans.map((dayPlan,index)=>{
                             return <View style={{flex:1}} key={index}>
                                     <Text style={{fontFamily: appVars.fontText,
         color: appVars.colorBlack,
         fontSize: 12,
-        marginBottom: 5,}}>{dayPlan.title}</Text>
+        marginBottom: 5,}}>{dayPlan}</Text>
                                 </View>
                         })
                     }
@@ -186,7 +188,7 @@ export default class Home extends Component{
                                 <HTMLView
                                     addLineBreaks={false}
                                     stylesheet={htmlStyles}
-                                    style={{fontFamily: appVars.fontMain,  color: appVars.colorMain, marginLeft: 15, marginRight: 15, }}
+                                    style={{marginLeft: 15, marginRight: 15, }}
                                     value={dayMessage.text}
                                 />
                             </ScrollView>
