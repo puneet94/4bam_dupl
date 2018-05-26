@@ -40,16 +40,14 @@ class DrawerContainer extends React.Component {
 				},
 				// (required) Called when a remote or local notification is opened or received
 				onNotification: (notification)=> {
-					
+					console.log("local notification received",notification);
 					const { navigation } = this.props;
-					
 					
 					//Alert.alert(" IGNORE THIS ALERT ",notification.id+ " " +" "+ notification.data.alarmID);
 					//Alert.alert("USER INFO",);
 					
-					
 					store.delete("PENDING_EXERCISE");
-					navigation.navigate('LocalNotification',
+					notification.fireDate && navigation.navigate('LocalNotification',
 						{
 							localNotification:true,
 							alarmID:notification.id || notification.data.id || notification.data.alarmID}
@@ -86,6 +84,7 @@ class DrawerContainer extends React.Component {
         this.setState({
             firstName
 		});
+		OneSignal.sendTag("group", '16');
 		OneSignal.getPermissionSubscriptionState((status)=>{
 			console.log("subscription status");
 			console.log(status);
@@ -145,7 +144,7 @@ class DrawerContainer extends React.Component {
 	}
 
 	onReceived(notification) {
-		
+		console.log("notification received",notification);
 	}
 	naviagatePage = (newsid)=>{
 		const { navigation } = this.props;
@@ -162,7 +161,7 @@ class DrawerContainer extends React.Component {
 			  }
 			}
 		  }
-*/
+*/console.log("notification opened",openResult);
 
 		this.naviagatePage(openResult.notification.payload.additionalData.newsid);  
 	}

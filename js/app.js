@@ -16,6 +16,17 @@ import MenuScreen from './components/menu';
 import LoginScreen from "./components/login";
 import NewsDetailScreen from './components/newsdetail';
 
+import OneSignal from 'react-native-onesignal';
+import store from 'react-native-simple-store';
+
+
+OneSignal.addEventListener('opened', async (values)=>{   
+  console.log("opened"); 
+    if(values.notification.payload.additionalData.newsid){
+        await store.save('deepLinkNewsId',values.notification.payload.additionalData.newsid);
+    }
+    
+});
 const bamApp = StackNavigator({
     Login: {
         screen: LoginScreen,
