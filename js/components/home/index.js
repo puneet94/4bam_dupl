@@ -171,8 +171,8 @@ export default class Home extends Component{
                         
                         </View>
                     
-
-                        <View style={{width: 300, paddingBottom:15,}}>
+                        <View style={{width: 300}}>
+                        
 
         
                    { dayPlans.map((dayPlan,index)=>{
@@ -189,6 +189,7 @@ export default class Home extends Component{
                     </View>
                         })
                     }
+                    <View style={{backgroundColor: appVars.colorSeperatorColor, height:1, width: 300, marginTop:10,marginBottom:10}} />
                </View>
                </View>
 
