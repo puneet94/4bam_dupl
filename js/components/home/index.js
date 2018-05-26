@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,ScrollView,Button,BackHandler,Platform,Alert,TouchableOpacity, PixelRatio} from "react-native";
+import {StyleSheet,Text,View,ScrollView,Button,Dimensions,BackHandler,Platform,Alert,TouchableOpacity, PixelRatio} from "react-native";
 import store from "react-native-simple-store";
 import appVars from "../../appVars";
 import appStyles from "../../appStyles";
@@ -11,7 +11,7 @@ export default class Home extends Component{
     constructor(props){
         super(props);
         this.backButtonListener = null;
-        this.days = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Sonnabend', 'Sonntag'];
+        this.days = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'So', 'So'];
         this.exitApp = 0;
         this.state = {
             position: 'bottom',
@@ -145,25 +145,53 @@ export default class Home extends Component{
         if(Object.keys(this.state.weekPlan).length){
             const weekDays = Object.keys(this.state.weekPlan).sort();
             return weekDays.map((weekDay)=>{
+                
                 const dayPlans = this.state.weekPlan[weekDay];
-                return <View style={{flex:1, marginLeft: 15, marginRight: 15}} key={weekDay}>
-                    <Text style={{
-                    fontSize: 14,
-                    fontFamily: appVars.fontMain,
-                    color: appVars.colorMain,
-                    marginBottom: 3,
-                    }}>{this.day(weekDay-1    )} {weekDay}</Text>
-                   {
-                        dayPlans.map((dayPlan,index)=>{
-                            return <View style={{flex:1}} key={index}>
-                                    <Text style={{fontFamily: appVars.fontText,
-        color: appVars.colorBlack,
-        fontSize: 12,
-        marginBottom: 5,}}>{dayPlan}</Text>
-                                </View>
+
+                return <View style={{flex: 1, flexDirection: 'row'}} key={weekDay}>
+                        
+                            <View style={{width: 40, height: 30, backgroundColor: appVars.colorSeperatorColor, alignItems:'center', justifyContent:'center', borderRadius:10,}}>
+                            <Text style={{
+                            fontSize: 14,
+                            textAlign:'center',
+                            fontFamily: appVars.fontMain,
+                            color: appVars.colorBlack,
+                            }}>{this.day(weekDay-1)}
+                            </Text>
+
+                            </View>
+
+                       
+                            <View style={{width: 30, height: '100%', backgroundColor: appVars.colorWhite, alignItems:'center', marginTop: 6}}>
+                                <View style={{width: 15, height: 15, backgroundColor: appVars.colorMain, borderRadius:10, alignItems:'center', justifyContent:'center'}}>
+                                <View style={{width: 7, height: 7, backgroundColor: appVars.colorWhite, borderRadius:10}} />
+                            </View>
+
+                            <View style={{width: 2, backgroundColor: appVars.colorMain,height: '100%'}} />
+                        
+                        </View>
+                    
+
+                        <View style={{width: 300, paddingBottom:15,}}>
+
+        
+                   { dayPlans.map((dayPlan,index)=>{
+                return <View key={index}>
+                        
+                        <Text style={{fontFamily: appVars.fontText,
+                        color: appVars.colorBlack,
+                        marginTop: 4,
+                        fontFamily: appVars.fontText,
+                        ontSize: 14,
+                        color: appVars.colorBlack,
+                        }}>{dayPlan}</Text>
+                        
+                    </View>
                         })
                     }
-                </View>
+               </View>
+               </View>
+
             });
         }
     }
@@ -197,16 +225,15 @@ export default class Home extends Component{
                     }
                     
                 </View>
-                <View style={{flex:1,backgroundColor:"white"}}>
 
                 <Text style={{fontFamily: appVars.fontMain,  color: appVars.colorBlack, fontSize: 24, marginLeft: 15, marginRight: 15, }}>Dein Wochenplan</Text>
 
-                <ScrollView>
+                <ScrollView style={{marginLeft:10}}>
                         {
                             this.renderWeekPlan()
                         }
                 </ScrollView>
-                </View>
+                
                 
                 <View style={{marginLeft: 15, marginTop:10, marginBottom: 10, marginRight: 15}}>
                         <Button
@@ -248,5 +275,7 @@ const htmlStyles=  StyleSheet.create({
         color: appVars.colorMain,
         marginBottom: 3,
     }
+
+    
 
 });

@@ -242,7 +242,6 @@ class DrawerContainer extends React.Component {
 				justifyContent:'center',
 				width:100,
 				height:100,
-				backgroundColor:'none',
 				borderRadius:100,
 			}}
           	source={{uri: appVars.serverUrl+'/'+this.state.logo}}
