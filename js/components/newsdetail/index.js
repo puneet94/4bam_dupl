@@ -189,11 +189,6 @@ fetchdata = async () => {
               color: appVars.colorMain,
               fontWeight: '700',
             },
-            city: {
-                fontSize: em_s(0.875, this.state.fontSize),
-                fontFamily: appVars.fontMain,
-                color: '#333',
-            },
             h3: {
               fontSize: em_s(1.250,this.state.fontSize),
               lineHeight: lineHeight_s(1.250,this.state.fontSize,120),

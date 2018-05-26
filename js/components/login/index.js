@@ -5,14 +5,19 @@ import {
 	ScrollView,
     TextInput,
     Button, Alert, Image,          
-	ActivityIndicator,
+		ActivityIndicator,
 		Linking,
-		Dimensions
+		Dimensions,
+		ImageBackground,
+		StyleSheet,
+		Modal
 } from "react-native";
 import appStyles from '../../appStyles';
 import appVars from '../../appVars';
 import store from "react-native-simple-store";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {NavigationActions} from "react-navigation";
+
 
 
 export default class LoginScreen extends PureComponent{
@@ -25,7 +30,7 @@ export default class LoginScreen extends PureComponent{
             email: '',
             pass: '',
             loading: false,
-            loggedIn: false,
+						loggedIn: false,
         }
 	}
 	componentWillMount = async()=>{
@@ -79,16 +84,16 @@ export default class LoginScreen extends PureComponent{
             if(json["@status"] === "OK"){
 							await this.storeToken(json["response"].id);
 							store.save("FIRSTNAME",json["response"].firstname);
-							store.save("GROUPS",json["response"].groups);
+							store.save("GROUPS",json["response"].group);
 
 							this.logIn();
 						}
 			
             else{
                 this.setState({
-                    loading: false,
+										loading: false,
                 })
-                Alert.alert(appVars.textErrorLogin);
+								Alert.alert(appVars.textErrorLogin);
                // console.log("incorrect login");
             }
 
@@ -96,9 +101,9 @@ export default class LoginScreen extends PureComponent{
         catch(e){
             console.log(e);
             this.setState({
-                loading: false,
+								loading: false,
             })
-            Alert.alert(appVars.textErrorLogin);
+						Alert.alert(appVars.textErrorLogin);
         }
 
 	};
@@ -135,10 +140,10 @@ export default class LoginScreen extends PureComponent{
 		if(this.state.loading)
 		{
 			return(
-			  <View style={appStyles.ActivityIndicatorFullscreenContainer}>
+			<View style={appStyles.ActivityIndicatorFullscreenContainer}>
+						<Image source={require ('../../../assets/images/app_bg_login.png')} style={styles.fakebackground} />
 				<ActivityIndicator animating={true} size={'large'}/>
-			  </View>
-			)
+			</View>)
 		}
 		if(this.state.loggedIn){
 			return(
@@ -160,27 +165,70 @@ export default class LoginScreen extends PureComponent{
 			);
 		}
 	  return (
-		<View style={appStyles.contenContainer}>
-		  <ScrollView ref='_scrollView'>
-			<View  style={{alignItems:"center"}}>
-				<Image style={{'width': Dimensions.get('window').width-20, 'height': 300, }}
-                  resizeMode='contain' source={require('../../../assets/images/app_logo.png')} />
-		  	</View>
-			<View style={appStyles.contentElement}>
-		  		<Text style={appStyles.settingsColStart}>{appVars.labelEmail.toUpperCase()}</Text>
-					<TextInput returnKeyType={"next"} onSubmitEditing={this.onSubmitEditing} style={appStyles.formInput} keyboardType={'email-address'} autoCapitalize={'none'} autoCorrect={false} onChangeText={this.emailChange}/>
-				
-		  	</View>
-			<View style={appStyles.contentElement}>
-				<Text style={appStyles.settingsColStart}>{appVars.labelPassword.toUpperCase()} </Text>
-				<TextInput returnKeyType={"next"} ref='SecondInput' style={appStyles.formInput} secureTextEntry={true} autoCapitalize={'none'} autoCorrect={false} onChangeText={this.passChange}/>
-			</View>
-  
-			<View style={appStyles.contentElement}>
-				<Button color={appVars.colorMain} style={appStyles.submit} title={appVars.labelLoginButton} onPress={this.onSubmit} />
-			</View>
-		  </ScrollView>
-		</View>
+			<View style={styles.mainContainer}>
+			<Image source={require ('../../../assets/images/app_bg_login.png')} style={styles.fakebackground} />
+
+
+          
+                <View style={styles.content}>
+ 
+                    <View style={styles.loginbox}>
+
+										<Image style={{'width': Dimensions.get('window').width-80, 'height': 100, }} resizeMode='contain' source={require('../../../assets/images/app_logo.png')} />
+										
+
+
+												<View>
+												
+
+												<TextInput placeholder={'Benutzername'} returnKeyType={"next"} onSubmitEditing={this.onSubmitEditing} style={appStyles.formInput} keyboardType={'email-address'} autoCapitalize={'none'} autoCorrect={false} onChangeText={this.emailChange}/>
+                        </View>
+
+                        <View>
+												<TextInput placeholder={'Passwort'} returnKeyType={"next"} ref='SecondInput' style={appStyles.formInput} secureTextEntry={true} autoCapitalize={'none'} autoCorrect={false} onChangeText={this.passChange}/>
+                        </View>
+
+												<View>
+												
+												<Button color={appVars.colorMain} style={appStyles.submit} title={appVars.labelLoginButton} onPress={this.onSubmit} />
+												</View>
+
+                    </View>
+								</View>
+						</View>
 	  )
 	}
 }
+
+
+const styles = StyleSheet.create({
+
+mainContainer:{
+	flex:1,
+	backgroundColor: appVars.colorWhite,
+},
+
+fakebackground: {
+	position: 'absolute',
+	left: 0,
+	top: 0,
+	width: appVars.screenX,
+	height: appVars.screenX,
+},
+
+content:{
+		flex:1,
+		flexDirection:'row',
+		alignItems:'center',
+		justifyContent:'center',
+},
+  loginbox:{
+		backgroundColor:appVars.colorWhite,
+		width:appVars.screenX-40,
+		paddingTop:10,
+		paddingBottom:20,
+		paddingLeft:20,
+		paddingRight:20, 
+		borderRadius:20
+}
+});
