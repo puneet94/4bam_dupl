@@ -17,7 +17,7 @@
     "react-native-gesture-responder": "^0.1.1",
     "react-native-hamburger": "0.0.2",
     "react-native-htmlview": "^0.12.1",
-    "react-native-onesignal": "^3.0.9",
+    "react-native-onesignal": "3.0.6",
     "react-native-photo-view": "^1.5.1",
     "react-native-pinch-zoom-view": "^0.1.6",
     "react-native-push-notification": "^3.0.2",

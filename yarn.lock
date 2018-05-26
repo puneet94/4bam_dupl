@@ -3721,6 +3721,10 @@ react-native-gesture-responder@^0.1.1:
   dependencies:
     react-timer-mixin "^0.13.3"
 
+react-native-hamburger@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-hamburger/-/react-native-hamburger-0.0.2.tgz#c1ebcb8cb091287e1dcfc1364a97f3b73d20a9b5"
+
 react-native-htmlview@^0.12.1:
   version "0.12.1"
   resolved "https://registry.yarnpkg.com/react-native-htmlview/-/react-native-htmlview-0.12.1.tgz#4b987f1f34fae89f7bbd3c478f8f20d601019639"
@@ -3728,9 +3732,9 @@ react-native-htmlview@^0.12.1:
     entities "^1.1.1"
     htmlparser2-without-node-native "^3.9.2"
 
-react-native-onesignal@^3.0.9:
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-3.0.9.tgz#b98285afd9fa2e08eea6c5fac76f2f8104610175"
+react-native-onesignal@3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-3.0.6.tgz#cbba9813fef876aa4c3b02977eda15a80abd8cb3"
   dependencies:
     invariant "^2.2.2"
 

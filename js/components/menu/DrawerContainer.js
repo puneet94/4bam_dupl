@@ -9,9 +9,15 @@ import PushNotification from 'react-native-push-notification';
 import OneSignal from 'react-native-onesignal';
 import store from 'react-native-simple-store';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-
+   
 class DrawerContainer extends React.Component {
+	constructor(props){
+		super(props);
+		this.state = {
+			firstName: ""
+		}
+	}
+
 	handleURL = (url)=>{
 		const route = url.replace(/.*?:\/\//g, '');
 		const id = route.match(/\/([^\/]+)\/?$/)[1];
@@ -76,14 +82,25 @@ class DrawerContainer extends React.Component {
 			});
 	}
 	componentWillMount = async ()=> {
-		
-		
+		let firstName = await store.get("FIRSTNAME");
+        this.setState({
+            firstName
+		});
+		OneSignal.getPermissionSubscriptionState((status)=>{
+			console.log("subscription status");
+			console.log(status);
+            
+        });
 		this.configureLocalNotification();
-		
-		/*OneSignal.addEventListener('received', this.onReceived);
+		//OneSignal.init("edf77b0d-d501-4977-a101-1f0f26fe4d77",{kOSSettingsKeyAutoPrompt : true});//425266528939");
+		console.log("hit");
+		OneSignal.addEventListener('received', this.onReceived);
 		OneSignal.addEventListener('opened', this.onOpened);
-		OneSignal.addEventListener('registered', this.onRegistered);
-		OneSignal.addEventListener('ids', this.onIds);*/
+		OneSignal.addEventListener('registered',this.onRegistered);
+		OneSignal.addEventListener('ids', this.onIds);
+		console.log("hit it");
+
+
 		let newsid = await store.get('deepLinkNewsId'); 
 		store.delete('deepLinkNewsId');
 		if(newsid){
@@ -108,21 +125,22 @@ class DrawerContainer extends React.Component {
 	componentDidMount = async ()=>{
 		let pendingExercise = await store.get("PENDING_EXERCISE");
 		if(pendingExercise){
-			Alert.alert("Found exercise",pendingExercise.totalDuration+"--"+pendingExercise.currentExercise);
+			
 			const { navigation } = this.props;
 			navigation.navigate("Training",{exerciseRestart: true});
 			return;
 		}
 	}
 	componentWillUnmount=()=> {
-			/*OneSignal.removeEventListener('received', this.onReceived);
+		
+			OneSignal.removeEventListener('received', this.onReceived);
 			OneSignal.removeEventListener('opened', this.onOpened);
-			OneSignal.removeEventListener('registered', this.onRegistered);
+			
 			OneSignal.removeEventListener('ids', this.onIds);
 			
 				Linking.removeEventListener('url', (event)=>{
 					
-				});*/
+				});
 			
 	}
 
@@ -150,7 +168,7 @@ class DrawerContainer extends React.Component {
 	}
 
 	onRegistered(notifData) {
-		
+		console.log("on registered",notifData);
 	}
 	logout = ()=>{
 		
@@ -161,11 +179,11 @@ class DrawerContainer extends React.Component {
 	checkUserAuthenticated = async (pageUrl)=>{
 		let APIKEY = appVars.apiKey;
 		let userStoredID  = await store.get(appVars.STORAGE_KEY);
-		console.log("user stored id",userStoredID);
+		
 		if(userStoredID){
 			let authFetch  = await fetch(`https://www.app-4bam.de/api/user.html?authtoken=${[APIKEY]}&userid=${userStoredID}`);
 			let authResponse = await authFetch.json();
-			console.log("authresponse",authResponse);
+			
 			if(authResponse["@status"]=="OK"){
 				const { navigation } = this.props;
 				navigation.navigate(pageUrl);
@@ -179,7 +197,8 @@ class DrawerContainer extends React.Component {
 
 	}
 	onIds(device) {
-		
+		console.log("onids called");
+		console.log(device);
 		store.save("PUSH_TOKEN",device.pushToken);
 		store.save("USER_ID",device.userId);
 	}
@@ -198,7 +217,7 @@ class DrawerContainer extends React.Component {
 		return (
 		<ScrollView style={appStyles.drawerContainer}>
 			<ImageBackground source={require ('../../../assets/images/app_bg_drawer.png')} style={{width: '100%', height: '100%'}} >
-
+				<Text style={{fontFamily: appVars.fontMain,  color: appVars.colorWhite, fontSize: 24, marginLeft: 15, marginTop:10, marginBottom: 15, marginRight: 15, }}>Hallo {this.state.firstName}</Text>
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('Home')} >
 				<View style={[appStyles.drawerItem,this.isActiveClass('Home')]}>
 				<MaterialCommunityIcons style={appStyles.drawerIcon} name="home-account" />

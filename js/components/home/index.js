@@ -119,12 +119,13 @@ export default class Home extends Component{
         let apiHitPoint = appVars.apiUrl+"/motd.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
         const response = await fetch(apiHitPoint);
         const json = await response.json();
-        if(json.response.length) {
+        if(json.response && json.response.length) {
             this.setState({dayMessages:json.response});
         }
         
     }
 
+    
     async fetchWeekView() {
         let userStoredID  = await store.get(appVars.STORAGE_KEY);
         let apiHitPoint = appVars.apiUrl+"/weekview.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
@@ -141,7 +142,6 @@ export default class Home extends Component{
     }
 
     renderWeekPlan = ()=>{
-        console.log(this.state.weekPlan);
         if(Object.keys(this.state.weekPlan).length){
             const weekDays = Object.keys(this.state.weekPlan).sort();
             return weekDays.map((weekDay)=>{
@@ -174,7 +174,7 @@ export default class Home extends Component{
                 
                 <View style={{height:150, borderBottomColor: appVars.colorSeperatorColor, borderBottomWidth: 5, marginBottom: 5}}>
                 
-                <Text style={{fontFamily: appVars.fontMain,  color: appVars.colorBlack, fontSize: 24, marginLeft: 15, marginTop:10, marginBottom: 15, marginRight: 15, }}>Hallo {this.state.firstName}</Text>
+                
 
                 
                     {
