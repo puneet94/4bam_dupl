@@ -14,7 +14,9 @@ class DrawerContainer extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			firstName: ""
+			firstName: "",
+			groupName: "",
+			logo: ""
 		}
 	}
 
@@ -81,8 +83,17 @@ class DrawerContainer extends React.Component {
 	}
 	componentWillMount = async ()=> {
 		let firstName = await store.get("FIRSTNAME");
+		let groupName = await store.get("GROUPTITLE");
+		let logo = await store.get("GROUPLOGO");
+
         this.setState({
             firstName
+		});
+		this.setState({
+            groupName
+		});
+		this.setState({
+            logo
 		});
 		OneSignal.sendTag("group", '16');
 		OneSignal.getPermissionSubscriptionState((status)=>{
@@ -215,8 +226,35 @@ class DrawerContainer extends React.Component {
 		const { navigation } = this.props
 		return (
 		<ScrollView style={appStyles.drawerContainer}>
-			<ImageBackground source={require ('../../../assets/images/app_bg_drawer.png')} style={{width: '100%', height: '100%'}} >
-				<Text style={{fontFamily: appVars.fontMain,  color: appVars.colorWhite, fontSize: 24, marginLeft: 15, marginTop:10, marginBottom: 15, marginRight: 15, }}>Hallo {this.state.firstName}</Text>
+
+			<Image source={require ('../../../assets/images/app_bg_drawer.png')} style={{position: 'absolute',
+	left: 0,
+	top: 0,width: appVars.drawerWidth, height: appVars.drawerWidth}} />
+			
+			<View style={{alignItems:'center',
+				justifyContent:'center',height: 200, width: appVars.drawerWidth}}> 
+
+			<Image
+			  style={{
+				borderWidth: 2,
+				borderColor: appVars.colorMain,
+				alignItems:'center',
+				justifyContent:'center',
+				width:100,
+				height:100,
+				backgroundColor:'none',
+				borderRadius:100,
+			}}
+          	source={{uri: appVars.serverUrl+'/'+this.state.logo}}
+        	/>
+
+			<Text style={{fontFamily: appVars.fontMain,  color: appVars.colorWhite, fontSize: 24 }}>{this.state.firstName}</Text>
+			<Text style={{fontFamily: appVars.fontText,  color: appVars.colorWhite, fontSize: 11 }}>{this.state.groupName}</Text>
+	
+
+			
+			</View>
+
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('Home')} >
 				<View style={[appStyles.drawerItem,this.isActiveClass('Home')]}>
 				<MaterialCommunityIcons style={appStyles.drawerIcon} name="home-account" />
@@ -251,7 +289,6 @@ class DrawerContainer extends React.Component {
 				</View>
 			</TouchableWithoutFeedback>
 
-		</ImageBackground>	
 		</ScrollView>
 		
 		

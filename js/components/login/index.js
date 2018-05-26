@@ -85,7 +85,8 @@ export default class LoginScreen extends PureComponent{
 							await this.storeToken(json["response"].id);
 							store.save("FIRSTNAME",json["response"].firstname);
 							store.save("GROUPS",json["response"].group);
-
+							store.save("GROUPTITLE",json["response"].groupname);
+							store.save("GROUPLOGO",json["response"].picture.img.src);
 							this.logIn();
 						}
 			
