@@ -12,7 +12,7 @@ import {
     var fontText = "OpenSans-Regular";
   } else {
     // ios
-    var fontMain= "BrandonGrotesque-Bold";//"MafraCondensedDeck"; //cause error in ios
+    var fontMain= "OpenSans";//"BrandonGrotesque-Bold";//"MafraCondensedDeck"; //cause error in ios
     var fontText = "OpenSans";
   }
 
@@ -33,7 +33,7 @@ import {
     serverUrl: "https://www.app-4bam.de",
   
     // icons
-    shareIcon: "share-alt",
+    shareIcon: "ios-share-alt",
     vistedIcon: "building", //check
     notVisitedIcon: "building-o",
     mapIcon: "map",
