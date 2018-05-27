@@ -3738,6 +3738,10 @@ react-native-onesignal@3.0.6:
   dependencies:
     invariant "^2.2.2"
 
+react-native-open-settings@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-open-settings/-/react-native-open-settings-1.0.1.tgz#1c0ae3d25fd3fd6de94b6d538333d47245cc5a0c"
+
 react-native-photo-view@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/react-native-photo-view/-/react-native-photo-view-1.5.1.tgz#b1dc6c8890e39a7fa57fbbbf7937979ad26e78b7"

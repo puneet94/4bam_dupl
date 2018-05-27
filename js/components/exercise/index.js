@@ -28,8 +28,25 @@ const entryBorderRadius = 8;
 export default  class Exercise extends PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+        galleryPageSelected: 0
+    }
   }
+  onPageSelected = (pageSelectedData)=>{
+    console.log("pagesleetceddata",pageSelectedData);
+    this.setState({
+        galleryPageSelected: pageSelectedData
+    });
+  }
+  renderGalleryDots = ()=>{
+      let dotsArray = [];
+      for(let i = 0; i<this.props.exercise.picture.length;i++){
+          dotsArray.push(<View key={i} style={i==this.state.galleryPageSelected?styles.selectedCircle:styles.circle}>
 
+          </View>)
+      }
+      return dotsArray;
+  }
   render() {
     return (
         
@@ -42,13 +59,18 @@ export default  class Exercise extends PureComponent {
                     <VideoPlayer video={{uri: this.props.exercise.video}} style={{width:sliderWidth,height:slideHeight*1.7}}/>:
                     
                     this.props.exercise.picture ?<View style={{flex:1}}>
-                {<Gallery
+                {<View><Gallery
                 style={{flex: 1, backgroundColor: 'white'}}
                 key={this.props.exercise.text}
                 images={this.props.exercise.picture.map((temp)=>{return {source:{uri:appVars.serverUrl+'/'+temp.sources[0].src}}})}
                 initialPage = {0}
+                onPageSelected = {this.onPageSelected}
                 
-                />}
+                /><View style={{alignItems:"center",justifyContent:"center"}}>
+                    <View style={{flexDirection:"row"}}>{this.renderGalleryDots()}</View>
+                    
+                    </View>
+                    </View>}
               </View>:null
                     /*<Carousel
                         ref={(c) => { this._carousel = c; }}
@@ -78,7 +100,20 @@ export default  class Exercise extends PureComponent {
   }
 }
 const styles=  StyleSheet.create({
-    
+    circle: {
+        width: 10,
+        height: 10,
+        borderRadius: 10/2,
+        backgroundColor: 'red',
+        margin: 5
+    },
+    selectedCircle:{
+        width: 10,
+        height: 10,
+        borderRadius: 10/2,
+        backgroundColor: 'blue',
+        margin: 5
+    },
     //HTML things
     p: {
         fontFamily: appVars.fontText,

@@ -31,7 +31,6 @@ export default class Home extends Component{
         };
       };       
 
-        
     onClick=(text, position, duration,withStyle)=>{
         this.setState({
             position: position,
@@ -63,6 +62,7 @@ export default class Home extends Component{
     }
 
     componentWillMount = async()=>{
+        this._mounted = true;
         this.fetchWeekView();
         this.fetchDayMessage();
         /*let ALARM_TIMES = await store.get("ALARM_TIMES");
@@ -71,7 +71,7 @@ export default class Home extends Component{
                     const {alarmTime,dayName}=getNextAlarm(ALARM_DAYS,ALARM_TIMES);
                 }*/
         let firstName = await store.get("FIRSTNAME");
-        this.setState({
+        this._mounted && this.setState({
             firstName
         });
                
@@ -84,6 +84,7 @@ export default class Home extends Component{
     }
 
     componentWillUnmount = ()=>{
+        this._mounted = false;
         if(Platform.OS === 'android' && this.backButtonListener) {
             this.backButtonListener.remove();
         }
@@ -120,7 +121,7 @@ export default class Home extends Component{
         const response = await fetch(apiHitPoint);
         const json = await response.json();
         if(json.response && json.response.length) {
-            this.setState({dayMessages:json.response});
+            this._mounted && this.setState({dayMessages:json.response});
         }
         
     }
@@ -131,7 +132,7 @@ export default class Home extends Component{
         let apiHitPoint = appVars.apiUrl+"/weekview.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
         const response = await fetch(apiHitPoint);
         const json = await response.json();
-        this.setState({weekPlan: json.response});
+        this._mounted && this.setState({weekPlan: json.response});
         
     }
 
@@ -182,7 +183,7 @@ export default class Home extends Component{
                         color: appVars.colorBlack,
                         marginTop: 4,
                         fontFamily: appVars.fontText,
-                        ontSize: 14,
+                        fontSize: 14,
                         color: appVars.colorBlack,
                         }}>{dayPlan}</Text>
                         

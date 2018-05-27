@@ -1,6 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, View, PushNotificationIOS,ScrollView, Image, TouchableWithoutFeedback, Platform, Linking, Alert, ImageBackground} from 'react-native';
-
+import { StyleSheet,Text, View, PushNotificationIOS,ScrollView, Image, TouchableWithoutFeedback, Platform, Linking, Alert, ImageBackground} from 'react-native';
+import OpenSettings from 'react-native-open-settings';
 import appVars from '../../appVars';
 import appStyles from '../../appStyles';
 
@@ -10,6 +10,8 @@ import OneSignal from 'react-native-onesignal';
 import store from 'react-native-simple-store';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
    
+
+
 class DrawerContainer extends React.Component {
 	constructor(props){
 		super(props);
@@ -31,8 +33,14 @@ class DrawerContainer extends React.Component {
 		if(routeName2=="newsfeed"){
 			this.naviagatePage(id);
 		}
-		
 	}
+
+    performLogout = ()=> {
+        store.save("LOGGED_IN",false);
+            store.delete(appVars.STORAGE_KEY)
+            const { navigation } = this.props;
+            navigation.navigate('Login');
+    }
 	configureLocalNotification(){
 		
 		PushNotification.configure({
@@ -80,7 +88,9 @@ class DrawerContainer extends React.Component {
 				  */
 				requestPermissions: true,
 			});
+
 	}
+	
 	componentWillMount = async ()=> {
 		let firstName = await store.get("FIRSTNAME");
 		let groupName = await store.get("GROUPTITLE");
@@ -96,19 +106,38 @@ class DrawerContainer extends React.Component {
             logo
 		});
 		OneSignal.sendTag("group", '16');
-		OneSignal.getPermissionSubscriptionState((status)=>{
-			console.log("subscription status");
-			console.log(status);
-            
+		OneSignal.getPermissionSubscriptionState(async (status)=>{
+			console.log("status check",status);
+
+			if(!status.notificationsEnabled){
+				//OneSignal.setSubscription(true);
+			Alert.alert(
+				'Push notification',
+				'If push notification are not enabled the app wont work properly. Do you want to enable?',
+				[
+				  {text: 'Deny', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+				  {text: 'Accept', onPress: ()=>{
+					  if(Platform.OS === 'android'){
+						OpenSettings.openSettings()
+					  }else{
+						Linking.openURL('app-settings:1')
+					  }	
+				}}
+				],
+				{ cancelable: true}
+			  )
+			
+				
+			}            
         });
 		this.configureLocalNotification();
 		//OneSignal.init("edf77b0d-d501-4977-a101-1f0f26fe4d77",{kOSSettingsKeyAutoPrompt : true});//425266528939");
-		console.log("hit");
+		
 		OneSignal.addEventListener('received', this.onReceived);
 		OneSignal.addEventListener('opened', this.onOpened);
 		OneSignal.addEventListener('registered',this.onRegistered);
 		OneSignal.addEventListener('ids', this.onIds);
-		console.log("hit it");
+		
 
 
 		let newsid = await store.get('deepLinkNewsId'); 
@@ -163,18 +192,11 @@ class DrawerContainer extends React.Component {
 	}
 
 	onOpened=(openResult)=> {
-		
-/*
-		onNotificationOpened: function(message, data, isActive) {
-			if (data.p2p_notification) {
-			  for (var num in data.p2p_notification) {
-				// console.log(data.p2p_notification[num]);
-			  }
-			}
-		  }
-*/console.log("notification opened",openResult);
 
-		this.naviagatePage(openResult.notification.payload.additionalData.newsid);  
+		if(openResult && openResult.notification && openResult.notification.payload && openResult.notification.payload.additionalData){
+			openResult.notification.payload.additionalData.newsid && this.naviagatePage(openResult.notification.payload.additionalData.newsid);  
+		}
+		
 	}
 
 	onRegistered(notifData) {
@@ -287,7 +309,9 @@ class DrawerContainer extends React.Component {
 				<Text style={appStyles.drawerLabel}>{appVars.labelNews.toUpperCase()}</Text>
 				</View>
 			</TouchableWithoutFeedback>
-
+			
+			<View style={appStyles.drawerSeperator} />
+			
 		</ScrollView>
 		
 		

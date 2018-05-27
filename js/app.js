@@ -21,8 +21,9 @@ import store from 'react-native-simple-store';
 
 
 OneSignal.addEventListener('opened', async (values)=>{   
-  console.log("opened"); 
-    if(values.notification.payload.additionalData.newsid){
+  console.log("without newsid");  
+  console.log(values);
+    if(values.notification.payload.additionalData && values.notification.payload.additionalData.newsid){
         await store.save('deepLinkNewsId',values.notification.payload.additionalData.newsid);
     }
     
