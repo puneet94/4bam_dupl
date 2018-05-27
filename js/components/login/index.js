@@ -27,8 +27,8 @@ export default class LoginScreen extends PureComponent{
 	constructor(props){
 		super(props);
 		this.state={
-            email: '',
-            pass: '',
+            email: 'test@test.tdl',
+            pass: 'yXoHwhUd/',
             loading: false,
 						loggedIn: false,
         }
