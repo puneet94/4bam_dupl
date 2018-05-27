@@ -202,7 +202,7 @@ export default class Home extends Component{
             <View style={{flex:1, backgroundColor: appVars.colorWhite}}>
                 
                 
-                <View style={{height:150, borderBottomColor: appVars.colorSeperatorColor, borderBottomWidth: 5, marginBottom: 5}}>
+                <View style={{height:150, marginBottom: 5}}>
                 
                 
 
@@ -227,16 +227,17 @@ export default class Home extends Component{
                     }
                     
                 </View>
+                
+                <View style={appStyles.contentSeperator} />
 
-                <Text style={{fontFamily: appVars.fontMain,  color: appVars.colorBlack, fontSize: 24, marginLeft: 15, marginRight: 15, }}>Dein Wochenplan</Text>
-
-                <ScrollView style={{marginLeft:10}}>
+                <ScrollView style={{padding:10}}>
                         {
                             this.renderWeekPlan()
                         }
                 </ScrollView>
                 
-                
+                <View style={appStyles.contentSeperator} />
+
                 <View style={{marginLeft: 15, marginTop:10, marginBottom: 10, marginRight: 15}}>
                         <Button
                         onPress={this.start.bind(this)}

@@ -39,6 +39,7 @@ export default  class Exercise extends PureComponent {
     });
   }
   renderGalleryDots = ()=>{
+
       let dotsArray = [];
       for(let i = 0; i<this.props.exercise.picture.length;i++){
           dotsArray.push(<View key={i} style={i==this.state.galleryPageSelected?styles.selectedCircle:styles.circle}>
@@ -104,14 +105,14 @@ const styles=  StyleSheet.create({
         width: 10,
         height: 10,
         borderRadius: 10/2,
-        backgroundColor: 'red',
+        backgroundColor: appVars.colorLightGray,
         margin: 5
     },
     selectedCircle:{
         width: 10,
         height: 10,
         borderRadius: 10/2,
-        backgroundColor: 'blue',
+        backgroundColor: appVars.colorMain,
         margin: 5
     },
     //HTML things

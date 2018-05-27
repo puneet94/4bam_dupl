@@ -149,48 +149,29 @@ class NewsListScreen extends Component{
   }
   renderItemNext = (item,index) => {
     return (
-      <View style={{flex:1}}>
-      <TouchableOpacity activeOpacity = { .5 } onPress={ ()=>this.handleClick(item)}>
-      <View style={{flexDirection:"row"}}>
-        <View style={{flex:2,flexDirection:"column",alignItems:"center"}}>
-        {item.picture&&<Image style={{height: 40,width: 40,borderRadius:20,borderColor:"black",borderWidth:1}} source={{uri: appVars.apiUrl +"/"+item.picture.sources[0].src} }/>}
-          <View style={{flex:9,backgroundColor:"red",width:3.5}}>
-        
+     <View>
+      <View style={appStyles.contentElement}>
+      
+          <TouchableOpacity activeOpacity = { .5 } onPress={ this.handleClick.bind(this,item)}>
+                    
+          <Text style={[appStyles.newsListHeadline,{fontSize:em_s(1.25,this.state.fontSize), lineHeight: lineHeight_s(1.25,this.state.fontSize,120), marginBottom: em_s(0.250,this.state.fontSize)}]} numberOfLines={1}>{item.title}</Text>
+            
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <View>
+              <View style={[appStyles.imageBorder,{borderRadius: appVars.screenX*(0.125)+4}]}>
+              <Image style={{borderRadius: appVars.screenX*0.125, width: appVars.screenX*0.25, height: appVars.screenX*0.25}} source={{uri: appVars.serverUrl +"/"+item.picture.img.src} } />
+              </View>
+            </View>
+            <View style={appStyles.newsListInner}>
+              <Text style={[appStyles.newsListTeaser,{fontSize:em_s(0.750,this.state.fontSize), lineHeight: lineHeight_s(0.750,this.state.fontSize,150)}]} numberOfLines={4}>
+              {item.text}</Text>
+              <Text style={appStyles.newsDate}>{item["date"]}</Text>
+            </View>
           </View>
+          </TouchableOpacity>
         </View>
-        <View style={{flex:9,marginHorizontal:8,marginBottom:10,position:"relative"}}>
-          <View style={{
-            transform: [{rotate: '-90deg'}],
-            width: 0,
-            position:"absolute",
-            left: -12,
-            top:12,
-            height: 0,
-            backgroundColor: 'transparent',
-            borderStyle: 'solid',
-            borderLeftWidth: 8,
-            borderRightWidth: 8,
-            borderBottomWidth: 8,
-            borderLeftColor: 'transparent',
-            borderRightColor: 'transparent',
-            borderBottomColor: 'gray'
-             }}>
-
-          </View>
-          <View style={{borderWidth:0.8,borderColor:"gray",borderRadius:1,padding:10}}>
-          <Text style={appStyles.newsDate}>{item["date"]}</Text>
-            <View style={[appStyles.contentSeperator,{backgroundColor:"red",height:1}]}/>
-            <Text style={[appStyles.newsListHeadline,{fontSize:em_s(1,this.state.fontSize), lineHeight: lineHeight_s(1.5,this.state.fontSize,120), marginBottom: em_s(0.550,this.state.fontSize)}]} numberOfLines={1}>
-              {item.title}
-            </Text>
-            <Text style={[appStyles.newsListTeaser,{fontSize:em_s(0.875,this.state.fontSize), lineHeight: lineHeight_s(0.875,this.state.fontSize,150)}]} numberOfLines={20}>
-              {item.text.replace(/<{1}[^<>]{1,}>{1}/g," ")}
-            </Text>
-          </View>
+        <View style={appStyles.contentSeperator} />
         </View>
-      </View>
-      </TouchableOpacity>
-      </View>
     );
   }
   

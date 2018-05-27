@@ -201,17 +201,9 @@ fetchdata = async () => {
           
           onLinkPress={(url) => handleExternalUrl(url)} />
           
-            <FlatList
-            data={this.state.gallerydata}
-            numColumns={4}
-            keyExtractor={(item,index)=> {
-                return item.img.src;
-              }}
-            renderItem={({item,index}) => this.renderGalleryItem(item,index)}
-            />
+
           <View style={{flex: 1, flexDirection: 'row', justifyContent:'space-between'}}>
             <Text style={appStyles.newsDate}>{item.date}</Text>
-            <Text style={appStyles.newsEditor}>{item.editor}</Text>
           </View>
           
       </View>
@@ -224,6 +216,7 @@ fetchdata = async () => {
 
     return (
       <View style={appStyles.contenContainer}>
+      <Text>{console.log(this.state.data[0])}</Text>
       <FlatList
         data={this.state.data}
         refreshControl={

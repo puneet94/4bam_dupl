@@ -328,6 +328,10 @@ drawerLabel: {
   contentSeperator: {
     backgroundColor: appVars.colorSeperatorColor,
     height: 5,
+    borderBottomColor: appVars.colorLightGray,
+    borderBottomWidth: 1,
+    borderTopColor: appVars.colorLightGray,
+    borderTopWidth: 1,
   },
   contentElement: {
     margin: 10,
@@ -356,8 +360,8 @@ drawerLabel: {
   imageBorder: {
     padding: 3,
     backgroundColor: appVars.colorWhite,
-    borderColor: appVars.colorLightGray,
-    borderWidth: 1,
+    borderColor: appVars.colorMain,
+    borderWidth: 2,
   },
 
   listAd: {

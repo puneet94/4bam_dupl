@@ -59,7 +59,7 @@ import {
     //fonts
     fontMain: fontMain,
     fontSub: "OpenSans-Bold", // not in use
-    fontHeadline: "YanoneKaffeesatz-Bold",
+    fontHeadline: "OpenSans-Bold",
     fontText: fontText,
   
     //labels
