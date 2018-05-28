@@ -177,6 +177,15 @@ module.exports = StyleSheet.create({
     margin: 1
   },
 
+//author
+
+authorName: {
+  fontSize: em(1.0000),
+  lineHeight: lineHeight(1.000,120),
+  fontFamily: appVars.fontHeadline,
+  color: appVars.colorBlack
+},
+
 //drawer
 
 drawerContainer: {
@@ -230,6 +239,15 @@ drawerLabel: {
     fontFamily: appVars.fontMain,
     color: appVars.colorBlack,
     fontSize: 18,
+  },
+
+  headerRightText: {
+    fontFamily: appVars.fontMain,
+    color: appVars.colorBlack,
+    fontSize: 18,
+  },
+  headerRight: {
+    marginRight: 15,
   },
 
   iconWrapper: {
@@ -417,5 +435,37 @@ drawerLabel: {
   iOSToastText: {
     color: appVars.colorBlack,
   },
+
+  // HTML
+
+  p: {
+    fontSize: em(0.875),
+    lineHeight: lineHeight(0.875,150),
+    fontFamily: appVars.fontText,
+    color: appVars.colorBlack,
+    marginBottom: em(0.875),
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  strong: {
+    fontWeight: '700'
+  },
+  a: {
+    color: appVars.colorMain,
+    fontWeight: '700',
+  },
+  h3: {
+    fontSize: em(1.250),
+    lineHeight: lineHeight(1.250,120),
+    fontFamily: appVars.fontHeadline,
+    color: appVars.colorMain,
+    marginBottom: em(0.500),
+  },
+  li: {
+    fontSize: em(0.750),
+    fontFamily: appVars.fontText,
+    color: appVars.colorMain,
+    marginBottom: 3,
+},
 
 });

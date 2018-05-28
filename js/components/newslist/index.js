@@ -132,13 +132,6 @@ class NewsListScreen extends Component{
   }
 
 
-  renderSeparator = () =>{
-    
-    return(
-      <View style={appStyles.contentSeperator}/>
-    );
-  }
-
   handleClick = async (item)=>{
     this.setState({
       currentItem: item.id
@@ -154,7 +147,7 @@ class NewsListScreen extends Component{
       
           <TouchableOpacity activeOpacity = { .5 } onPress={ this.handleClick.bind(this,item)}>
                     
-          <Text style={[appStyles.newsListHeadline,{fontSize:em_s(1.25,this.state.fontSize), lineHeight: lineHeight_s(1.25,this.state.fontSize,120), marginBottom: em_s(0.250,this.state.fontSize)}]} numberOfLines={1}>{item.title}</Text>
+          <Text style={appStyles.newsListHeadline} numberOfLines={1}>{item.title}</Text>
             
           <View style={{flex: 1, flexDirection: 'row'}}>
             <View>
@@ -163,9 +156,10 @@ class NewsListScreen extends Component{
               </View>
             </View>
             <View style={appStyles.newsListInner}>
-              <Text style={[appStyles.newsListTeaser,{fontSize:em_s(0.750,this.state.fontSize), lineHeight: lineHeight_s(0.750,this.state.fontSize,150)}]} numberOfLines={4}>
-              {item.text}</Text>
-              <Text style={appStyles.newsDate}>{item["date"]}</Text>
+              <Text style={appStyles.newsListTeaser} numberOfLines={6}>
+  
+              {item.text.replace(/<{1}[^<>]{1,}>{1}/g,"")}
+              </Text>
             </View>
           </View>
           </TouchableOpacity>

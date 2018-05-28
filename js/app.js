@@ -42,7 +42,7 @@ const bamApp = StackNavigator({
         headerLeft:
           <View style={appStyles.iconWrapper} >
           <Hamburger active={navigation.state.index}
-          type="spinCross"
+          type="spin"
           color={appVars.colorMain}
           onPress={() => 
             {

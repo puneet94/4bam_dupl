@@ -58,8 +58,8 @@ import {
   
     //fonts
     fontMain: fontMain,
-    fontSub: "OpenSans-Bold", // not in use
-    fontHeadline: "OpenSans-Bold",
+    fontSub: fontText, // not in use
+    fontHeadline: fontText,
     fontText: fontText,
   
     //labels
