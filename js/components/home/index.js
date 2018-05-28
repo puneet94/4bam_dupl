@@ -143,11 +143,12 @@ export default class Home extends Component{
     }
 
     renderWeekPlan = ()=>{
+        
         if(Object.keys(this.state.weekPlan).length){
             const weekDays = Object.keys(this.state.weekPlan).sort();
             return weekDays.map((weekDay)=>{
                 
-                const dayPlans = this.state.weekPlan[weekDay];
+                const dayPlans = this.state.weekPlan[weekDay].blocks;
 
                 return <View style={{flex: 1, flexDirection: 'row'}} key={weekDay}>
                         
@@ -177,7 +178,7 @@ export default class Home extends Component{
 
         
                    { dayPlans.map((dayPlan,index)=>{
-                return <View key={index}>
+                return <View key={dayPlan.id}>
                         
                         <Text style={{fontFamily: appVars.fontText,
                         color: appVars.colorBlack,
@@ -185,7 +186,7 @@ export default class Home extends Component{
                         fontFamily: appVars.fontText,
                         fontSize: 14,
                         color: appVars.colorBlack,
-                        }}>{dayPlan}</Text>
+                        }}>{dayPlan.title}</Text>
                         
                     </View>
                         })

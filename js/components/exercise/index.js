@@ -1,12 +1,12 @@
 import StarRating from 'react-native-star-rating';
 import React,{PureComponent} from 'react';
-import {View, Alert,StyleSheet, Dimensions, Platform,Text,Image,ScrollView,TouchableOpacity} from "react-native";
+import {View, Alert,StyleSheet, Dimensions, Platform,Text,Image,ScrollView,TouchableOpacity,TouchableHighlight} from "react-native";
 import appVars from '../../appVars';
 import VideoPlayer from 'react-native-video-player';
 import ImageViewer from "../imageviewer";
-import Gallery from "../imageviewer/Gallery";
+import { NavigationActions } from 'react-navigation';
 import HTMLView from 'react-native-htmlview';
-
+import Swiper from 'react-native-swiper';
 const IS_IOS = Platform.OS === 'ios';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -48,6 +48,23 @@ export default  class Exercise extends PureComponent {
       }
       return dotsArray;
   }
+  renderGalleryImages = ()=>{
+    const { navigation } = this.props;
+
+    
+    return this.props.exercise.picture.map((temp,index)=>{
+        return (
+        <TouchableHighlight style={{flex:1}} key={index} onPress={()=>{navigation.navigate('ExerciseGallery',{images:this.props.exercise.picture,initialPage:index})}}>
+        
+        <Image style={{flex:1}}
+        key={temp.sources[0].src}
+                source={{uri:appVars.serverUrl+'/'+temp.sources[0].src
+            }}  
+        />
+           </TouchableHighlight>)
+    })
+  }
+
   render() {
     return (
         
@@ -60,18 +77,14 @@ export default  class Exercise extends PureComponent {
                     <VideoPlayer video={{uri: this.props.exercise.video}} style={{width:sliderWidth,height:slideHeight*1.7}}/>:
                     
                     this.props.exercise.picture ?<View style={{flex:1}}>
-                {<View><Gallery
-                style={{flex: 1, backgroundColor: 'white'}}
-                key={this.props.exercise.text}
-                images={this.props.exercise.picture.map((temp)=>{return {source:{uri:appVars.serverUrl+'/'+temp.sources[0].src}}})}
-                initialPage = {0}
-                onPageSelected = {this.onPageSelected}
-                
-                /><View style={{alignItems:"center",justifyContent:"center"}}>
-                    <View style={{flexDirection:"row"}}>{this.renderGalleryDots()}</View>
+                {
                     
-                    </View>
-                    </View>}
+
+                    <Swiper autoplay={true} autoplayTimeout={1} showsPagination={true} loop={false}>
+                        {this.renderGalleryImages()}
+                    </Swiper>
+                    
+                 }
               </View>:null
                     /*<Carousel
                         ref={(c) => { this._carousel = c; }}
@@ -79,7 +92,16 @@ export default  class Exercise extends PureComponent {
                         renderItem={this._renderItem}
                         sliderWidth={sliderWidth}
                         itemWidth={itemWidth}
-                    />*/
+                    />
+                    <Gallery
+                style={{flex: 1, backgroundColor: 'white'}}
+                key={this.props.exercise.text}
+                images={this.props.exercise.picture.map((temp)=>{return {source:{uri:appVars.serverUrl+'/'+temp.sources[0].src}}})}
+                initialPage = {0}
+                onPageSelected = {this.onPageSelected}
+                
+                />
+                    */
             }
             </View>
             <View style={{flex:1,backgroundColor:"white", paddingLeft: 15, paddingRight: 15}}>

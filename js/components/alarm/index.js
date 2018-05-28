@@ -2,6 +2,8 @@ import React,{PureComponent} from "react";
 import {
     View,Text,Button,Modal,StyleSheet,TextInput,FlatList
 } from "react-native";
+import appVars from "../../appVars";
+import appStyles from '../../appStyles';
 import moment from "moment";
 import {getNearestDay} from "../../services/dateService.js";
 const NOTIFICATION_DATE_FORMAT = 'YYYY-MM-DD';
@@ -17,6 +19,7 @@ export default class AlarmSceen extends PureComponent{
             temporaryDay: "",
             alarmDays: ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"],
             modalVisible: false,
+            validalarms: {},
             ALARM_DAYS: {
                 "MONDAY": [],
                 "TUESDAY": [],
@@ -31,6 +34,16 @@ export default class AlarmSceen extends PureComponent{
     }
 
     componentWillMount= async ()=>{
+        
+        let userStoredID  = await store.get(appVars.STORAGE_KEY);
+        let apiHitPoint = appVars.apiUrl+"/validalarms.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
+        const response = await fetch(apiHitPoint);
+        const json = await response.json();
+        let validalarms = json.response;
+        this.setState({validalarms});
+        console.log("valid alarms",validalarms);
+        
+
         let ALARM_DAYS = await store.get('ALARM_DAYS');
         if(ALARM_DAYS){
             this.setState({
@@ -43,6 +56,10 @@ export default class AlarmSceen extends PureComponent{
             this.setState({
                 ALARM_TIMES
             })
+
+
+        
+            
         }
     }
     changeAlarm=(alarmID,{time,text})=>{    
@@ -152,7 +169,8 @@ export default class AlarmSceen extends PureComponent{
         store.save('ALARM_TIMES',newAlarmTimes);
     }
     _keyExtractor = (item,index)=>index;
-    _renderItem = ({item})=>{
+    _renderItem = ({item,index})=>{
+        if(this.state.validalarms && this.state.validalarms[index+1]){
         return (
         <View style={{flex:1,margin:10}}>
             <View style={{flexDirection:"row",justifyContent:"space-between",backgroundColor:"red"}}>
@@ -181,7 +199,10 @@ export default class AlarmSceen extends PureComponent{
                 }
             </View>
         </View>
-        );
+        );}
+        else{
+            return null
+        }
     }
     render(){
         

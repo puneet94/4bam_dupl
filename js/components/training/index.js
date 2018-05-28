@@ -159,7 +159,7 @@ export default class Training extends PureComponent{
                 {
                     <View style={{flex:1}}>
                         {/*this.state.localNotification?<Text style={styles.trainingMessage}>{this.state.alarmValue.alarmText}</Text>:<Text style={styles.trainingMessage}>{"Training Screen"}</Text>*/}
-                        <Exercise exercise = {this.state.exercises[this.state.currentExercise]}/>
+                        <Exercise {...this.props} exercise = {this.state.exercises[this.state.currentExercise]}/>
                         <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10,marginBottom:10, paddingTop: 10,borderColor: '#ddd',borderTopWidth: 1}}> 
                             <TouchableHighlight onPress={this.toggleStopwatch} style={{backgroundColor:appVars.colorMain,marginLeft: 15,padding:10,width:90, borderRadius:5}}>
                                 <View style={{flex:1,flexDirection:"row"}}>
