@@ -2,11 +2,12 @@ import StarRating from 'react-native-star-rating';
 import React,{PureComponent} from 'react';
 import {View, Alert,StyleSheet, Dimensions, Platform,Text,Image,ScrollView,TouchableOpacity,TouchableHighlight} from "react-native";
 import appVars from '../../appVars';
+import appStyles from '../../appStyles';
 import VideoPlayer from 'react-native-video-player';
 import ImageViewer from "../imageviewer";
 import { NavigationActions } from 'react-navigation';
 import HTMLView from 'react-native-htmlview';
-import Swiper from 'react-native-swiper';
+import SwiperFlatList from 'react-native-swiper-flatlist';
 const IS_IOS = Platform.OS === 'ios';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -32,159 +33,86 @@ export default  class Exercise extends PureComponent {
         galleryPageSelected: 0
     }
   }
+
   onPageSelected = (pageSelectedData)=>{
-    console.log("pagesleetceddata",pageSelectedData);
+    //console.log("pagesleetceddata",pageSelectedData);
     this.setState({
         galleryPageSelected: pageSelectedData
     });
   }
-  renderGalleryDots = ()=>{
 
-      let dotsArray = [];
-      for(let i = 0; i<this.props.exercise.picture.length;i++){
-          dotsArray.push(<View key={i} style={i==this.state.galleryPageSelected?styles.selectedCircle:styles.circle}>
-
-          </View>)
-      }
-      return dotsArray;
-  }
   renderGalleryImages = ()=>{
     const { navigation } = this.props;
 
-    
     return this.props.exercise.picture.map((temp,index)=>{
         return (
         <TouchableHighlight style={{flex:1}} key={index} onPress={()=>{navigation.navigate('ExerciseGallery',{images:this.props.exercise.picture,initialPage:index})}}>
-        
-        <Image style={{flex:1}}
+        <Image key={this.props.exercise.picture.id} style={styles.child}
         key={temp.sources[0].src}
                 source={{uri:appVars.serverUrl+'/'+temp.sources[0].src
             }}  
         />
-           </TouchableHighlight>)
+        </TouchableHighlight>)
     })
   }
 
+
   render() {
+    
     return (
         
-        this.props.exercise?
-        <View style={{flex:1, backgroundColor: "white" }} >
-            
-            <View style={{flex:4,justifyContent:"flex-start",alignItems:"center",backgroundColor:"white",height:200}}>
-            {
-                this.props.exercise.video?
-                    <VideoPlayer video={{uri: this.props.exercise.video}} style={{width:sliderWidth,height:slideHeight*1.7}}/>:
-                    
-                    this.props.exercise.picture ?<View style={{flex:1}}>
+                <View>
+                    <View style={{flex:0, height: appVars.screenX}}>   
                 {
-                    
-
-                    <Swiper autoplay={true} autoplayTimeout={1} showsPagination={true} loop={false}>
+                this.props.exercise.video?<VideoPlayer video={{uri: this.props.exercise.video}} style={{width:sliderWidth,height:slideHeight*1.7}}/>:
+                this.props.exercise.picture.length >1 ?
+                        
+                        <SwiperFlatList
+                        autoplay
+                        autoplayLoop
+                        showPagination
+                        paginationColor={appVars.colorLightGray}
+                        paginationActiveColor={appVars.colorMain}
+                        >
                         {this.renderGalleryImages()}
-                    </Swiper>
+                        </SwiperFlatList>
+                        :<SwiperFlatList>
+                        {this.renderGalleryImages()}
+                        </SwiperFlatList>
+
+                }
+
+                    </View>
+                    <View style={appStyles.contentElement}>
+                    <Text style={appStyles.a}>{this.props.exercise.block}</Text>
+                    <ScrollView style={{flex:0, height: appVars.screenY-appVars.screenX-210}}>
+                        <HTMLView
+                        addLineBreaks={false}
+                        value={this.props.exercise.text}
+                        stylesheet={appStyles}
+                        onLinkPress={(url) => console.log('clicked link: ', url)}
+                        />
+                    </ScrollView>
+                    <View style={{flexDirection:"row"}} >
+                        <Text style={appStyles.a}>Intensität:</Text>
+                        <Text style={appStyles.p}>{this.props.exercise.intent}</Text>
+                    </View>
+
+                    </View>
                     
-                 }
-              </View>:null
-                    /*<Carousel
-                        ref={(c) => { this._carousel = c; }}
-                        data={this.props.exercise.images}
-                        renderItem={this._renderItem}
-                        sliderWidth={sliderWidth}
-                        itemWidth={itemWidth}
-                    />
-                    <Gallery
-                style={{flex: 1, backgroundColor: 'white'}}
-                key={this.props.exercise.text}
-                images={this.props.exercise.picture.map((temp)=>{return {source:{uri:appVars.serverUrl+'/'+temp.sources[0].src}}})}
-                initialPage = {0}
-                onPageSelected = {this.onPageSelected}
-                
-                />
-                    */
-            }
-            </View>
-            <View style={{flex:1,backgroundColor:"white", paddingLeft: 15, paddingRight: 15}}>
-            <ScrollView>
-                <HTMLView
-                    addLineBreaks={false}
-                    value={this.props.exercise.text}
-                    stylesheet={styles}
-                    onLinkPress={(url) => console.log('clicked link: ', url)}
-                />
-            </ScrollView>
-            </View>
-            <View style={{flexDirection:"row", backgroundColor:"white", paddingLeft: 15, paddingRight: 15}} >
-                <Text style={{fontFamily: appVars.fontMain, color: appVars.colorBlack, fontSize: 11, paddingRight:10 }}>Intensität:</Text>
-                <Text style={{fontFamily: appVars.fontText, color: appVars.colorBlack, fontSize: 11}}>{this.props.exercise.intent}</Text>
-            </View>
-        </View>:null
-    );
+                </View>
+        
+    
+    )
   }
 }
 const styles=  StyleSheet.create({
-    circle: {
-        width: 10,
-        height: 10,
-        borderRadius: 10/2,
-        backgroundColor: appVars.colorLightGray,
-        margin: 5
-    },
-    selectedCircle:{
-        width: 10,
-        height: 10,
-        borderRadius: 10/2,
-        backgroundColor: appVars.colorMain,
-        margin: 5
-    },
-    //HTML things
-    p: {
-        fontFamily: appVars.fontText,
-        color: appVars.colorBlack,
-        fontSize: 12,
-        marginBottom: 5,
-    },
-    strong: {
-        fontFamily: appVars.fontMain,
-        color: appVars.colorBlack,
-        fontSize: 12,
-    },
-    h3: {
-        fontSize: 14,
-        fontFamily: appVars.fontMain,
-        color: appVars.colorMain,
-        marginBottom: 3,
-    },
-    li: {
-        fontSize: 12,
-        fontFamily: appVars.fontText,
-        color: appVars.colorMain,
-        marginBottom: 3,
-    },
+ 
+        child: {
+          height: appVars.screenX,
+          width: appVars.screenX,
+          justifyContent: 'center'
+        },
 
-    // image's border radius is buggy on iOS; let's hack it!   
-    title: {
-        color: "black",
-        fontSize: 13,
-        fontWeight: 'bold',
-        letterSpacing: 0.5
-    },
-    titleEven: {
-        color: 'white'
-    },image: {
-        ...StyleSheet.absoluteFillObject,
-        resizeMode: 'cover',
-        borderRadius: IS_IOS ? entryBorderRadius : 0,
-        borderTopLeftRadius: entryBorderRadius,
-        borderTopRightRadius: entryBorderRadius
-    },imageContainer: {
-        flex: 1,
-        
-        marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
-        //backgroundColor: 'white',
-        borderTopLeftRadius: entryBorderRadius,
-        borderTopRightRadius: entryBorderRadius
-
-    },
 });
 

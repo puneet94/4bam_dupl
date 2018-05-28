@@ -28,6 +28,7 @@
     "react-native-star-rating": "^1.0.9",
     "react-native-stopwatch-timer": "^0.0.20",
     "react-native-swiper": "^1.5.13",
+    "react-native-swiper-flatlist": "^1.0.7",
     "react-native-vector-icons": "^4.6.0",
     "react-native-video": "^2.0.0",
     "react-native-video-player": "^0.9.1",

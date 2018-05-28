@@ -38,7 +38,8 @@ export default class Training extends PureComponent{
           options={options}/>
         </View>
         };
-      };
+        };
+
       selectNextExercise = ()=>{
         let exerciseTime = parseInt(this.currentTime.split(":")[0],10)*60 +  parseInt(this.currentTime.split(":")[1],10);
         
