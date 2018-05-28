@@ -150,50 +150,44 @@ export default class Home extends Component{
                 
                 const dayPlans = this.state.weekPlan[weekDay].blocks;
 
-                return <View style={{flex: 1, flexDirection: 'row'}} key={weekDay}>
+                return <View style={appStyles.timeline_container} key={weekDay}>
                         
-                            <View style={{width: 40, height: 30, backgroundColor: appVars.colorSeperatorColor, alignItems:'center', justifyContent:'center', borderRadius:10,}}>
-                            <Text style={{
-                            fontSize: 14,
-                            textAlign:'center',
-                            fontFamily: appVars.fontMain,
-                            color: appVars.colorBlack,
-                            }}>{this.day(weekDay-1)}
-                            </Text>
+                <View style={appStyles.timeline_datecontainer}>
+                
+                <Text style={appStyles.timeline_date}>{this.day(weekDay-1)}
+                </Text>
 
-                            </View>
+                </View>
 
-                       
-                            <View style={{width: 30, height: '100%', backgroundColor: appVars.colorWhite, alignItems:'center', marginTop: 6}}>
-                                <View style={{width: 15, height: 15, backgroundColor: appVars.colorMain, borderRadius:10, alignItems:'center', justifyContent:'center'}}>
-                                <View style={{width: 7, height: 7, backgroundColor: appVars.colorWhite, borderRadius:10}} />
-                            </View>
-
-                            <View style={{width: 2, backgroundColor: appVars.colorMain,height: '100%'}} />
-                        
-                        </View>
-                    
-                        <View style={{width: 300}}>
+           
+                <View style={appStyles.timeline_line_container}>
+                    <View style={appStyles.timeline_dot_outer}>
+                        <View style={appStyles.timeline_dot_inner} />
+                    </View>
+                
+                <View style={appStyles.timeline_line} />
+            
+            </View>
+        
+           
+            <View style={appStyles.timeline_content}>
                         
 
         
                    { dayPlans.map((dayPlan,index)=>{
                 return <View key={dayPlan.id}>
                         
-                        <Text style={{fontFamily: appVars.fontText,
-                        color: appVars.colorBlack,
-                        marginTop: 4,
-                        fontFamily: appVars.fontText,
-                        fontSize: 14,
-                        color: appVars.colorBlack,
-                        }}>{dayPlan.title}</Text>
+                        <Text style={appStyles.timeline_text}>{dayPlan.title}</Text>
                         
-                    </View>
-                        })
-                    }
-                    <View style={{backgroundColor: appVars.colorSeperatorColor, height:1, width: 300, marginTop:10,marginBottom:10}} />
-               </View>
-               </View>
+                        </View>
+                            })
+                        }
+                        <View style={appStyles.timeline_content_seperator} />
+                   </View>
+                   </View>
+
+
+   
 
             });
         }
@@ -217,7 +211,7 @@ export default class Home extends Component{
                                 <Text style={{fontFamily: appVars.fontMain,  color: appVars.colorBlack, fontSize: 16, marginLeft: 15, marginRight: 15, }}>{dayMessage.title}</Text>
                                 <HTMLView
                                     addLineBreaks={false}
-                                    stylesheet={htmlStyles}
+                                    stylesheet={appStyles}
                                     style={{marginLeft: 15, marginRight: 15, }}
                                     value={dayMessage.text}
                                 />
@@ -231,14 +225,16 @@ export default class Home extends Component{
                 
                 <View style={appStyles.contentSeperator} />
 
-                <ScrollView style={{padding:10}}>
+                <ScrollView style={appStyles.contenContainer}>
+                <View style={appStyles.contentElement}>
                         {
                             this.renderWeekPlan()
                         }
+                        </View>
                 </ScrollView>
                 
                 <View style={appStyles.contentSeperator} />
-
+                
                 <View style={{marginLeft: 15, marginTop:10, marginBottom: 10, marginRight: 15}}>
                         <Button
                         onPress={this.start.bind(this)}
@@ -252,34 +248,3 @@ export default class Home extends Component{
         )
     }
 }
-
-const htmlStyles=  StyleSheet.create({
-    
-    //HTML things
-    p: {
-        fontFamily: appVars.fontText,
-        color: appVars.colorBlack,
-        fontSize: 12,
-        marginBottom: 5,
-    },
-    strong: {
-        fontFamily: appVars.fontMain,
-        color: appVars.colorBlack,
-        fontSize: 12,
-    },
-    h3: {
-        fontSize: 14,
-        fontFamily: appVars.fontMain,
-        color: appVars.colorMain,
-        marginBottom: 3,
-    },
-    li: {
-        fontSize: 12,
-        fontFamily: appVars.fontText,
-        color: appVars.colorMain,
-        marginBottom: 3,
-    }
-
-    
-
-});

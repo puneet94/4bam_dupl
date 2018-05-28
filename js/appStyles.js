@@ -27,59 +27,76 @@ module.exports = StyleSheet.create({
 
   formInput: formInput,
 
-  //epaper (home)
-  ePaperMainContainer: {
-    backgroundColor: appVars.colorWhite,
-    height: (y * .75)-80,
-    borderBottomColor: appVars.colorWhite,
-    borderBottomWidth: 2,
+  //timeline - weekplan
+
+  timeline_container: {
+    flex: 1,
+    flexDirection: 'row',
   },
-  ePaperMainWrapper: {
-    paddingTop: 15,
-    justifyContent: 'center',
-    alignItems: 'center',
+
+  timeline_datecontainer: {
+    width: 40,
+    height: 24,
+    backgroundColor: appVars.colorSeperatorColor,
+    alignItems:'center',
+    justifyContent:'center',
+    borderRadius:10
   },
-  ePaperHorizontalContainer: {
-    backgroundColor: appVars.colorWhite,
-    height: (y * .25)+ePaperWrapperPlusHeight,
-  },
-  ePaperEditionWrapper: {
-    height: (y * .25)+ePaperWrapperPlusHeight,
-    width: (x * .25),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  ePaperEditionDate:{
-    backgroundColor: appVars.colorMain,
-    color: appVars.colorWhite,
-    textAlign: 'center',
-    fontSize: em(0.666),
-    padding: 3,
+
+ timeline_date: {
+    fontSize: 14,
+    textAlign:'center',
     fontFamily: appVars.fontMain,
-    justifyContent: 'center',
-    alignItems: 'center'
+    color: appVars.colorBlack,
   },
 
-  //myIssues
-  
-  myIssuesEditionWrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingLeft: 10,
-    paddingTop: 15,
-  },
-
-  myIssueSelect: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    width: 18,
-    height: 18,
-    borderRadius: 9,
-    borderColor:appVars.colorDrawerIsActiveBackgroundColor,
+  timeline_line_container: {
+    width: 30,
+    height: '100%',
     backgroundColor: appVars.colorWhite,
-    borderWidth: 1
+    alignItems:'center',
+    marginTop: 6,
   },
+  timeline_dot_outer: {
+    width: 15,
+    height: 15,
+    backgroundColor: appVars.colorMain,
+    borderRadius:10,
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  timeline_dot_inner: {
+    width: 7,
+    height: 7,
+    backgroundColor: appVars.colorWhite,
+    borderRadius: 10,
+  },
+  
+  timeline_line: {
+    width: 2,
+    backgroundColor: appVars.colorMain,
+    height: '100%',
+  },
+
+  timeline_content: {
+    flex: 1,
+  },
+  timeline_text: {
+    fontFamily: appVars.fontText,
+    color: appVars.colorBlack,
+    marginTop: 4,
+    fontFamily: appVars.fontText,
+    fontSize: em(0.875),
+    lineHeight: lineHeight(0.875,140),  
+    color: appVars.colorBlack,
+  },
+
+timeline_content_seperator: {
+  backgroundColor: appVars.colorSeperatorColor,
+  height:1,
+  marginTop:10,
+  marginBottom:10
+},
 
   //newslist
   newsListInner: {
@@ -339,10 +356,12 @@ drawerLabel: {
     flex: 1,
     backgroundColor: appVars.colorWhite,
   },
+
   contenContainer: {
     flex: 1,
     backgroundColor: appVars.colorWhite,
   },
+
   contentSeperator: {
     backgroundColor: appVars.colorSeperatorColor,
     height: 5,
@@ -351,9 +370,11 @@ drawerLabel: {
     borderTopColor: appVars.colorLightGray,
     borderTopWidth: 1,
   },
+
   contentElement: {
     margin: 10,
-  }, 
+  },
+
   contentHeadline: {
     fontSize: em(1.500),
     lineHeight: lineHeight(1.500,120),
@@ -361,6 +382,7 @@ drawerLabel: {
     color: appVars.colorBlack,
     marginBottom: em(0.25), 
   },
+
   contentText: {
     fontSize: em(0.875),
     lineHeight: lineHeight(0.875,140),
@@ -380,14 +402,6 @@ drawerLabel: {
     backgroundColor: appVars.colorWhite,
     borderColor: appVars.colorMain,
     borderWidth: 2,
-  },
-
-  listAd: {
-    paddingTop: 3,
-    paddingBottom: 3,
-    backgroundColor: appVars.colorSeperatorColor,
-    justifyContent: 'center',
-    alignItems: 'center',   
   },
 
   paywallIconTriangle:{
@@ -420,11 +434,6 @@ drawerLabel: {
     backgroundColor: appVars.colorWhite,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-
-  ePaperActivityIndicator: {
-    flex: 1,
-    backgroundColor:'rgba(255, 255, 255, 0.8)',
   },
 
   iOSToast: {
