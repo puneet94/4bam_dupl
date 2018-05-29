@@ -57,6 +57,15 @@ module.exports = StyleSheet.create({
     alignItems:'center',
     marginTop: 6,
   },
+
+  timeline_container_today: {
+ width: 30,
+    height: '100%',
+    backgroundColor: appVars.colorWhite,
+    alignItems:'center',
+    marginTop: 6,
+  },
+
   timeline_dot_outer: {
     width: 15,
     height: 15,

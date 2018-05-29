@@ -148,10 +148,18 @@ export default class Home extends Component{
             const weekDays = Object.keys(this.state.weekPlan).sort();
             return weekDays.map((weekDay)=>{
                 
-                const dayPlans = this.state.weekPlan[weekDay].blocks;
-
+                const dayPlans = this.state.weekPlan[weekDay].blocks;                
+                /*
+                this does not work
+                if(this.state.weekPlan[weekDay].today===true ) {
+                     appStyles.timeline_container_today
+                } else {
+                    appStyles.timeline_container
+                }
                 return <View style={appStyles.timeline_container} key={weekDay}>
-                        
+                */                
+                return <View style={appStyles.timeline_container} key={weekDay}>
+
                 <View style={appStyles.timeline_datecontainer}>
                 
                 <Text style={appStyles.timeline_date}>{this.day(weekDay-1)}
@@ -171,7 +179,7 @@ export default class Home extends Component{
         
            
             <View style={appStyles.timeline_content}>
-                        
+       
 
         
                    { dayPlans.map((dayPlan,index)=>{
@@ -196,8 +204,9 @@ export default class Home extends Component{
         return (
             <View style={{flex:1, backgroundColor: appVars.colorWhite}}>
                 
-                
-                <View style={{height:150, marginBottom: 5}}>
+                <View style={appStyles.contentElement}>
+
+                    <View style={{height:150}}>
                 
                 
 
@@ -212,7 +221,6 @@ export default class Home extends Component{
                                 <HTMLView
                                     addLineBreaks={false}
                                     stylesheet={appStyles}
-                                    style={{marginLeft: 15, marginRight: 15, }}
                                     value={dayMessage.text}
                                 />
                             </ScrollView>
@@ -221,7 +229,9 @@ export default class Home extends Component{
                         )
                     }
                     
+                    </View>
                 </View>
+
                 
                 <View style={appStyles.contentSeperator} />
 
