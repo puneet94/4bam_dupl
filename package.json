@@ -13,6 +13,7 @@
     "react-native": "0.52.2",
     "react-native-datepicker": "^1.6.0",
     "react-native-easy-toast": "^1.1.0",
+    "react-native-fast-image": "^4.0.14",
     "react-native-fontawesome": "^5.7.0",
     "react-native-gesture-responder": "^0.1.1",
     "react-native-hamburger": "0.0.2",

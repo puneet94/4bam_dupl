@@ -1,11 +1,12 @@
 import StarRating from 'react-native-star-rating';
 import React,{PureComponent} from 'react';
-import {View, Alert,StyleSheet, Dimensions, Platform,Text,Image,ScrollView,TouchableOpacity} from "react-native";
+import {View, Alert,StyleSheet, Dimensions, Platform,Text,Image,ScrollView,TouchableOpacity,ActivityIndicator} from "react-native";
 import appVars from '../../appVars';
 import appStyles from '../../appStyles';
 import VideoPlayer from 'react-native-video-player';
 import { NavigationActions } from 'react-navigation';
 import HTMLView from 'react-native-htmlview';
+import FastImage from 'react-native-fast-image'
 
 const IS_IOS = Platform.OS === 'ios';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
@@ -72,13 +73,20 @@ scrolling() {
     const { navigation } = this.props;
 
     return this.props.exercise.picture.map((temp,index)=>{
+
+    
         return (
-            <TouchableOpacity style={{flex:1}} key={index} onPress={()=>{navigation.navigate('ExerciseGallery',{images:this.props.exercise.picture,initialPage:index})}}>
-        <Image key={this.props.exercise.picture.id} style={styles.child}
-        key={temp.sources[0].src}
-                source={{uri:appVars.serverUrl+'/'+temp.sources[0].src
-            }}  
-        />
+            <TouchableOpacity style={{flex:1}} key={index} onPress={()=>{navigation.navigate('ExerciseGallery',{images:this.props.exercise.picture,initialPage:index})}}>        
+            <FastImage
+                key={this.props.exercise.picture.id} 
+                style={styles.child}
+                source={{
+                uri: ''+appVars.serverUrl+'/'+temp.sources[0].src+'',
+                priority: FastImage.priority.normal,
+                }}
+                
+                resizeMode={FastImage.resizeMode.contain}
+            />
         </TouchableOpacity>)
     })
   }
@@ -98,18 +106,20 @@ scrolling() {
         <View>
         <View style={styles.contentElement}>
           <ScrollView
-             style={styles.scrollview}
-             horizontal={true}
-             pagingEnabled={true}
-             ref={(ref) => this.ticker = ref}
-             bounces={false}
-             showsHorizontalScrollIndicator={false}
-             onTouchStart={() => this.timeclear()}
-             onTouchMove={() => this.timeclear()}
-             onTouchEnd={() => this.timeclear()}
-             onScrollBeginDrag={() => this.timeclear()}
-             onScrollEndDrag={() => this.timerstart()}
-             >
+            ref={(ref) => this.ticker = ref}
+            style={styles.scrollview}
+            horizontal={true}
+            pagingEnabled={true}
+            decelerationRate={0}
+            snapToInterval={appVars.screenX-80}
+            snapToAlignment={"center"}
+            showsHorizontalScrollIndicator={false}
+            onTouchStart={() => this.timeclear()}
+            onTouchMove={() => this.timeclear()}
+            onTouchEnd={() => this.timeclear()}
+            onScrollBeginDrag={() => this.timeclear()}
+            onScrollEndDrag={() => this.timerstart()}
+            >
                     {this.renderGalleryImages()}
 
           </ScrollView>
