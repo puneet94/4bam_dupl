@@ -28,7 +28,7 @@ class ImageViewerScreen extends Component {
               this.state.images ?<View style={appStyles.contenContainer}>
               
                 <Gallery
-                style={{flex: 1, backgroundColor: 'black'}}
+                style={{flex: 1, backgroundColor: 'white'}}
                 images={this.state.images}
                 initialPage = {0}
               />

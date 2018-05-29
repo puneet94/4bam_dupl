@@ -125,11 +125,6 @@ fetchdata = async () => {
           stylesheet={appStyles}
           
           onLinkPress={(url) => handleExternalUrl(url)} />
-          
-          <View style={{flex: 1, flexDirection: 'row', justifyContent:'space-between'}}>
-            <Text style={appStyles.newsDate}>{item.date}</Text>
-          </View>
-          
    
       </View>
       <View style={appStyles.contentSeperator} />
@@ -169,7 +164,7 @@ fetchdata = async () => {
 
     if(this.state.loading){
       return(
-          <View style={{flex:1,justifyContent:"center"}}>
+          <View style={{flex:1,justifyContent:"center",backgroundColor:appVars.colorWhite}}>
               <ActivityIndicator size="large" color={appVars.colorMain} />
           </View>
       )

@@ -16,21 +16,27 @@ export default  class Exercise extends PureComponent {
     this.state = {
         galleryPageSelected: 0,
         currentPosition: 0,
+        Page: this.props.exercise.count,
     }
     this.scrolling = this.scrolling.bind(this);
   }
-  componentDidMount(){
 
+  componentDidMount(){
     // 4 seconds
     // this one needs to be reseted if the page change or it will cause a crash
-    this.activeInterval = setInterval(this.scrolling, 3000);
-
+    this.activeInterval = setInterval(this.scrolling, 4000);
     }
 
     componentWillUnmount(){
         clearInterval(this.activeInterval);
     }
 
+timerstart() {
+    this.activeInterval = setInterval(this.scrolling, 4000);
+}
+timeclear() {
+    clearInterval(this.activeInterval);
+}
 // Scrolling Animation
 scrolling() {
     const { navigation } = this.props;
@@ -61,14 +67,10 @@ scrolling() {
     }
 }
 
-  onPageSelected = (pageSelectedData)=>{
-    this.setState({
-        galleryPageSelected: pageSelectedData
-    });
-  }
 
   renderGalleryImages = ()=>{
     const { navigation } = this.props;
+
     return this.props.exercise.picture.map((temp,index)=>{
         return (
             <TouchableOpacity style={{flex:1}} key={index} onPress={()=>{navigation.navigate('ExerciseGallery',{images:this.props.exercise.picture,initialPage:index})}}>
@@ -93,7 +95,8 @@ scrolling() {
 
   renderScroll =()=> {
     return(
-        <View style={styles.scrollViewContainer}>
+        <View>
+        <View style={styles.contentElement}>
           <ScrollView
              style={styles.scrollview}
              horizontal={true}
@@ -101,20 +104,17 @@ scrolling() {
              ref={(ref) => this.ticker = ref}
              bounces={false}
              showsHorizontalScrollIndicator={false}
-             onTouchStart={() => console.log('STOP TIMER')}
-             onTouchMove={() => console.log('STOP TIMER')}
-             onTouchEnd={() => console.log('STOP TIMER')}
-             onScrollBeginDrag={() => console.log('STOP TIMER')}
-             onScrollEndDrag={() => console.log('START TIMER')}
+             onTouchStart={() => this.timeclear()}
+             onTouchMove={() => this.timeclear()}
+             onTouchEnd={() => this.timeclear()}
+             onScrollBeginDrag={() => this.timeclear()}
+             onScrollEndDrag={() => this.timerstart()}
              >
-             
-            {this.renderGalleryImages()}
-          </ScrollView>
-          
-          <View style={{alignItems:"center",justifyContent:"center"}}>
-            <View style={{flexDirection:"row"}}>{this.renderGalleryDots()}</View>
+                    {this.renderGalleryImages()}
 
+          </ScrollView>
         </View>
+       
         </View>
         )
   }
@@ -131,11 +131,15 @@ scrolling() {
                 
                     this.renderScroll()
                 }
-
+                 
                     </View>
+                    <View style={{alignItems:"center",justifyContent:"center"}}>
+                        <View style={{flexDirection:"row"}}>{this.renderGalleryDots()}</View>
+                    </View>
+
                     <View style={appStyles.contentElement}>
                     <Text style={appStyles.a}>{this.props.exercise.block}</Text>
-                    <ScrollView style={{flex:0, height: appVars.screenY-appVars.screenX-210}}>
+                    <ScrollView style={{flex:0, height: appVars.screenY-appVars.screenX-240}}>
                         <HTMLView
                         addLineBreaks={false}
                         value={this.props.exercise.text}
