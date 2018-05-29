@@ -34,7 +34,7 @@ export default  class Exercise extends PureComponent {
   }
     componentDidMount = ()=>{
         
-        setTimeout(this.startScrolling,8000);
+        //setTimeout(this.startScrolling,8000);
     }
 
     componentWillUnmount(){
@@ -104,8 +104,15 @@ scrolling() {
           return dotsArray;
       }
       
+    onMomentumScrollEnd = (e)=>{
+        let screenX = Math.round(appVars.screenX);
+        console.log(e.nativeEvent);
+        this.setState({ pageNum:(e.nativeEvent.contentOffset.x)/screenX });
+      }
+
   renderScroll =()=> {
     return(
+
         <View>
         <View style={styles.contentElement}>
           <ScrollView
@@ -114,10 +121,11 @@ scrolling() {
             horizontal={true}
             pagingEnabled={true}
             decelerationRate={0}
+            
             //snapToInterval={appVars.screenX-80}
             snapToAlignment={"center"}
             showsHorizontalScrollIndicator={false}
-            
+            onMomentumScrollEnd = {this.onMomentumScrollEnd}    
             
             >
                     {this.renderGalleryImages()}
@@ -145,7 +153,7 @@ scrolling() {
                     </View>
                     <View style={{alignItems:"center",justifyContent:"center"}}>
                         <View style={{flexDirection:"row"}}>{this.renderGalleryDots()}</View>
-                        
+                        <Text>{this.state.pageNum}</Text>
                     </View>
 
                     <View style={appStyles.contentElement}>
