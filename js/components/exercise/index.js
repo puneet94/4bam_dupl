@@ -18,14 +18,20 @@ export default  class Exercise extends PureComponent {
         galleryPageSelected: 0,
         currentPosition: 0,
         Page: this.props.exercise.count,
+        pageNum: 0
     }
     this.scrolling = this.scrolling.bind(this);
   }
-
-  componentDidMount(){
-    // 4 seconds
-    // this one needs to be reseted if the page change or it will cause a crash
-    this.activeInterval = setInterval(this.scrolling, 4000);
+  startScrolling = ()=>{
+      if(this.state.pageNum<this.props.exercise.picture.length){
+        this.scrolling();
+        setTimeout(this.startScrolling,5000);
+      }
+      
+  }
+    componentDidMount = ()=>{
+        
+        setTimeout(this.startScrolling,8000);
     }
 
     componentWillUnmount(){
@@ -58,23 +64,18 @@ scrolling() {
         // Set animation back to first image
         if (position > maxOffset) {
              this.ticker.scrollTo({ x: 0, animated: true })
-             this.setState({ currentPosition: 0 });
-             this.setState({ galleryPageSelected: 0});
+             this.setState({ currentPosition: 0,pageNum: 0});
         }
         else {
-            this.setState({ currentPosition: position });
+            this.setState({ currentPosition: position,pageNum:position/screenX });
         }
 
     }
 }
 
-
   renderGalleryImages = ()=>{
     const { navigation } = this.props;
-
     return this.props.exercise.picture.map((temp,index)=>{
-
-    
         return (
             <TouchableOpacity style={{flex:1}} key={index} onPress={()=>{navigation.navigate('ExerciseGallery',{images:this.props.exercise.picture,initialPage:index})}}>        
             <FastImage
@@ -84,7 +85,6 @@ scrolling() {
                 uri: ''+appVars.serverUrl+'/'+temp.sources[0].src+'',
                 priority: FastImage.priority.normal,
                 }}
-                
                 resizeMode={FastImage.resizeMode.contain}
             />
         </TouchableOpacity>)
@@ -94,13 +94,13 @@ scrolling() {
   renderGalleryDots = ()=>{
           let dotsArray = [];
           for(let i = 0; i<this.props.exercise.picture.length;i++){
-              dotsArray.push(<View key={i} style={i==this.state.galleryPageSelected?styles.selectedCircle:styles.circle}>
+              dotsArray.push(<View key={i} style={i==this.state.pageNum?styles.selectedCircle:styles.circle}>
      
               </View>)
           }
           return dotsArray;
       }
-
+      
   renderScroll =()=> {
     return(
         <View>
@@ -111,14 +111,11 @@ scrolling() {
             horizontal={true}
             pagingEnabled={true}
             decelerationRate={0}
-            snapToInterval={appVars.screenX-80}
+            //snapToInterval={appVars.screenX-80}
             snapToAlignment={"center"}
             showsHorizontalScrollIndicator={false}
-            onTouchStart={() => this.timeclear()}
-            onTouchMove={() => this.timeclear()}
-            onTouchEnd={() => this.timeclear()}
-            onScrollBeginDrag={() => this.timeclear()}
-            onScrollEndDrag={() => this.timerstart()}
+            
+            
             >
                     {this.renderGalleryImages()}
 
@@ -145,6 +142,7 @@ scrolling() {
                     </View>
                     <View style={{alignItems:"center",justifyContent:"center"}}>
                         <View style={{flexDirection:"row"}}>{this.renderGalleryDots()}</View>
+                        
                     </View>
 
                     <View style={appStyles.contentElement}>
