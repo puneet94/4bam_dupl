@@ -23,11 +23,14 @@ export default  class Exercise extends PureComponent {
     this.scrolling = this.scrolling.bind(this);
   }
   startScrolling = ()=>{
-      if(this.state.pageNum<this.props.exercise.picture.length){
+      if((this.state.pageNum<this.props.exercise.picture.length) && this._mounted){
         this.scrolling();
         setTimeout(this.startScrolling,5000);
       }
       
+  }
+  componentWillMount = ()=>{
+      this._mounted = true;
   }
     componentDidMount = ()=>{
         
@@ -35,7 +38,7 @@ export default  class Exercise extends PureComponent {
     }
 
     componentWillUnmount(){
-        clearInterval(this.activeInterval);
+        this._mounted = false;
     }
 
 timerstart() {
@@ -50,7 +53,7 @@ scrolling() {
     let screenX = Math.round(appVars.screenX);
 
     // Start scrolling if there's more than one item to display
-    if (this.props.exercise.picture.length > 1) {
+    if (this.props.exercise.picture.length > 1 && this._mounted) {
         // Increment position with each new interval
         position = this.state.currentPosition + screenX;
         this.ticker.scrollTo({ x: position, animated: true });
