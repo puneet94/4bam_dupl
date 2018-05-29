@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet,Text, View, PushNotificationIOS,ScrollView, Image, TouchableWithoutFeedback, Platform, Linking, Alert, ImageBackground} from 'react-native';
+import { StyleSheet,Text, View, PushNotificationIOS,ScrollView, TouchableWithoutFeedback, Image, Platform, Linking, Alert, ImageBackground} from 'react-native';
 import OpenSettings from 'react-native-open-settings';
 import appVars from '../../appVars';
 import appStyles from '../../appStyles';
@@ -9,7 +9,7 @@ import PushNotification from 'react-native-push-notification';
 import OneSignal from 'react-native-onesignal';
 import store from 'react-native-simple-store';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-   
+import FastImage from 'react-native-fast-image'
 
 
 class DrawerContainer extends React.Component {
@@ -256,7 +256,7 @@ class DrawerContainer extends React.Component {
 			<View style={{alignItems:'center',
 				justifyContent:'center',height: 200, width: appVars.drawerWidth}}> 
 
-			<Image
+			<FastImage
 			  style={{
 				borderWidth: 2,
 				borderColor: appVars.colorMain,

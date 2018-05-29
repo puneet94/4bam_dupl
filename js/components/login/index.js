@@ -41,7 +41,7 @@ export default class LoginScreen extends PureComponent{
 				  loggedIn: true,
 			  });
 				const { navigation } = this.props;
-				navigation.navigate('Menu');
+				navigation.navigate('Home');
 			}
 		  } catch (e) {
 			console.log(e);

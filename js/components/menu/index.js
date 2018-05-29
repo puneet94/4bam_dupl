@@ -7,12 +7,17 @@ import AlarmScreen from "../alarm";
 import TrainingFinishScreen from "../trainingfinish";
 import LocalNotificationScreen from "../localnotification";
 import HomeScreen from "../home";
+import LoginScreen from "../login";
+
 import NewsScreen from "../newslist";
 import DrawerContainer from "./DrawerContainer";
 import appVars from '../../appVars';
 import appStyles from '../../appStyles';
 
 const Menu = DrawerNavigator({
+  Login: {
+    screen: LoginScreen,
+  },
   Home: {
     screen: HomeScreen,
     navigationOptions : ({ navigation, screenProps }) => ({

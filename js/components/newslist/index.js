@@ -17,7 +17,6 @@ import {
     ToastAndroid,
     Linking,
     Button,
-    Image,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import AwseomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -26,6 +25,8 @@ import appVars from '../../appVars';
 import store from 'react-native-simple-store';
 import { em_s, lineHeight_s, handleExternalUrl } from '../../core/helpers';
 import {getNewsList} from "../../services/storeService";
+import FastImage from 'react-native-fast-image'
+
 
 class NewsListScreen extends Component{
   
@@ -152,7 +153,7 @@ class NewsListScreen extends Component{
           <View style={{flex: 1, flexDirection: 'row'}}>
             <View>
               <View style={[appStyles.imageBorder,{borderRadius: appVars.screenX*(0.125)+4}]}>
-              <Image style={{borderRadius: appVars.screenX*0.125, width: appVars.screenX*0.25, height: appVars.screenX*0.25}} source={{uri: appVars.serverUrl +"/"+item.picture.img.src} } />
+              <FastImage style={{borderRadius: appVars.screenX*0.125, width: appVars.screenX*0.25, height: appVars.screenX*0.25}} source={{uri: appVars.serverUrl +"/"+item.picture.img.src} } />
               </View>
             </View>
             <View style={appStyles.newsListInner}>

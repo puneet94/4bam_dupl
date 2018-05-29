@@ -29,10 +29,6 @@ OneSignal.addEventListener('opened', async (values)=>{
     
 });
 const bamApp = StackNavigator({
-    Login: {
-        screen: LoginScreen,
-        
-    },
     Menu : {
       screen: MenuScreen,
       navigationOptions: ({navigation}) => ({
