@@ -34,7 +34,7 @@ export default  class Exercise extends PureComponent {
   }
     componentDidMount = ()=>{
         
-        //setTimeout(this.startScrolling,8000);
+        setTimeout(this.startScrolling,8000);
     }
 
     componentWillUnmount(){
@@ -122,7 +122,7 @@ scrolling() {
             pagingEnabled={true}
             decelerationRate={0}
             
-            //snapToInterval={appVars.screenX-80}
+            snapToInterval={appVars.screenX-80}
             snapToAlignment={"center"}
             showsHorizontalScrollIndicator={false}
             onMomentumScrollEnd = {this.onMomentumScrollEnd}    
