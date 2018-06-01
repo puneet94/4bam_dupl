@@ -122,7 +122,7 @@ scrolling() {
             pagingEnabled={true}
             decelerationRate={0}
             
-            snapToInterval={appVars.screenX-80}
+            //snapToInterval={appVars.screenX-80}
             snapToAlignment={"center"}
             showsHorizontalScrollIndicator={false}
             onMomentumScrollEnd = {this.onMomentumScrollEnd}    

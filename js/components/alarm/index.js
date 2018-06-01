@@ -17,17 +17,17 @@ export default class AlarmSceen extends PureComponent{
             temporaryText:"",
             temporaryID: null,
             temporaryDay: "",
-            alarmDays: ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"],
+            alarmDays: ["MONTAG","DIENSTAG","MITTWOCH","DONNERSTAG","FREITAG","SAMSTAG","SONNTAG"],
             modalVisible: false,
             validalarms: {},
             ALARM_DAYS: {
-                "MONDAY": [],
-                "TUESDAY": [],
-                "WEDNESDAY":[],
-                "THURSDAY": [],
-                "FRIDAY": [],
-                "SATURDAY": [],
-                "SUNDAY": [],
+                "MONTAG": [],
+                "DIENSTAG": [],
+                "MITTWOCH":[],
+                "DONNERSTAG": [],
+                "FREITAG": [],
+                "SAMSTAG": [],
+                "SONNTAG": [],
             },
             ALARM_TIMES:{}
         }
@@ -145,8 +145,7 @@ export default class AlarmSceen extends PureComponent{
         alarmID  = alarmID?(Number(alarmID)+1) : 1;
         await store.save("ALARM_ID",alarmID);
         
-        let newAlarm = 
-        {
+        let newAlarm = {
             dayName: item,
             alarmID,
             alarmText: item+" alarm",
@@ -156,12 +155,10 @@ export default class AlarmSceen extends PureComponent{
         const newAlarmDays = {...this.state.ALARM_DAYS,[item]:[...this.state.ALARM_DAYS[item],alarmID]}
         const newAlarmTimes = {...this.state.ALARM_TIMES,[alarmID]:newAlarm};
         
-        
         this.setState({
             ALARM_DAYS: newAlarmDays,
             ALARM_TIMES: newAlarmTimes
         });
-        
         
         store.delete('ALARM_DAYS');
         store.save('ALARM_DAYS',newAlarmDays);
