@@ -71,7 +71,7 @@
 		FD6F6FD920B71AAF00FF112E /* GothamNarrow-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD6F6FAC20B71AAF00FF112E /* GothamNarrow-Book.ttf */; };
 		FD794ED320B91BC400339DB4 /* YanoneKaffeesatz-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = FD794EA620B91BC400339DB4 /* YanoneKaffeesatz-Bold.otf */; };
 		FDB7C28F2052A36000E7E911 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD47BFA22052A0B5002D8A76 /* libRCTPushNotification.a */; };
-		45122DA1A47C48B6AB7264ED /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CBEA92C2D474BAAA472E9F3 /* libFastImage.a */; };
+		42A26945A2B74475A5A15AF4 /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C755B0BBAC47AD85AB639C /* libFastImage.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -473,8 +473,8 @@
 		FD47BF8F2052A0B5002D8A76 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		FD6F6FAC20B71AAF00FF112E /* GothamNarrow-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GothamNarrow-Book.ttf"; path = "../../../Library/Mobile Documents/com~apple~CloudDocs/Desktop/eulenfest/assets/fonts/GothamNarrow-Book.ttf"; sourceTree = "<group>"; };
 		FD794EA620B91BC400339DB4 /* YanoneKaffeesatz-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "YanoneKaffeesatz-Bold.otf"; path = "../android/app/src/main/assets/fonts/YanoneKaffeesatz-Bold.otf"; sourceTree = "<group>"; };
-		1FCF46B834ED4FDE8EF1232D /* FastImage.xcodeproj */ = {isa = PBXFileReference; name = "FastImage.xcodeproj"; path = "../node_modules/react-native-fast-image/ios/FastImage.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		9CBEA92C2D474BAAA472E9F3 /* libFastImage.a */ = {isa = PBXFileReference; name = "libFastImage.a"; path = "libFastImage.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		49A21999939947518F00CCF6 /* FastImage.xcodeproj */ = {isa = PBXFileReference; name = "FastImage.xcodeproj"; path = "../node_modules/react-native-fast-image/ios/FastImage.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		38C755B0BBAC47AD85AB639C /* libFastImage.a */ = {isa = PBXFileReference; name = "libFastImage.a"; path = "libFastImage.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -509,7 +509,7 @@
 				6F4C9C9A7BA745F78E13A7B8 /* libRNVectorIcons.a in Frameworks */,
 				EC1978362FF949DC980FC5C5 /* libRNPhotoView.a in Frameworks */,
 				673D45F7862E4F2C8CE7AE39 /* libReact Native Open Settings.a in Frameworks */,
-				45122DA1A47C48B6AB7264ED /* libFastImage.a in Frameworks */,
+				42A26945A2B74475A5A15AF4 /* libFastImage.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -701,7 +701,7 @@
 				A6D9F953956846C59114B187 /* RNVectorIcons.xcodeproj */,
 				9D5E097C9B194EFE85E987DA /* RNPhotoView.xcodeproj */,
 				B99D782E9F574E0886C06BAE /* React Native Open Settings.xcodeproj */,
-				1FCF46B834ED4FDE8EF1232D /* FastImage.xcodeproj */,
+				49A21999939947518F00CCF6 /* FastImage.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1558,10 +1558,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1592,10 +1588,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1689,10 +1681,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1733,10 +1721,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1766,10 +1750,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.BackgroundCheck-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1794,10 +1774,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.BackgroundCheck-tvOSTests";
