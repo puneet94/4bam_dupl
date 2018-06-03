@@ -1,9 +1,10 @@
 import React,{PureComponent} from "react";
 import {
-    View,Text,Button,Modal,StyleSheet,TextInput,FlatList
+    View,Text,Button,Modal,StyleSheet,TextInput,FlatList,TouchableOpacity
 } from "react-native";
 import appVars from "../../appVars";
 import appStyles from '../../appStyles';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import moment from "moment";
 import {getNearestDay} from "../../services/dateService.js";
 const NOTIFICATION_DATE_FORMAT = 'YYYY-MM-DD';
@@ -179,11 +180,19 @@ export default class AlarmSceen extends PureComponent{
     _renderItem = ({item,index})=>{
         if(this.state.validalarms && this.state.validalarms[index+1]){
         return (
-        <View style={{flex:1,margin:10}}>
-            <View style={{flexDirection:"row",justifyContent:"space-between",backgroundColor:"red"}}>
-                <Text style={{fontSize:22,color:"white"}}>{GERMAN_DAYS_MAPPING[item]}</Text>
-                <Button onPress={()=>this.addAlarm(item)} title="Add"/>
-            </View>
+            <View style={{flex:1}}>
+        
+            <TouchableOpacity style={{flexDirection:"row",justifyContent:"space-between",backgroundColor:appVars.colorWhite,  margin: 10}} onPress={()=>this.addAlarm(item)} >
+
+            <View style={appStyles.alarmDayWrapper}><Text style={appStyles.alarmDay}>{GERMAN_DAYS_MAPPING[item]}</Text></View>
+
+            <MaterialCommunityIcons name="alarm-plus" style={{color: appVars.colorMain,fontSize:24}} />
+
+            </TouchableOpacity>
+
+
+       
+
             
             <View>
                 {
@@ -204,7 +213,11 @@ export default class AlarmSceen extends PureComponent{
                         }
                     )
                 }
+            
             </View>
+
+            <View style={appStyles.contentSeperator} />
+
         </View>
         );}
         else{
@@ -214,7 +227,7 @@ export default class AlarmSceen extends PureComponent{
     render(){
         
         return(
-            <View style={{flex:1,backgroundColor:"white"}}>
+            <View style={appStyles.container}>
                 <FlatList
                     style={{flex:1}}
                     data={this.state.alarmDays}
@@ -230,7 +243,6 @@ export default class AlarmSceen extends PureComponent{
                     <View style={styles.modalContainer}>
                         <View style={styles.innerContainer}>
                             <TextInput
-                                style={{height: 40, width:200,borderColor: 'red', borderWidth: 2}}
                                 onChangeText={(temporaryText) => this.setState({temporaryText})}
                                 value={this.state.temporaryText}
                             />

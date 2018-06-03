@@ -453,8 +453,28 @@ drawerLabel: {
   iOSToastText: {
     color: appVars.colorBlack,
   },
+// Alarmmaaaaa
 
-  // HTML
+alarmDayWrapper:{
+    backgroundColor: appVars.colorSeperatorColor,
+    justifyContent:'center',
+    borderRadius:10,
+    width: (x * .90)-5,
+    marginRight: 5,
+},
+
+alarmDay: {
+  fontFamily: appVars.fontMain,
+  color: appVars.colorBlack,
+  fontSize: 18,
+  paddingLeft: 15,
+},
+
+alarmTime: {
+  borderRadius:10,
+  borderColor: appVars.colorMain,
+  marginLeft: 15,
+},
 
   p: {
     fontSize: em(0.875),

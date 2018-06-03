@@ -122,6 +122,7 @@ import {
     htmlUpload: htmlContentUpload,
     htmlImpress: htmlContentImpress,
     htmlPrivacyPolicy: htmlContentPrivacyPolicy,
+
   
   }
   import store from 'react-native-simple-store';
