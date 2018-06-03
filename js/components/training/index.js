@@ -41,6 +41,7 @@ export default class Training extends PureComponent{
         };
 
       selectNextExercise = ()=>{
+        
         let exerciseTime = parseInt(this.currentTime.split(":")[0],10)*60 +  parseInt(this.currentTime.split(":")[1],10);
         
         //Store only when user opens pending exercise. Using localNotification-true from DraweContainer
@@ -48,7 +49,7 @@ export default class Training extends PureComponent{
             totalDuration: this.state.totalDuration+exerciseTime,
             currentExercise: this.state.currentExercise+1
         });
-
+        
         // If this exercise is the last. Then navigate to next page. There we use totalDuration to display.
         // Else start next exercise, adding duration and increment current exercise number
         
@@ -56,12 +57,17 @@ export default class Training extends PureComponent{
             store.delete("PENDING_EXERCISE");
             this.onTimerFinish(this.state.totalDuration+exerciseTime);
         }else{
+            console.log("line 60");
             this.setState({
                 currentExercise: this.state.currentExercise+1,
                 totalDuration: this.state.totalDuration + exerciseTime
+                
+            },()=>{
+                console.log("line65");
             });
             this.resetStopwatch();
           }
+          
       }
     componentWillMount = async ()=>{
 

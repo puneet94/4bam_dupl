@@ -7,9 +7,11 @@ import VideoPlayer from 'react-native-video-player';
 import { NavigationActions } from 'react-navigation';
 import HTMLView from 'react-native-htmlview';
 import FastImage from 'react-native-fast-image'
+import TestGallery from "../testGallery";
 
 const IS_IOS = Platform.OS === 'ios';
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+
 
 export default  class Exercise extends PureComponent {
   constructor(props) {
@@ -18,9 +20,11 @@ export default  class Exercise extends PureComponent {
         galleryPageSelected: 0,
         currentPosition: 0,
         Page: this.props.exercise.count,
-        pageNum: 0
+        pageNum: 0,
+        page: 0,
+        userInactive: false
     }
-    this.scrolling = this.scrolling.bind(this);
+    
   }
   startScrolling = ()=>{
       if((this.state.pageNum<this.props.exercise.picture.length) && this._mounted){
@@ -29,109 +33,71 @@ export default  class Exercise extends PureComponent {
       }
       
   }
+  onPageChange = (page)=>{
+    this.setState({
+      page
+    })
+}
   componentWillMount = ()=>{
+      console.log("mounted exercise");
       this._mounted = true;
   }
     componentDidMount = ()=>{
         
-        setTimeout(this.startScrolling,8000);
+        //setTimeout(this.startScrolling,8000);
     }
 
     componentWillUnmount(){
         this._mounted = false;
-    }
-
-timerstart() {
-    this.activeInterval = setInterval(this.scrolling, 4000);
-}
-timeclear() {
-    clearInterval(this.activeInterval);
-}
-// Scrolling Animation
-scrolling() {
-    const { navigation } = this.props;
-    let screenX = Math.round(appVars.screenX);
-
-    // Start scrolling if there's more than one item to display
-    if (this.props.exercise.picture.length > 1 && this._mounted) {
-        // Increment position with each new interval
-        position = this.state.currentPosition + screenX;
-        this.ticker.scrollTo({ x: position, animated: true });
         
-        // After position passes this value, snaps back to beginning
-        this.setState({currentPosition: position});
-        maxOffset = screenX*(this.props.exercise.picture.length-1);
-
-        this.setState({galleryPageSelected: this.state.galleryPageSelected + 1});
-
-        // Set animation back to first image
-        if (position > maxOffset) {
-             this.ticker.scrollTo({ x: 0, animated: true })
-             this.setState({ currentPosition: 0,pageNum: 0});
-        }
-        else {
-            this.setState({ currentPosition: position,pageNum:position/screenX });
-        }
-
     }
-}
 
+// Scrolling Animation
   renderGalleryImages = ()=>{
+      
     const { navigation } = this.props;
     return this.props.exercise.picture.map((temp,index)=>{
+        
         return (
-            <TouchableOpacity style={{flex:1}} key={index} onPress={()=>{navigation.navigate('ExerciseGallery',{images:this.props.exercise.picture,initialPage:index})}}>        
-            <FastImage
+
+            <View style={{flex:1}} key={"page"+index}>
+            <TouchableOpacity style={{flex:1}} key={temp.sources[0].src} onPress={()=>{navigation.navigate('ExerciseGallery',{images:this.props.exercise.picture,initialPage:index})}}>        
+            
+            <Image
                 key={this.props.exercise.picture.id} 
                 style={styles.child}
                 source={{
                 uri: ''+appVars.serverUrl+'/'+temp.sources[0].src+'',
                 priority: FastImage.priority.normal,
                 }}
-                resizeMode={FastImage.resizeMode.contain}
+                resizeMode={"contain"}
             />
-        </TouchableOpacity>)
+        </TouchableOpacity></View>)
     })
   }
 
   renderGalleryDots = ()=>{
           let dotsArray = [];
           for(let i = 0; i<this.props.exercise.picture.length;i++){
-              dotsArray.push(<View key={i} style={i==this.state.pageNum?styles.selectedCircle:styles.circle}>
+              dotsArray.push(<View key={i} style={i==this.state.page?styles.selectedCircle:styles.circle}>
      
               </View>)
           }
           return dotsArray;
       }
       
-    onMomentumScrollEnd = (e)=>{
-        let screenX = Math.round(appVars.screenX);
-        console.log(e.nativeEvent);
-        this.setState({ pageNum:(e.nativeEvent.contentOffset.x)/screenX });
-      }
-
   renderScroll =()=> {
     return(
-
-        <View>
-        <View style={styles.contentElement}>
-          <ScrollView
-            ref={(ref) => this.ticker = ref}
-            style={styles.scrollview}
-            horizontal={true}
-            pagingEnabled={true}
-            decelerationRate={0}
-            
-            //snapToInterval={appVars.screenX-80}
-            snapToAlignment={"center"}
-            showsHorizontalScrollIndicator={false}
-            onMomentumScrollEnd = {this.onMomentumScrollEnd}    
-            
+        <View style={{flex:1}}>
+        
+          {this.props.exercise.picture?<TestGallery style={{flex:1}} 
+          exercise = {this.props.exercise}
+            images={this.props.exercise.picture?this.props.exercise.picture:[]}
+            onPageChange = {this.onPageChange}
             >
-                    {this.renderGalleryImages()}
-
-          </ScrollView>
-        </View>
+            {this.renderGalleryImages()}
+          </TestGallery>:null}
+          
        
         </View>
         )
@@ -153,7 +119,7 @@ scrolling() {
                     </View>
                     <View style={{alignItems:"center",justifyContent:"center"}}>
                         <View style={{flexDirection:"row"}}>{this.renderGalleryDots()}</View>
-                        <Text>{this.state.pageNum}</Text>
+                        
                     </View>
 
                     <View style={appStyles.contentElement}>
@@ -203,4 +169,3 @@ const styles=  StyleSheet.create({
         },
 
 });
-
