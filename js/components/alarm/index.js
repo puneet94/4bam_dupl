@@ -10,6 +10,16 @@ const NOTIFICATION_DATE_FORMAT = 'YYYY-MM-DD';
 import {scheduleLocalNotification,cancelNotification} from "../../services/localNotification";
 import store from "react-native-simple-store";
 import AlarmDate from "./alarmDate";
+
+const GERMAN_DAYS_MAPPING = {
+    MONDAY: "MONTAG",
+    TUESDAY: "DIENSTAG",
+    WEDNESDAY: "MITTWOCH",
+    THURSDAY: "DONNERSTAG",
+    FRIDAY: "FREITAG",
+    SATURDAY: "SAMSTAG",
+    SUNDAY: "SONNTAG"
+}
 export default class AlarmSceen extends PureComponent{
     constructor(props){
         super(props);
@@ -17,17 +27,17 @@ export default class AlarmSceen extends PureComponent{
             temporaryText:"",
             temporaryID: null,
             temporaryDay: "",
-            alarmDays: ["MONTAG","DIENSTAG","MITTWOCH","DONNERSTAG","FREITAG","SAMSTAG","SONNTAG"],
+            alarmDays: ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"],
             modalVisible: false,
             validalarms: {},
             ALARM_DAYS: {
-                "MONTAG": [],
-                "DIENSTAG": [],
-                "MITTWOCH":[],
-                "DONNERSTAG": [],
-                "FREITAG": [],
-                "SAMSTAG": [],
-                "SONNTAG": [],
+                "MONDAY": [],
+                "TUESDAY": [],
+                "WEDNESDAY":[],
+                "THURSDAY": [],
+                "FRIDAY": [],
+                "SATURDAY": [],
+                "SUNDAY": [],
             },
             ALARM_TIMES:{}
         }
@@ -171,7 +181,7 @@ export default class AlarmSceen extends PureComponent{
         return (
         <View style={{flex:1,margin:10}}>
             <View style={{flexDirection:"row",justifyContent:"space-between",backgroundColor:"red"}}>
-                <Text style={{fontSize:22,color:"white"}}>{item}</Text>
+                <Text style={{fontSize:22,color:"white"}}>{GERMAN_DAYS_MAPPING[item]}</Text>
                 <Button onPress={()=>this.addAlarm(item)} title="Add"/>
             </View>
             
