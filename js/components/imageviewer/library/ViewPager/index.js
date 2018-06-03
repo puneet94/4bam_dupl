@@ -52,7 +52,6 @@ export default class ViewPager extends PureComponent {
 
     constructor (props) {
         super(props);
-
         this.onLayout = this.onLayout.bind(this);
         this.renderRow = this.renderRow.bind(this);
         this.onResponderGrant = this.onResponderGrant.bind(this);
@@ -95,6 +94,7 @@ export default class ViewPager extends PureComponent {
             onResponderRelease: this.onResponderRelease,
             onResponderTerminate: this.onResponderRelease
         });
+        
     }
 
     componentDidMount () {
@@ -116,6 +116,7 @@ export default class ViewPager extends PureComponent {
             this.scrollByOffset(1);
             this.scrollByOffset(-1);
         });
+        
     }
 
     componentDidUpdate (prevProps) {

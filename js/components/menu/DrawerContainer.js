@@ -57,7 +57,7 @@ class DrawerContainer extends React.Component {
 					//Alert.alert("USER INFO",);
 					
 					store.delete("PENDING_EXERCISE");
-					notification.fireDate && navigation.navigate('LocalNotification',
+					(notification.fireDate || notification.data) && navigation.navigate('LocalNotification',
 						{
 							localNotification:true,
 							alarmID:notification.id || notification.data.id || notification.data.alarmID}
