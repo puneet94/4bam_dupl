@@ -59,7 +59,7 @@ function fetchNextTime(alarmID,alarmsIDs,alarmsHash){
     return mappedIDs.find((element)=>element.alarmTime>alarmTime);
   }
 export function getNextAlarm2(alarmID, alarmDays, alarmTimes){
-    const daysArray = ["MONTAG","DIENSTAG","MITTWOCH","DONNERSTAG","FREITAG","SAMSTAG","SONNTAG"];
+    const daysArray = ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"];
     const alarmValue = alarmTimes[alarmID];
     const alarmDay = alarmValue.dayName;
     const dayIndex = daysArray.indexOf(alarmDay);
@@ -79,7 +79,7 @@ export function getNextAlarm2(alarmID, alarmDays, alarmTimes){
     return alarmValue;    
 }
 export function getNextAlarm(alarmDays, alarmTimes){
-    const daysArray = ["MONTAG","DIENSTAG","MITTWOCH","DONNERSTAG","FREITAG","SAMSTAG","SONNTAG"];
+    const daysArray = ["MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY","SUNDAY"];
     const alarmValue = moment();
     const alarmDay = alarmValue.format('dddd').toUpperCase();
     const alarmTime  = alarmValue.format('HH:mm');
