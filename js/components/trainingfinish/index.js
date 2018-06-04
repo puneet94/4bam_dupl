@@ -13,7 +13,7 @@ export default class TrainingFinish extends PureComponent{
         }
     }
     onRating=(rating)=>{
-        Alert.alert(`Thanks for the ${rating} rating`);
+        //Alert.alert(`Thanks for the ${rating} rating`);
     }
     componentWillMount = async ()=>{
         if(this.props.navigation.state.params){
@@ -22,16 +22,14 @@ export default class TrainingFinish extends PureComponent{
                 let ALARM_DAYS = await store.get("ALARM_DAYS");
                 const {alarmTime,dayName}=getNextAlarm(ALARM_DAYS,ALARM_TIMES);
                 this.setState({time:alarmTime,day:dayName,totalDuration});             
-                Alert.alert("total duration",totalDuration+"-");
+                //Alert.alert("total duration",totalDuration+"-");
         }        
     }
     render(){
         return (
             <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"white"}}>
-                <Text>{"Next alarm at"}</Text>
-                <Text>{this.state.time}</Text>
-                <Text>{this.state.day}</Text>
-                <Rating onRating={this.onRating}/>
+                <Text style={{color: 'black'}}>Dein nächstes Training am {this.state.day} um {this.state.time}</Text>
+        {/*<Rating onRating={this.onRating}/>*/}
             </View>
         );
     }

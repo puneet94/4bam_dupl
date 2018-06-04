@@ -39,7 +39,7 @@ class ImageViewerScreen extends Component {
         if(this.state.images){
             return (
                 <View style={appStyles.contenContainer}>
-                <Button onPress={()=>{this.ref.scrollToIndex({index:2});}} title="hello"></Button>
+                {/*<Button onPress={()=>{this.ref.scrollToIndex({index:2});}} title="hello"></Button>*/}
                   <Gallery
                   style={{flex: 1, backgroundColor: 'white'}}
                   images={this.state.images}

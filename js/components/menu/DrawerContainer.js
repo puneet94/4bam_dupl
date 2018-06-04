@@ -270,7 +270,7 @@ class DrawerContainer extends React.Component {
         	/>
 
 			<Text style={{fontFamily: appVars.fontMain,  color: appVars.colorWhite, fontSize: 24 }}>{this.state.firstName}</Text>
-			<Text style={{fontFamily: appVars.fontText,  color: appVars.colorWhite, fontSize: 11 }}>{this.state.groupName}</Text>
+			<Text style={{fontFamily: appVars.fontText,  color: appVars.colorWhite, fontSize: 11, marginLeft:10,marginRight:10}}>{this.state.groupName}</Text>
 	
 
 			
@@ -286,7 +286,7 @@ class DrawerContainer extends React.Component {
 			<TouchableWithoutFeedback onPress={() => navigation.navigate('Alarms')} >
 				<View style={[appStyles.drawerItem,this.isActiveClass('Alarms')]}>
 				<MaterialCommunityIcons name="alarm-multiple" style={appStyles.drawerIcon} />
-				<Text style={appStyles.drawerLabel}>{"Alarms".toUpperCase()}</Text>
+				<Text style={appStyles.drawerLabel}>{appVars.labelTimeTable.toUpperCase()}</Text>
 				</View>
 			</TouchableWithoutFeedback>
 

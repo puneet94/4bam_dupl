@@ -154,7 +154,7 @@ export default class Training extends PureComponent{
         if(this.state.exerciseLoading){
             return(
 
-                <View style={{flex:1,justifyContent:"center"}}>
+                <View style={{flex:1,justifyContent:"center",backgroundColor:appVars.colorWhite}}>
                     <ActivityIndicator size="large" color={appVars.colorMain} />
                 </View>
             )
@@ -162,12 +162,16 @@ export default class Training extends PureComponent{
 
         
         return (
-            <View style={{flex:1,backgroundColor:appVars.colorWhite}}>
-                {
-                    <View style={{flex:1}}>
-                        {/*this.state.localNotification?<Text style={styles.trainingMessage}>{this.state.alarmValue.alarmText}</Text>:<Text style={styles.trainingMessage}>{"Training Screen"}</Text>*/}
+            <View style={{flex:1, backgroundColor:'white'}}>
+                
+                
+                        
                         <Exercise {...this.props} exercise = {this.state.exercises[this.state.currentExercise]}/>
-                        <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10,marginBottom:10, paddingTop: 10,borderColor: '#ddd',borderTopWidth: 1}}> 
+                        
+
+
+            <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10,marginBottom:10, paddingTop: 10,borderColor: '#ddd',borderTopWidth: 1}}>
+
                             <TouchableHighlight onPress={this.toggleStopwatch} style={{backgroundColor:appVars.colorMain,marginLeft: 15,padding:10,width:90, borderRadius:5}}>
                                 <View style={{flex:1,flexDirection:"row"}}>
                                     <Entypo name="stopwatch" style={{color:"white",fontSize:18,marginRight:5}}/>
@@ -186,10 +190,10 @@ export default class Training extends PureComponent{
                                     <Text style={{fontSize: 16,color:"black", fontFamily: appVars.fontMain, textAlign:"center"}}>RESET</Text>
                                 </View>
                             </TouchableHighlight>
-                        </View>
-                    </View>
-                    
-                }
+            </View>     
+
+                        
+                
             </View>
         )}
     }

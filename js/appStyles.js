@@ -476,6 +476,21 @@ alarmTime: {
   marginLeft: 15,
 },
 
+startButton: {
+  width: 200,
+      height: 200,
+      backgroundColor:appVars.colorMain,
+      borderRadius: 100,
+      justifyContent:"center",
+      alignItems:"center",
+},
+
+startButtonText: {
+  fontFamily: appVars.fontMain,
+  fontSize: 18,
+  color: appVars.colorWhite,
+},
+
   p: {
     fontSize: em(0.875),
     lineHeight: lineHeight(0.875,150),

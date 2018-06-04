@@ -28,7 +28,7 @@ const Menu = DrawerNavigator({
   Alarms: {
     screen: AlarmScreen,
     navigationOptions : ({ navigation, screenProps }) => ({
-      headerTitle:  <Text style={ appStyles.headerTitle }>ALARM</Text>,
+      headerTitle:  <Text style={ appStyles.headerTitle }>{appVars.labelTimeTable.toUpperCase()}</Text>,
     }),
   },
   Training: {

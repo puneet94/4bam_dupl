@@ -1,7 +1,9 @@
 import React,{PureComponent} from "react";
 import {
-    View,Text,Button,Picker
+    View,Text,Button,Picker,StyleSheet,TouchableOpacity
 } from "react-native";
+import appVars from '../../appVars';
+import appStyles from '../../appStyles';
 import store from "react-native-simple-store"
 import {scheduleLocalNotification} from "../../services/localNotification";
 import moment from "moment";
@@ -51,36 +53,45 @@ export default class LocalNotificationScreen extends PureComponent{
     }
     render = ()=>{
         return (
-        <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-            <View style={{justifyContent:"center",alignItems:"center"}}>
-                <Button
-                    onPress={()=>this.redirectTraining()}
-                    title="Start Training"
-                    color="#09437f"
-                    />
-                <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
-                    <Button style={{width:100}}
+        <View style={appStyles.container}>
+            <View style={{flex: 1,justifyContent:"center",alignItems:"center"}}>
+
+            <TouchableOpacity  style={appStyles.startButton} activeOpacity = { .5 } onPress={()=>this.redirectTraining()}>
+                <Text style={appStyles.startButtonText}>JETZT STARTEN</Text>
+            </TouchableOpacity>
+
+            <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center"}}>
+
+                    <Button style={{width:20}}
                         onPress={()=>this.snoozeAlarm()}
                         title="Snooze"
                         color="#09437f"
                     />
 
-                    <Picker style={{width:150}}
+                    <Picker style={{width:100}}
                         selectedValue={this.state.snoozeTime}
                         onValueChange={(itemValue, itemIndex) => this.setState({snoozeTime: itemValue})}>
-                            <Picker.Item label="1 minutes" value="1" />
-                            <Picker.Item label="5 minutes" value="5" />
-                            <Picker.Item label="10 minutes" value="10" />
-                            <Picker.Item label="15 minutes" value="15" />
-                            <Picker.Item label="20 minutes" value="20" />
-                            <Picker.Item label="25 minutes" value="25" />
-                            <Picker.Item label="30 minutes" value="30" />
-                            <Picker.Item label="45 minutes" value="45" />
-                            <Picker.Item label="60 minutes" value="60" />
+                            <Picker.Item label="5 Minuten" value="5" />
+                            <Picker.Item label="10 Minuten" value="10" />
+                            <Picker.Item label="15 Minuten" value="15" />
+                            <Picker.Item label="20 Minuten" value="20" />
+                            <Picker.Item label="25 Minuten" value="25" />
+                            <Picker.Item label="30 Minuten" value="30" />
+                            <Picker.Item label="45 Minuten" value="45" />
+                            <Picker.Item label="60 Minuten" value="60" />
                     </Picker>
                 </View>
             </View>
-        </View>);
+            </View>);
         
     }
 }
+const styles = StyleSheet.create({
+ 
+   
+    TextStyle:{
+        color:'#fff',
+        textAlign:'center',
+    }
+   
+  });

@@ -63,7 +63,8 @@ export default  class Exercise extends PureComponent {
             <View style={{flex:1}} key={"page"+index}>
             <TouchableOpacity style={{flex:1}} key={temp.sources[0].src} onPress={()=>{navigation.navigate('ExerciseGallery',{images:this.props.exercise.picture,initialPage:index})}}>        
             
-            <Image
+            <FastImage
+            
                 key={this.props.exercise.picture.id} 
                 style={styles.child}
                 source={{
@@ -107,39 +108,51 @@ export default  class Exercise extends PureComponent {
   render() {
     
     return (
-        
-                <View>
-                    <View style={{flex:0, height: appVars.screenX}}>   
+        <View style={{flex:1,margin:10,marginBottom:0,}}>
+
+                    <View style={{height: appVars.screenX-40}}>
                 {
-                this.props.exercise.video?<VideoPlayer video={{uri: this.props.exercise.video}} style={{width:sliderWidth,height:slideHeight*1.7}}/>:
                 
                     this.renderScroll()
                 }
-                 
-                    </View>
-                    <View style={{alignItems:"center",justifyContent:"center"}}>
-                        <View style={{flexDirection:"row"}}>{this.renderGalleryDots()}</View>
-                        
-                    </View>
 
-                    <View style={appStyles.contentElement}>
+                                         <View style={{alignItems:"center",justifyContent:"center",flexDirection:"row"}}>
+
+{this.renderGalleryDots()}
+
+</View>                
+                    </View>               
+
+                    <ScrollView>
+                    
                     <Text style={appStyles.a}>{this.props.exercise.block}</Text>
-                    <ScrollView style={{flex:0, height: appVars.screenY-appVars.screenX-240}}>
+         
                         <HTMLView
-                        addLineBreaks={false}
+                        addLineBreaks={true}
                         value={this.props.exercise.text}
                         stylesheet={appStyles}
                         onLinkPress={(url) => console.log('clicked link: ', url)}
                         />
-                    </ScrollView>
+
+                    
                     <View style={{flexDirection:"row"}} >
+                        
                         <Text style={appStyles.a}>Intensität:</Text>
+                        <View style={{width:appVars.screenX-100}}>
                         <Text style={appStyles.p}>{this.props.exercise.intent}</Text>
+                        </View>
                     </View>
 
-                    </View>
-                    
-                </View>
+                    </ScrollView>
+
+
+
+
+
+
+
+        </View> 
+                   
         
     
     )
@@ -148,9 +161,10 @@ export default  class Exercise extends PureComponent {
 const styles=  StyleSheet.create({
  
         child: {
-          height: appVars.screenX,
-          width: appVars.screenX,
-          justifyContent: 'center'
+          height: appVars.screenX-50,
+          width: appVars.screenX-50,
+          alignItems:"center",
+          justifyContent:"center"
         },
 
         circle: {

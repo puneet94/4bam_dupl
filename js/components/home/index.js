@@ -215,14 +215,18 @@ export default class Home extends Component{
                         this.state.dayMessages.map((dayMessage)=>{    
                          
 
-                        return <ScrollView key={dayMessage.id}>
+                        return <ScrollView style={appStyles.contentElement} key={dayMessage.id}>
                                 
-                                <Text style={{fontFamily: appVars.fontMain,  color: appVars.colorBlack, fontSize: 16, marginLeft: 15, marginRight: 15, }}>{dayMessage.title}</Text>
-                                <HTMLView
-                                    addLineBreaks={false}
-                                    stylesheet={appStyles}
-                                    value={dayMessage.text}
-                                />
+
+                                <Text style={appStyles.headline}>{dayMessage.title}</Text>
+
+                                <HTMLView addLineBreaks={false} value={dayMessage.text} 
+
+                                stylesheet={appStyles}
+
+                                onLinkPress={(url) => handleExternalUrl(url)} />
+
+
                             </ScrollView>
                         }
                         
