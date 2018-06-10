@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,ScrollView,Button,Dimensions,BackHandler,Platform,Alert,TouchableOpacity, PixelRatio} from "react-native";
+import {StyleSheet,Text,View,ScrollView,Button,Dimensions,BackHandler,Platform,Alert,TouchableOpacity, PixelRatio,TouchableHighlight} from "react-native";
 import store from "react-native-simple-store";
 import appVars from "../../appVars";
 import appStyles from "../../appStyles";
@@ -205,7 +205,7 @@ export default class Home extends Component{
                             this.state.dayMessages.map((dayMessage)=>{    
                              
     
-                            return <ScrollView style={appStyles.contentElement} key={dayMessage.id}>
+                            return <ScrollView key={dayMessage.id}>
                                     
     
                                     <Text style={appStyles.headline}>{dayMessage.title}</Text>
@@ -236,13 +236,18 @@ export default class Home extends Component{
                 
                 <View style={appStyles.contentSeperator} />
                 
-                <View style={{marginLeft: 15, marginTop:10, marginBottom: 10, marginRight: 15}}>
-                        <Button
-                        onPress={this.start.bind(this)}
-                        title="JETZT TRAINIEREN"
-                        color={appVars.colorMain}
-                        />
-                </View>
+                <View style={{marginBottom:5, paddingTop: 5}}>
+
+
+                <TouchableHighlight onPress={this.start.bind(this)}style={{backgroundColor:appVars.colorMain,padding:10, marginRight: 10,marginLeft: 10, height:35, borderRadius:5}}>
+                    <View style={{flex:1,flexDirection:"row",alignItems: "center", justifyContent: "center"}}>
+                        <MaterialCommunityIcons name="view-carousel" style={{fontSize:18,color: "white",marginRight: 5}}/>
+                        <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>JETZT TRAINIEREN</Text>
+                    </View>
+                </TouchableHighlight>
+                </View>     
+
+
 
                 <Toast ref="toast" position={this.state.position}/>
             </View>

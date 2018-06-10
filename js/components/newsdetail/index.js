@@ -14,7 +14,8 @@ import {
     Modal,
     ListView,
     Alert,
-    ActivityIndicator
+    ActivityIndicator,
+    Image
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import AwseomeIcon from 'react-native-vector-icons/FontAwesome';
@@ -22,8 +23,6 @@ import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import appStyles from '../../appStyles';
 import appVars from '../../appVars';
 import { NavigationActions } from 'react-navigation';
-import FastImage from 'react-native-fast-image'
-
 
 import store from 'react-native-simple-store';
 import { em_s, lineHeight_s, handleExternalUrl } from '../../core/helpers';
@@ -62,8 +61,6 @@ componentWillMount = async ()=>{
          headerRight: <View style={appStyles.headerRight}><Text style={appStyles.headerRightText}>{params.newsdate}</Text></View>
     }
  };
-
-
 
   componentDidMount = async ()=>{
      this.fetchdata();
@@ -113,7 +110,7 @@ fetchdata = async () => {
 
     return(
       <View>
-      <FastImage style={{width: appVars.screenX, height: appVars.screenX}}
+      <Image style={{width: appVars.screenX, height: appVars.screenX}}
                   source={{uri: appVars.serverUrl +"/"+item.picture.img.src} }
                   />
 
@@ -137,7 +134,7 @@ fetchdata = async () => {
         <View style={{flex: 1, flexDirection: 'row'}}>
             <View>
               <View style={[appStyles.imageBorder,{borderRadius: appVars.screenX*(0.125)+4}]}>
-              <FastImage style={{borderRadius: appVars.screenX*0.125, width: appVars.screenX*0.25, height: appVars.screenX*0.25}} source={{uri: appVars.serverUrl +"/"+item.author_picture.img.src} } />
+              <Image style={{borderRadius: appVars.screenX*0.125, width: appVars.screenX*0.25, height: appVars.screenX*0.25}} source={{uri: appVars.serverUrl +"/"+item.author_picture.img.src} } />
               </View>
             </View>
 
