@@ -103,7 +103,20 @@ fetchdata = async () => {
     })
   }
   
-
+  densi = ()=> {
+    if (appVars.screenX > 768) {
+        return 3
+      } else if (appVars.screenX > 414) {
+        return 2
+      } else if (appVars.screenX > 375) {
+        return 1
+      } else if (appVars.screenX > 320) {
+        return 0
+      }
+    else {
+        return 3
+    }
+}
 
  renderItem = (item) =>{
 
@@ -111,7 +124,7 @@ fetchdata = async () => {
     return(
       <View>
       <Image style={{width: appVars.screenX, height: appVars.screenX}}
-                  source={{uri: appVars.serverUrl +"/"+item.picture.img.src} }
+                  source={{uri: appVars.serverUrl +"/"+item.picture.sources[this.densi()].src} }
                   />
 
       <View style={appStyles.contentElement}>

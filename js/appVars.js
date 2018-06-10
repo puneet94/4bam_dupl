@@ -40,7 +40,7 @@ import {
     noteIcon: "sticky-note",
   
     //drawerWidth
-    drawerWidth: ScreenWidth*0.69,
+    drawerWidth: ScreenWidth*0.80,
   
     //BaseUnit
     baseUnit: 16,

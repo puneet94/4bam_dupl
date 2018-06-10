@@ -1,6 +1,6 @@
 import StarRating from 'react-native-star-rating';
 import React,{PureComponent} from 'react';
-import {View, Alert,StyleSheet, Dimensions, Platform,Text,Image,ScrollView,TouchableOpacity,ActivityIndicator} from "react-native";
+import {View, PixelRatio,Alert,StyleSheet, Dimensions, Platform,Text,Image,ScrollView,TouchableOpacity,ActivityIndicator} from "react-native";
 import appVars from '../../appVars';
 import appStyles from '../../appStyles';
 import VideoPlayer from 'react-native-video-player';
@@ -52,9 +52,23 @@ export default  class Exercise extends PureComponent {
         
     }
 
+    densi = ()=> {
+        if (appVars.screenX > 768) {
+            return 3
+          } else if (appVars.screenX > 414) {
+            return 2
+          } else if (appVars.screenX > 375) {
+            return 1
+          } else if (appVars.screenX > 320) {
+            return 0
+          }
+        else {
+            return 3
+        }
+    }
 // Scrolling Animation
   renderGalleryImages = ()=>{
-      
+
     const { navigation } = this.props;
     return this.props.exercise.picture.map((temp,index)=>{
         
@@ -62,13 +76,12 @@ export default  class Exercise extends PureComponent {
 
             <View style={{flex:1}} key={"page"+index}>
             <TouchableOpacity style={{flex:1}} key={temp.sources[0].src} onPress={()=>{navigation.navigate('ExerciseGallery',{images:this.props.exercise.picture,initialPage:index})}}>        
-            
-            <Image
+            <Text>{appVars.screenX}</Text><Image
             
                 key={this.props.exercise.picture.id} 
                 style={styles.child}
                 source={{
-                uri: ''+appVars.serverUrl+'/'+temp.sources[0].src+'',
+                uri: ''+appVars.serverUrl+'/'+temp.sources[this.densi()].src+'',
                 }}
                 resizeMode={"contain"}
             />

@@ -153,7 +153,7 @@ class NewsListScreen extends Component{
           <View style={{flex: 1, flexDirection: 'row'}}>
             <View>
               <View style={[appStyles.imageBorder,{borderRadius: appVars.screenX*(0.125)+4}]}>
-              <Image style={{borderRadius: appVars.screenX*0.125, width: appVars.screenX*0.25, height: appVars.screenX*0.25}} source={{uri: appVars.serverUrl +"/"+item.picture.img.src} } />
+              <Image style={{borderRadius: appVars.screenX*0.125, width: appVars.screenX*0.25, height: appVars.screenX*0.25}} source={{uri: appVars.serverUrl +"/"+item.picture.sources[0].src} } />
               </View>
             </View>
             <View style={appStyles.newsListInner}>

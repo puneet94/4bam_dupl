@@ -19,7 +19,7 @@ class ImageViewerScreen extends Component {
     
     if(navParams.images) {
       let images = navParams.images.map((temp)=>{
-        return {source:{uri:appVars.serverUrl+'/'+temp.sources[0].src}}
+        return {source:{uri:appVars.serverUrl+'/'+temp.sources[4].src}}
         });
 
         
