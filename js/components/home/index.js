@@ -190,44 +190,41 @@ export default class Home extends Component{
             });
         }
     }
-    render(){
-        return (
-            <View style={{flex:1, backgroundColor: appVars.colorWhite}}>
-                
-                <View style={appStyles.contentElement}>
-
-                    <View style={{height:150}}>
-                
-                
-
-                
-                    {
-                        this.state.dayMessages.map((dayMessage)=>{    
-                         
-
-                        return <ScrollView style={appStyles.contentElement} key={dayMessage.id}>
-                                
-
-                                <Text style={appStyles.headline}>{dayMessage.title}</Text>
-
-                                <HTMLView addLineBreaks={false} value={dayMessage.text} 
-
-                                stylesheet={appStyles}
-
-                                onLinkPress={(url) => handleExternalUrl(url)} />
-
-
-                            </ScrollView>
+        render(){
+            return (
+                <View style={{flex:1, backgroundColor: appVars.colorWhite}}>
+                    
+                    <View style={appStyles.contentElement}>
+    
+                        <View style={{height:150}}>
+                    
+                    
+    
+                    
+                        {
+                            this.state.dayMessages.map((dayMessage)=>{    
+                             
+    
+                            return <ScrollView style={appStyles.contentElement} key={dayMessage.id}>
+                                    
+    
+                                    <Text style={appStyles.headline}>{dayMessage.title}</Text>
+    
+                                    <HTMLView addLineBreaks={false} value={dayMessage.text} 
+    
+                                    stylesheet={appStyles}
+    
+                                    onLinkPress={(url) => handleExternalUrl(url)} />
+    
+    
+                                </ScrollView>
+                            }
+                            
+                            )
                         }
                         
-                        )
-                    }
-                    
+                        </View>
                     </View>
-                </View>
-
-                
-                <View style={appStyles.contentSeperator} />
 
                 <ScrollView style={appStyles.contenContainer}>
                 <View style={appStyles.contentElement}>

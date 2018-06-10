@@ -268,9 +268,9 @@ drawerLabel: {
   },
 
   headerRightText: {
-    fontFamily: appVars.fontMain,
-    color: appVars.colorBlack,
-    fontSize: 18,
+    fontFamily: appVars.fontText,
+    fontSize: 16,
+    color: appVars.colorMain,
   },
   headerRight: {
     marginRight: 15,
@@ -534,7 +534,6 @@ startButtonText: {
     fontSize: em(0.750),
     fontFamily: appVars.fontText,
     color: appVars.colorMain,
-    marginBottom: 3,
 },
 
 });

@@ -105,10 +105,12 @@ fetchdata = async () => {
       this.fetchdata();
     })
   }
-
+  
 
 
  renderItem = (item) =>{
+
+
     return(
       <View>
       <FastImage style={{width: appVars.screenX, height: appVars.screenX}}
@@ -194,3 +196,4 @@ fetchdata = async () => {
 }
 
 export default NewsDetailScreen;
+
