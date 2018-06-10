@@ -94,6 +94,7 @@ class DrawerContainer extends React.Component {
 	componentWillMount = async ()=> {
 		let firstName = await store.get("FIRSTNAME");
 		let groupName = await store.get("GROUPTITLE");
+		let pushgroup = await store.get("GROUPS");
 		let logo = await store.get("GROUPLOGO");
 
         this.setState({
@@ -105,7 +106,7 @@ class DrawerContainer extends React.Component {
 		this.setState({
             logo
 		});
-		OneSignal.sendTag("group", '16');
+		OneSignal.sendTag("group", pushgroup);
 		OneSignal.getPermissionSubscriptionState(async (status)=>{
 			console.log("status check",status);
 
