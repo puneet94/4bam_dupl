@@ -57,13 +57,11 @@ export default class Training extends PureComponent{
             store.delete("PENDING_EXERCISE");
             this.onTimerFinish(this.state.totalDuration+exerciseTime);
         }else{
-            console.log("line 60");
+            
             this.setState({
                 currentExercise: this.state.currentExercise+1,
                 totalDuration: this.state.totalDuration + exerciseTime
                 
-            },()=>{
-                console.log("line65");
             });
             this.resetStopwatch();
           }
@@ -183,11 +181,19 @@ export default class Training extends PureComponent{
                                     <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>{!this.state.stopwatchStart ? "START" : "STOP"}</Text>
                                 </View>
                             </TouchableHighlight>
-                            <TouchableHighlight onPress={this.selectNextExercise} style={{backgroundColor:appVars.colorLightGray,padding:10,width:100,borderRadius:5}}>
-                                <View style={{flex:1,flexDirection:"row",alignItems: "center"}}>
-                                    <Octicons name="arrow-right" style={{fontSize:18,color:appVars.colorMain}}/>
-                                    <Text style={{fontSize: 16,color:"black", fontFamily: appVars.fontMain,color:appVars.colorMain}}>WEITER</Text>
+                            <TouchableHighlight onPress={this.selectNextExercise} style={{backgroundColor:appVars.colorLightGray,padding:10,width:140,borderRadius:5}}>
+                            <View style={{flex:1,flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
+                                    <View style={{flex:7,flexDirection:"row",alignItems:"center"}}>
+                                        <Octicons name="arrow-right" style={{fontSize:18,color:appVars.colorMain}}/>
+                                        <Text style={{fontSize: 16,color:"black", fontFamily: appVars.fontMain, textAlign:"center",color:appVars.colorMain}}>WEITER</Text>
+                                    </View>
+                                    <View style={{flex:3,alignItems:"center",justifyContent:"center",flexDirection:"row"}}>
+                                        <Text>{"( "+this.state.exercises[this.state.currentExercise].index}</Text>
+                                        <Text>{"/"}</Text>
+                                        <Text>{this.state.exercises.length+" )"}</Text>
+                                    </View>
                                 </View>
+
                             </TouchableHighlight>
                             <TouchableHighlight onPress={this.resetStopwatch} style={{backgroundColor:appVars.colorLightGray,padding:10,width:90,marginRight: 15, height:35, borderRadius:5}}>
                                 <View style={{flex:1,flexDirection:"row",alignItems: "center"}}>
