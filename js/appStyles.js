@@ -79,7 +79,7 @@ module.exports = StyleSheet.create({
   timeline_dot_outer_today: {
     width: 15,
     height: 15,
-    backgroundColor: "red",
+    backgroundColor: appVars.colorActive,
     borderRadius:10,
     alignItems:'center',
     justifyContent:'center',
@@ -112,9 +112,9 @@ module.exports = StyleSheet.create({
   },
   timeline_text_care: {
     fontFamily: appVars.fontText,
-    color: "red",
+    color: appVars.colorMain,
+    fontWeight: 'bold',
     marginTop: 4,
-    fontFamily: appVars.fontText,
     fontSize: em(0.875),
     lineHeight: lineHeight(0.875,140)
   },

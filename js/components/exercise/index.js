@@ -76,7 +76,7 @@ export default  class Exercise extends PureComponent {
 
             <View style={{flex:1}} key={"page"+index}>
             <TouchableOpacity style={{flex:1}} key={temp.sources[0].src} onPress={()=>{navigation.navigate('ExerciseGallery',{images:this.props.exercise.picture,initialPage:index})}}>        
-            <Text>{appVars.screenX}</Text><Image
+            <Image
             
                 key={this.props.exercise.picture.id} 
                 style={styles.child}
@@ -195,7 +195,7 @@ const styles=  StyleSheet.create({
             width: 10,
             height: 10,
             borderRadius: 10/2,
-            backgroundColor: appVars.colorMain,
+            backgroundColor: appVars.colorActive,
             margin: 5
         },
 

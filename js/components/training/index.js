@@ -150,7 +150,6 @@ export default class Training extends PureComponent{
 
     render=()=>{
 
-        if(this.state.exercises.length > 1) {
 
         if(this.state.exerciseLoading){
             return(
@@ -161,7 +160,8 @@ export default class Training extends PureComponent{
             )
         }  else{
 
-        
+            if(this.state.exercises.length > 1) {
+
         return (
             <View style={{flex:1, backgroundColor:'white'}}>
                 
@@ -206,14 +206,17 @@ export default class Training extends PureComponent{
                         
                 
             </View>
-        )}
-    
-    } else {
-        return <View style={{flex:1, backgroundColor:'white',alignItems:"center",justifyContent:"center",}}>
-            <Text style={appStyles.contentHeadline}>Heute kein Training!</Text>
-            <Text style={appStyles.h3}>Genieße den Tag – genieße dein Leben.</Text>
-        </View>    
+        )
+        } else {
+            return <View style={{flex:1, backgroundColor:'white',alignItems:"center",justifyContent:"center",}}>
+                <Text style={appStyles.contentHeadline}>Heute kein Training!</Text>
+                <Text style={appStyles.h3}>Genieße den Tag – genieße dein Leben.</Text>
+            </View>    
+        }
+
     }
+    
+    
 
     }
 }

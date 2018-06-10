@@ -49,7 +49,7 @@ import {
     colorWhite: "#ffffff",
     colorBlack: "#000000",
     colorMain: "#155aa4",
-    colorActive: "#cc0000",
+    colorActive: "#ff9900",
     colorLightGray: "#cccccc",
     colorDarkGray: "#333333",
     colorSeperatorColor: "rgba(0, 0, 0, 0.1)",
