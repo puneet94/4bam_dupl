@@ -146,8 +146,25 @@ export default class Home extends Component{
         
         if(Object.keys(this.state.weekPlan).length){
             const weekDays = Object.keys(this.state.weekPlan).sort();
+            
             return weekDays.map((weekDay)=>{
-                
+                var timeline_dot_outer;
+                var timeline_text;
+
+               if(this.state.weekPlan[weekDay].today===true ) {
+
+                timeline_dot_outer = appStyles.timeline_dot_outer_today;
+
+               } else {
+
+                timeline_dot_outer = appStyles.timeline_dot_outer;
+
+               }
+               if(this.state.weekPlan[weekDay].care===true){
+                timeline_text = appStyles.timeline_text_care;
+               }else{
+                timeline_text = appStyles.timeline_text;
+               }
                 const dayPlans = this.state.weekPlan[weekDay].blocks;                          
                 return <View style={appStyles.timeline_container} key={weekDay}>
 
@@ -160,7 +177,7 @@ export default class Home extends Component{
 
            
                 <View style={appStyles.timeline_line_container}>
-                    <View style={appStyles.timeline_dot_outer}>
+                    <View style={timeline_dot_outer}>
                         <View style={appStyles.timeline_dot_inner} />
                     </View>
                 
@@ -175,7 +192,7 @@ export default class Home extends Component{
         
                    { dayPlans.map((dayPlan,index)=>{
                 return <View key={dayPlan.id}>
-                        <Text style={appStyles.timeline_text}>{dayPlan.title}</Text>
+                        <Text style={timeline_text}>{dayPlan.title}</Text>
                         
                         </View>
                             })

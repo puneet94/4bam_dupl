@@ -74,12 +74,24 @@ module.exports = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
   },
+
+
+  timeline_dot_outer_today: {
+    width: 15,
+    height: 15,
+    backgroundColor: "red",
+    borderRadius:10,
+    alignItems:'center',
+    justifyContent:'center',
+  },
+
   timeline_dot_inner: {
     width: 7,
     height: 7,
     backgroundColor: appVars.colorWhite,
     borderRadius: 10,
   },
+
   
   timeline_line: {
     width: 2,
@@ -96,8 +108,15 @@ module.exports = StyleSheet.create({
     marginTop: 4,
     fontFamily: appVars.fontText,
     fontSize: em(0.875),
-    lineHeight: lineHeight(0.875,140),  
-    color: appVars.colorBlack,
+    lineHeight: lineHeight(0.875,140)
+  },
+  timeline_text_care: {
+    fontFamily: appVars.fontText,
+    color: "red",
+    marginTop: 4,
+    fontFamily: appVars.fontText,
+    fontSize: em(0.875),
+    lineHeight: lineHeight(0.875,140)
   },
 
 timeline_content_seperator: {
