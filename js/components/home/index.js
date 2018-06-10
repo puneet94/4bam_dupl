@@ -148,16 +148,7 @@ export default class Home extends Component{
             const weekDays = Object.keys(this.state.weekPlan).sort();
             return weekDays.map((weekDay)=>{
                 
-                const dayPlans = this.state.weekPlan[weekDay].blocks;                
-                /*
-                this does not work
-                if(this.state.weekPlan[weekDay].today===true ) {
-                     appStyles.timeline_container_today
-                } else {
-                    appStyles.timeline_container
-                }
-                return <View style={appStyles.timeline_container} key={weekDay}>
-                */                
+                const dayPlans = this.state.weekPlan[weekDay].blocks;                          
                 return <View style={appStyles.timeline_container} key={weekDay}>
 
                 <View style={appStyles.timeline_datecontainer}>
@@ -184,7 +175,6 @@ export default class Home extends Component{
         
                    { dayPlans.map((dayPlan,index)=>{
                 return <View key={dayPlan.id}>
-                        
                         <Text style={appStyles.timeline_text}>{dayPlan.title}</Text>
                         
                         </View>

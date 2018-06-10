@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
-
+import appVars from "../../appVars";
+import appStyles from '../../appStyles';
 
 class StopWatch extends Component {
   constructor(props) {
@@ -123,7 +124,7 @@ class StopWatch extends Component {
 
     return(
       <View ref="stopwatch" style={styles.container}>
-        <Text style={styles.text}>{this.formatTime()}</Text>
+        <Text style={appStyles.timer}>{this.formatTime()}</Text>
       </View>
     );
   }

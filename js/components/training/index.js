@@ -169,25 +169,27 @@ export default class Training extends PureComponent{
                         <Exercise {...this.props} exercise = {this.state.exercises[this.state.currentExercise]}/>
                         
 
+                <View style={appStyles.contentSeperator} />
 
-            <View style={{flexDirection:"row",justifyContent:"space-between",marginTop:10,marginBottom:10, paddingTop: 10,borderColor: '#ddd',borderTopWidth: 1}}>
+
+            <View style={{flexDirection:"row",justifyContent:"space-between",marginBottom:5, paddingTop: 5}}>
 
                             <TouchableHighlight onPress={this.toggleStopwatch} style={{backgroundColor:appVars.colorMain,marginLeft: 15,padding:10,width:90, borderRadius:5}}>
-                                <View style={{flex:1,flexDirection:"row"}}>
+                                <View style={{flex:1,flexDirection:"row", alignItems: "center"}}>
                                     <Entypo name="stopwatch" style={{color:"white",fontSize:18,marginRight:5}}/>
-                                    <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain, textAlign:"center"}}>{!this.state.stopwatchStart ? "START" : "STOP"}</Text>
+                                    <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>{!this.state.stopwatchStart ? "START" : "STOP"}</Text>
                                 </View>
                             </TouchableHighlight>
                             <TouchableHighlight onPress={this.selectNextExercise} style={{backgroundColor:appVars.colorLightGray,padding:10,width:100,borderRadius:5}}>
-                                <View style={{flex:1,flexDirection:"row"}}>
+                                <View style={{flex:1,flexDirection:"row",alignItems: "center"}}>
                                     <Octicons name="arrow-right" style={{fontSize:18,color:appVars.colorMain}}/>
-                                    <Text style={{fontSize: 16,color:"black", fontFamily: appVars.fontMain, textAlign:"center",color:appVars.colorMain}}>WEITER</Text>
+                                    <Text style={{fontSize: 16,color:"black", fontFamily: appVars.fontMain,color:appVars.colorMain}}>WEITER</Text>
                                 </View>
                             </TouchableHighlight>
-                            <TouchableHighlight onPress={this.resetStopwatch} style={{backgroundColor:appVars.colorLightGray,padding:10,width:90,marginRight: 15, height:40,borderRadius:5}}>
-                                <View style={{flex:1,flexDirection:"row"}}>
+                            <TouchableHighlight onPress={this.resetStopwatch} style={{backgroundColor:appVars.colorLightGray,padding:10,width:90,marginRight: 15, height:35, borderRadius:5}}>
+                                <View style={{flex:1,flexDirection:"row",alignItems: "center"}}>
                                     <MaterialIcons name="replay" style={{fontSize:18}}/>
-                                    <Text style={{fontSize: 16,color:"black", fontFamily: appVars.fontMain, textAlign:"center"}}>RESET</Text>
+                                    <Text style={{fontSize: 16,color:"black", fontFamily: appVars.fontMain}}>RESET</Text>
                                 </View>
                             </TouchableHighlight>
             </View>     

@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Text,
-  View
+  View,
+  TouchableWithoutFeedback
 } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
-// https://github.com/GeekyAnts/react-native-hamburger
-
-import Hamburger from 'react-native-hamburger';
 import appVars from './appVars';
 import appStyles from './appStyles';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MenuScreen from './components/menu';
 import LoginScreen from "./components/login";
 import NewsDetailScreen from './components/newsdetail';
@@ -35,21 +34,19 @@ const bamApp = StackNavigator({
         headerStyle: {
           backgroundColor: appVars.colorWhite,
         },
-        headerLeft:
+        headerLeft: <TouchableWithoutFeedback  onPress={() => {
+          if (navigation.state.index === 0) {
+            navigation.navigate('DrawerOpen')
+          } else {
+            navigation.navigate('DrawerClose')
+          }
+        }}>
           <View style={appStyles.iconWrapper} >
-          <Hamburger active={navigation.state.index}
-          type="spin"
-          color={appVars.colorMain}
-          onPress={() => 
-            {
-            if (navigation.state.index === 0) {
-              navigation.navigate('DrawerOpen');
-            } else {
-              navigation.navigate('DrawerClose')
-              navigation.state.index === 0;
-            }
-          }}/>
+          {(navigation.state.index === 0)?
+            <MaterialCommunityIcons name="menu" style={appStyles.headerIcon} />:
+            <MaterialCommunityIcons name="close" style={appStyles.headerIcon} />}
           </View>
+        </TouchableWithoutFeedback>
     }),
   },
   ExerciseGallery: {

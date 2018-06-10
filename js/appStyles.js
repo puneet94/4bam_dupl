@@ -285,7 +285,7 @@ drawerLabel: {
   },
   headerIcon: {
       color: appVars.colorMain,
-      fontSize: 20,
+      fontSize: 28,
       textAlign: 'center',
   },
   
@@ -453,6 +453,22 @@ drawerLabel: {
   iOSToastText: {
     color: appVars.colorBlack,
   },
+
+// TRAINING
+
+blockText: {
+  fontSize: em(0.750),
+  fontFamily: appVars.fontMain,
+  color: appVars.colorDarkGray,
+  marginLeft: 10,
+},
+timer: {
+  fontFamily: appVars.fontText,
+  fontSize: 16,
+  marginRight: 15,
+  color: appVars.colorMain,
+},
+
 // Alarmmaaaaa
 
 alarmDayWrapper:{

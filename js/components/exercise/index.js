@@ -6,7 +6,6 @@ import appStyles from '../../appStyles';
 import VideoPlayer from 'react-native-video-player';
 import { NavigationActions } from 'react-navigation';
 import HTMLView from 'react-native-htmlview';
-import FastImage from 'react-native-fast-image'
 import TestGallery from "../testGallery";
 
 const IS_IOS = Platform.OS === 'ios';
@@ -26,6 +25,7 @@ export default  class Exercise extends PureComponent {
     }
     
   }
+
   startScrolling = ()=>{
       if((this.state.pageNum<this.props.exercise.picture.length) && this._mounted){
         this.scrolling();
@@ -63,13 +63,12 @@ export default  class Exercise extends PureComponent {
             <View style={{flex:1}} key={"page"+index}>
             <TouchableOpacity style={{flex:1}} key={temp.sources[0].src} onPress={()=>{navigation.navigate('ExerciseGallery',{images:this.props.exercise.picture,initialPage:index})}}>        
             
-            <FastImage
+            <Image
             
                 key={this.props.exercise.picture.id} 
                 style={styles.child}
                 source={{
                 uri: ''+appVars.serverUrl+'/'+temp.sources[0].src+'',
-                priority: FastImage.priority.normal,
                 }}
                 resizeMode={"contain"}
             />
@@ -80,9 +79,9 @@ export default  class Exercise extends PureComponent {
   renderGalleryDots = ()=>{
           let dotsArray = [];
           for(let i = 0; i<this.props.exercise.picture.length;i++){
-              dotsArray.push(<View key={i} style={i==this.state.page?styles.selectedCircle:styles.circle}>
-     
-              </View>)
+              if(this.props.exercise.picture.length >1) {
+              dotsArray.push(<View key={i} style={i==this.state.page?styles.selectedCircle:styles.circle} />)
+            }
           }
           return dotsArray;
       }
@@ -108,25 +107,31 @@ export default  class Exercise extends PureComponent {
   render() {
     
     return (
-        <View style={{flex:1,margin:10,marginBottom:0,}}>
+        <View style={{flex:1}}>
+               <View style={{padding: 5,width: appVars.screenX,alignItems:"center",justifyContent:"center"}}>
+                    <Text style={appStyles.blockText}>{this.props.exercise.block.toUpperCase()}</Text>
+                    </View>
 
-                    <View style={{height: appVars.screenX-40}}>
+                    <View style={{height: appVars.screenX}}>
                 {
                 
                     this.renderScroll()
                 }
 
-                                         <View style={{alignItems:"center",justifyContent:"center",flexDirection:"row"}}>
+        
 
-{this.renderGalleryDots()}
+                    <View style={{position: "absolute", bottom:5, width: appVars.screenX}}>
+                    
+                    <View style={{alignItems:"center",justifyContent:"center",flexDirection:"row"}}>
+                            {this.renderGalleryDots()}
+                        </View>
+                    </View>
+                    
 
-</View>                
+
                     </View>               
 
-                    <ScrollView>
-                    
-                    <Text style={appStyles.a}>{this.props.exercise.block}</Text>
-         
+                    <ScrollView style={{paddingLeft: 15,paddingRight: 15}}>           
                         <HTMLView
                         addLineBreaks={true}
                         value={this.props.exercise.text}
@@ -136,10 +141,9 @@ export default  class Exercise extends PureComponent {
 
                     
                     <View style={{flexDirection:"row"}} >
-                        
                         <Text style={appStyles.a}>Intensität:</Text>
-                        <View style={{width:appVars.screenX-100}}>
-                        <Text style={appStyles.p}>{this.props.exercise.intent}</Text>
+                        <View style={{width:appVars.screenX}}>
+                            <Text style={appStyles.p}>{this.props.exercise.intent}</Text>
                         </View>
                     </View>
 

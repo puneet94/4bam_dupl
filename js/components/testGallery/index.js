@@ -53,7 +53,7 @@ export default class  ImagesGallery extends Component{
          ref={ref => this.carousel = ref} 
 
             style={{flex:1}} 
-            pageSpacing={10}
+            pageSpacing={0}
             initialPage={0} 
             onPageChange={this.onPageChange}>
             {this.props.children?this.props.children:null}

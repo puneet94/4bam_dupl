@@ -28,7 +28,7 @@ export default class TrainingFinish extends PureComponent{
     render(){
         return (
             <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"white"}}>
-                <Text style={{color: 'black'}}>Dein nächstes Training am {this.state.day} um {this.state.time}</Text>
+                <Text style={{color: 'black'}}>Dein nächstes Training am {this.state.day} um {this.state.time} Uhr</Text>
         {/*<Rating onRating={this.onRating}/>*/}
             </View>
         );
