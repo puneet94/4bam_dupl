@@ -6,6 +6,7 @@ import appStyles from "../../appStyles";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';import Toast, {DURATION} from 'react-native-easy-toast'
 import {getNextAlarm} from "../../services/dateService";
 import HTMLView from 'react-native-htmlview';
+import { NavigationActions } from 'react-navigation'
 
 export default class Home extends Component{
     constructor(props){
@@ -24,9 +25,14 @@ export default class Home extends Component{
         const { params = {} } = navigation.state;
         return {
           headerRight: <View style={{flex:1,flexDirection:"row",alignItems:"center"}}>
+        <TouchableOpacity onPress={() => navigation.navigate('Account')}>
+              <MaterialCommunityIcons name="account" style={{color: appVars.colorMain,fontSize:24,marginRight:10}} />
+        </TouchableOpacity>
+          
           <TouchableOpacity onPress={() => params.handleLogout()}>
               <MaterialCommunityIcons name="power-settings" style={{color: appVars.colorMain,fontSize:24,marginRight:10}} />
-              </TouchableOpacity>
+            </TouchableOpacity>
+    
         </View>
         };
       };       

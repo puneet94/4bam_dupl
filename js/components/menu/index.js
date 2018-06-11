@@ -8,6 +8,7 @@ import TrainingFinishScreen from "../trainingfinish";
 import LocalNotificationScreen from "../localnotification";
 import HomeScreen from "../home";
 import LoginScreen from "../login";
+import AccountScreen from "../account";
 
 import NewsScreen from "../newslist";
 import DrawerContainer from "./DrawerContainer";
@@ -53,6 +54,12 @@ const Menu = DrawerNavigator({
     screen: LocalNotificationScreen,
     navigationOptions : ({ navigation, screenProps }) => ({
       headerTitle:  <Text style={ appStyles.headerTitle }>{"notification".toUpperCase()}</Text>,
+    }),
+  },
+  Account: {
+    screen: AccountScreen,
+    navigationOptions : ({ navigation, screenProps }) => ({
+      headerTitle:  <Text style={ appStyles.headerTitle }>{appVars.labelAccount.toUpperCase()}</Text>,
     }),
   },
 },
