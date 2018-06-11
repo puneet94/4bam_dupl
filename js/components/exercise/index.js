@@ -152,13 +152,16 @@ export default  class Exercise extends PureComponent {
                         onLinkPress={(url) => console.log('clicked link: ', url)}
                         />
 
-                    
-                    <View style={{flexDirection:"row"}} >
-                        <Text style={appStyles.a}>Intensität:</Text>
-                        <View style={{width:appVars.screenX}}>
-                            <Text style={appStyles.p}>{this.props.exercise.intent}</Text>
+                        {this.props.exercise.intent != 0 &&
+                            <View style={{flexDirection:"row"}} >
+                            <Text style={appStyles.a}>Intensität:</Text>
+                            <View style={{width:appVars.screenX}}>
+                                <Text style={appStyles.p}>{this.props.exercise.intent}</Text>
+                            </View>
                         </View>
-                    </View>
+                          }
+
+                   
 
                     </ScrollView>
 

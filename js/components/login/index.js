@@ -10,7 +10,8 @@ import {
 		Dimensions,
 		ImageBackground,
 		StyleSheet,
-		Modal
+		Modal,
+		TouchableHighlight
 } from "react-native";
 import appStyles from '../../appStyles';
 import appVars from '../../appVars';
@@ -72,15 +73,27 @@ export default class LoginScreen extends PureComponent{
 	
 
     onSubmit=async  ()=>{
-        //Alert.alert("email: "+ this.state.email + "pass: " + this.state.pass);
+        	//Alert.alert("email: "+ this.state.email + "pass: " + this.state.pass);
         this.setState({
             loading: true,
-        })
-        let apiHitPoint = appVars.apiUrl+"/user.html?authtoken="+appVars.apiKey+"&username="+this.state.email+"&password="+this.state.pass;
-        
+				});
+				
+				const payload = {
+					username: this.state.email,
+					password: this.state.pass,
+				}
+
+				var data = new FormData();
+				data.append( "formData",  JSON.stringify(payload));
+			
         try{
-            const response = await fetch(apiHitPoint);
-            const json = await response.json();
+					const response = await fetch(appVars.apiUrl+"/user.html?authtoken="+appVars.apiKey, {
+						method: 'POST',
+						body: data
+					});
+
+						const json = await response.json();
+
             if(json["@status"] === "OK"){
 							await this.storeToken(json["response"].id);
 							store.save("FIRSTNAME",json["response"].firstname);
@@ -93,7 +106,8 @@ export default class LoginScreen extends PureComponent{
             else{
                 this.setState({
 										loading: false,
-                })
+								})
+								console.log(json);
 								Alert.alert(appVars.textErrorLogin);
                // console.log("incorrect login");
             }
@@ -189,10 +203,21 @@ export default class LoginScreen extends PureComponent{
 												<TextInput placeholder={'Passwort'} returnKeyType={"next"} ref='SecondInput' style={appStyles.formInput} secureTextEntry={true} autoCapitalize={'none'} autoCorrect={false} onChangeText={this.passChange}/>
                         </View>
 
-												<View>
 												
-												<Button color={appVars.colorMain} style={appStyles.submit} title={appVars.labelLoginButton} onPress={this.onSubmit} />
-												</View>
+					
+
+												<View style={{paddingTop: 10}}>
+
+
+<TouchableHighlight onPress={this.onSubmit} style={{backgroundColor:appVars.colorMain,padding:10,height:35, borderRadius:5}}>
+		<View style={{flex:1,flexDirection:"row",alignItems: "center", justifyContent: "center"}}>
+				<MaterialCommunityIcons name="login-variant" style={{fontSize:18,color: "white",marginRight: 5}}/>
+				<Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>{appVars.labelLoginButton.toUpperCase()}</Text>
+		</View>
+</TouchableHighlight>
+</View> 
+
+											
 
                     </View>
 								</View>
