@@ -107,8 +107,8 @@ export default class LoginScreen extends PureComponent{
                 this.setState({
 										loading: false,
 								})
-								console.log(json);
-								Alert.alert(appVars.textErrorLogin);
+								//console.log(json);
+								//Alert.alert(appVars.textErrorLogin);
                // console.log("incorrect login");
             }
 
