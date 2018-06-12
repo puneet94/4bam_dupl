@@ -90,7 +90,8 @@ import {
     labelLoginButton: "Anmelden",
     labelLogoutButton: "Abmelden",
     labelForgotPassword: "Passwort vergessen?",
-  
+    labelAccountUpdateButton: "speichern",
+
     labelSelectPhoto: "Foto auswählen",
     labelSelectSource: "Bitte wählen Sie eine Fotoquelle",
     labelFromCamera: "Kamera",
