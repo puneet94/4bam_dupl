@@ -21,10 +21,23 @@ export default  class Exercise extends PureComponent {
         Page: this.props.exercise.count,
         pageNum: 0,
         page: 0,
-        userInactive: false
+        userInactive: false,
+        opacity: 0
     }
     
   }
+
+    onLoadStart = () => {
+    this.setState({opacity: 1});
+    }
+
+    onLoad = () => {
+    this.setState({opacity: 0});
+    }
+
+    onBuffer = ({isBuffering}) => {
+        this.setState({opacity: isBuffering ? 1 : 0});
+    }
 
   startScrolling = ()=>{
       if((this.state.pageNum<this.props.exercise.picture.length) && this._mounted){
@@ -119,28 +132,46 @@ export default  class Exercise extends PureComponent {
 
   render() {
     
+    if(this.props.exercise.video) {
+
     return (
         <View style={{flex:1}}>
-               <View style={{padding: 5,width: appVars.screenX,alignItems:"center",justifyContent:"center"}}>
-                    <Text style={appStyles.blockText}>{this.props.exercise.block.toUpperCase()}</Text>
+                    <View style={{height: appVars.screenX,marginBottom:10,}}>
+
+                    
+                    <VideoPlayer
+                        video={{ uri: this.props.exercise.video }}
+                        videoWidth={appVars.screenX}
+                        videoHeight={appVars.screenX}
+                        muted={true}
+                        disableFullscreen={true}
+                        loop={true}
+                        autoplay={true}
+                        onBuffer={this.onBuffer}
+                        onLoadStart={this.onLoadStart}
+                        onLoad={this.onLoad}
+                        customStyles={{
+                            seekBarProgress:{
+                              backgroundColor: appVars.colorMain,
+                            },
+                            seekBarKnob:{
+                                backgroundColor: appVars.colorMain,
+                            },
+
+                          }}
+                        ref={r => this.player = r}
+                        />
+
+                    <View style={{position: 'absolute', padding: 5,width: appVars.screenX,alignItems:"center",justifyContent:"center"}}>
+                        <Text style={appStyles.blockText}>{this.props.exercise.block.toUpperCase()}</Text>
                     </View>
 
-                    <View style={{height: appVars.screenX}}>
-                {
-                
-                    this.renderScroll()
-                }
-
-        
-
-                    <View style={{position: "absolute", bottom:5, width: appVars.screenX}}>
-                    
-                    <View style={{alignItems:"center",justifyContent:"center",flexDirection:"row"}}>
-                            {this.renderGalleryDots()}
-                        </View>
-                    </View>
-                    
-
+                        <ActivityIndicator
+                        animating
+                        size="large"
+                        color={appVars.colorMain}
+                        style={[styles.activityIndicator, {opacity: this.state.opacity}]}
+                        />
 
                     </View>               
 
@@ -159,24 +190,66 @@ export default  class Exercise extends PureComponent {
                                 <Text style={appStyles.p}>{this.props.exercise.intent}</Text>
                             </View>
                         </View>
-                          }
-
-                   
+                          }             
 
                     </ScrollView>
-
-
-
-
-
-
-
         </View> 
                    
         
     
     )
   }
+  else {
+    return (
+        <View style={{flex:1}}>
+                    <View style={{padding: 5,width: appVars.screenX,alignItems:"center",justifyContent:"center"}}>
+                    <Text style={appStyles.blockText}>{this.props.exercise.block.toUpperCase()}</Text>
+                    </View>
+
+                    
+                    <View style={{height: appVars.screenX}}>
+                        {
+                        
+                            this.renderScroll()
+                        }
+
+
+                        <View style={{position: "absolute", bottom:5, width: appVars.screenX}}>
+                        
+                            <View style={{alignItems:"center",justifyContent:"center",flexDirection:"row"}}>
+                                    {this.renderGalleryDots()}
+                                </View>
+                        </View>
+
+                    </View>               
+
+                    <ScrollView style={{paddingLeft: 15,paddingRight: 15}}>           
+                        <HTMLView
+                        addLineBreaks={true}
+                        value={this.props.exercise.text}
+                        stylesheet={appStyles}
+                        onLinkPress={(url) => console.log('clicked link: ', url)}
+                        />
+
+                        {this.props.exercise.intent != 0 &&
+                            <View style={{flexDirection:"row"}} >
+                            <Text style={appStyles.a}>Intensität:</Text>
+                            <View style={{width:appVars.screenX}}>
+                                <Text style={appStyles.p}>{this.props.exercise.intent}</Text>
+                            </View>
+                        </View>
+                          }             
+
+                    </ScrollView>
+        </View> 
+                   
+        
+    
+    )
+
+    }
+
+}  
 }
 const styles=  StyleSheet.create({
  
@@ -200,6 +273,17 @@ const styles=  StyleSheet.create({
             borderRadius: 10/2,
             backgroundColor: appVars.colorActive,
             margin: 5
+        },
+        activityIndicator: {
+            position: 'absolute',
+            height: appVars.screenX,
+            width: appVars.screenX,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        seekBar:{
+            color: 'blue',
+
         },
 
 });

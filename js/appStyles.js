@@ -494,8 +494,7 @@ alarmDayWrapper:{
     backgroundColor: appVars.colorSeperatorColor,
     justifyContent:'center',
     borderRadius:10,
-    width: (x * .90)-5,
-    marginRight: 5,
+    width: x-55,
 },
 
 alarmDay: {
