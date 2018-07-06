@@ -175,10 +175,10 @@ export default class Training extends PureComponent{
 
             <View style={{flexDirection:"row",justifyContent:"space-between",marginBottom:5, paddingTop: 5}}>
 
-                            <TouchableHighlight onPress={this.toggleStopwatch} style={{backgroundColor:appVars.colorMain,marginLeft: 15,padding:10,width:90, borderRadius:5}}>
+                            <TouchableHighlight onPress={this.toggleStopwatch} style={{backgroundColor:appVars.colorMain,marginLeft: 15,padding:10,width:92, borderRadius:5}}>
                                 <View style={{flex:1,flexDirection:"row", alignItems: "center"}}>
                                     <Entypo name="stopwatch" style={{color:"white",fontSize:18,marginRight:5}}/>
-                                    <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>{!this.state.stopwatchStart ? "START" : "STOP"}</Text>
+                                    <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>{!this.state.stopwatchStart ? "START" : "PAUSE"}</Text>
                                 </View>
                             </TouchableHighlight>
                             <TouchableHighlight onPress={this.selectNextExercise} style={{backgroundColor:appVars.colorLightGray,padding:10,width:140,borderRadius:5}}>
@@ -188,9 +188,9 @@ export default class Training extends PureComponent{
                                         <Text style={{fontSize: 16,color:"black", fontFamily: appVars.fontMain, textAlign:"center",color:appVars.colorMain}}>WEITER</Text>
                                     </View>
                                     <View style={{flex:3,alignItems:"center",justifyContent:"center",flexDirection:"row"}}>
-                                        <Text>{"( "+this.state.exercises[this.state.currentExercise].index}</Text>
+                                        <Text>{"("+this.state.exercises[this.state.currentExercise].index}</Text>
                                         <Text>{"/"}</Text>
-                                        <Text>{this.state.exercises.length+" )"}</Text>
+                                        <Text>{this.state.exercises.length+")"}</Text>
                                     </View>
                                 </View>
 

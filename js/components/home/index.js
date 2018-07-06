@@ -12,7 +12,7 @@ export default class Home extends Component{
     constructor(props){
         super(props);
         this.backButtonListener = null;
-        this.days = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'So', 'So'];
+        this.days = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
         this.exitApp = 0;
         this.state = {
             position: 'bottom',
