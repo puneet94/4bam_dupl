@@ -132,7 +132,10 @@ export default class Training extends PureComponent{
       }
       
   }
-  
+  withoutVideo = (exercise)=>{
+    const { video, ...withoutVideoObject } = exercise;
+    return withoutVideoObject;
+  }
   getFormattedTime=(time) =>{
       this.currentTime = time;
   }
@@ -172,11 +175,11 @@ export default class Training extends PureComponent{
                     this.setState({exercises: json.response,exerciseLoading:false});
                 }else{
                     console.log("user can and doesnt want to watch");
-                    this.setState({exercises: json.response.filter((exercise)=>!exercise.video),exerciseLoading:false});
+                    this.setState({exercises: json.response.map(this.withoutVideo),exerciseLoading:false});
                 }
             }else{
                 console.log("user cant");
-                this.setState({exercises: json.response.filter((exercise)=>!exercise.video),exerciseLoading:false});
+                this.setState({exercises: json.response.map(this.withoutVideo),exerciseLoading:false});
             }
             
         }else{
@@ -187,8 +190,6 @@ export default class Training extends PureComponent{
       }
 
     render=()=>{
-
-
         if(this.state.exerciseLoading){
             return(
 
@@ -196,34 +197,27 @@ export default class Training extends PureComponent{
                     <ActivityIndicator size="large" color={appVars.colorMain} />
                 </View>
             )
-        }  else{
+        }else{
 
             if(this.state.exercises.length > 1) {
 
-        return (
-            <View style={{flex:1, backgroundColor:'white'}}>
-                
-                
-                        
+                return (
+                    <View style={{flex:1, backgroundColor:'white'}}>
+                   
                         <Exercise {...this.props} exercise = {this.state.exercises[this.state.currentExercise]}/>
-                        
-
-                <View style={appStyles.contentSeperator} />
-
-
-            <View style={{flexDirection:"row",justifyContent:"space-between",marginBottom:5, paddingTop: 5}}>
-
+                        <View style={appStyles.contentSeperator} />
+                        <View style={{flexDirection:"row",justifyContent:"space-between",marginBottom:5, paddingTop: 5}}>
                             <TouchableHighlight onPress={this.toggleStopwatch} style={{backgroundColor:appVars.colorMain,marginLeft: 15,padding:10,width:92, borderRadius:5}}>
                                 <View style={{flex:1,flexDirection:"row", alignItems: "center"}}>
                                     <Entypo name="stopwatch" style={{color:"white",fontSize:18,marginRight:5}}/>
                                     <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>{!this.state.stopwatchStart ? "START" : "PAUSE"}</Text>
                                 </View>
                             </TouchableHighlight>
-                            <TouchableHighlight disabled={this.state.stopwatchStart } onPress={this.selectNextExercise} style={{backgroundColor:appVars.colorLightGray,padding:10,width:140,borderRadius:5}}>
+                            <TouchableHighlight disabled={!this.state.stopwatchStart } onPress={this.selectNextExercise} style={{backgroundColor:appVars.colorLightGray,padding:10,width:140,borderRadius:5}}>
                                 <View style={{flex:1,flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
                                     <View style={{flex:7,flexDirection:"row",alignItems:"center"}}>
                                         <Octicons name="arrow-right" style={{fontSize:18,color:appVars.colorMain}}/>
-                                        <Text style={{fontSize: 16,fontFamily: appVars.fontMain, textAlign:"center",color:(this.state.stopwatchStart?"white":appVars.colorMain)}}>WEITER</Text>
+                                        <Text style={{fontSize: 16,fontFamily: appVars.fontMain, textAlign:"center",color:(!this.state.stopwatchStart?"white":appVars.colorMain)}}>WEITER</Text>
                                     </View>
                                     <View style={{flex:3,alignItems:"center",justifyContent:"center",flexDirection:"row"}}>
                                         <Text>{"("+this.state.exercises[this.state.currentExercise].index}</Text>
