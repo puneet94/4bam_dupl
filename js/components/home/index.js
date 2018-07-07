@@ -39,7 +39,7 @@ export default class Home extends Component{
       };       
 
     onClick=(text, position, duration,withStyle)=>{
-        this.setState({
+        this._mounted && this.setState({
             position: position,
         });
         if(withStyle){
@@ -83,7 +83,7 @@ export default class Home extends Component{
         this.props.navigation.setParams({ 
             handleLogout: this.logOut
         });   
-        this.setState({
+        this._mounted && this.setState({
             homeLoading: false
         }) 
 
