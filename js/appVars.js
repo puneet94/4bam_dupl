@@ -23,7 +23,7 @@ import {
   
     const APP_CONSTANTS =   {
       STORAGE_KEY : 'TOKEN',
-      
+      NO_VIDEOS: "NO_VIDEOS",
     screenX: ScreenWidth,
     screenY: ScreenHeight,
   

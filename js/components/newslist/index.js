@@ -7,24 +7,20 @@ import {
     FlatList,
     StyleSheet,
     Platform,
-    TouchableWithoutFeedback,
+    
     TouchableOpacity,
-    PermissionsAndroid,
-    Dimensions,
+    
     RefreshControl,
-    Alert,
+    
     ActivityIndicator,
-    ToastAndroid,
-    Linking,
-    Button,
+    
     Image,
 } from 'react-native';
-import { NavigationActions } from 'react-navigation';
-import AwseomeIcon from 'react-native-vector-icons/FontAwesome';
+
 import appStyles from '../../appStyles';
 import appVars from '../../appVars';
 import store from 'react-native-simple-store';
-import { em_s, lineHeight_s, handleExternalUrl } from '../../core/helpers';
+
 import {getNewsList} from "../../services/storeService";
 
 
@@ -41,7 +37,8 @@ class NewsListScreen extends Component{
       downloading: false,
       currentItem: null,
       selectedArchive: this.props.screenId,
-      fontSize: appVars.baseUnit,      
+      fontSize: appVars.baseUnit,  
+      newsListLoading:true    
     }
 
   }
@@ -54,12 +51,14 @@ class NewsListScreen extends Component{
           fontSize
         });
       }
-    
   }
 
     
   componentDidMount  = async () => {
-    this.fetchdata(); 
+    await this.fetchdata(); 
+    this.setState({
+      newsListLoading: false
+    })
   }
 
   fetchdata = async () => {
@@ -71,10 +70,10 @@ class NewsListScreen extends Component{
     if(page===1){
       this.setState({ refreshing: true});
       
-      getNewsList(appVars.apiKey,userid,page)
+      return getNewsList(appVars.apiKey,userid,page)
         .then(res => res.json())
         .then(res => {
-            console.log("news response",res);
+            
             this.setState({
                 data: res.response || [],
                 error: res.error || null,
@@ -94,10 +93,9 @@ class NewsListScreen extends Component{
       } else {
         
         
-      getNewsList(appVars.apiKey,userid,page)
+      return getNewsList(appVars.apiKey,userid,page)
           .then(res => res.json())
           .then(res => {
-            
             this.setState({
               data: [...this.state.data, ...res.response],
               error: res.error || null,
@@ -169,32 +167,34 @@ class NewsListScreen extends Component{
         </View>
     );
   }
-  
 
 	render=()=>{
     return (
-      
       <View style={appStyles.container}>
-      <View style={appStyles.newsListContainer}>
-      <FlatList
-        data={this.state.data}
-        numColumns={1}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this.handleRefresh}
-            colors={[appVars.colorMain]}
+        {!this.state.newsListLoading?<View style={appStyles.newsListContainer}>
+          <FlatList
+            data={this.state.data}
+            numColumns={1}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.handleRefresh}
+                colors={[appVars.colorMain]}
+              />
+            }
+            onEndReached={this.handlePageEnd}
+            onEndReachedThreshold={1}
+            ref={(ref) => { this.newsList = ref; }}
+            keyExtractor={(item,index)=> {
+              return item.id;
+              }}
+            renderItem={({item,index}) => this.renderItemNext(item,index)}
           />
-        }
-        onEndReached={this.handlePageEnd}
-        onEndReachedThreshold={1}
-        ref={(ref) => { this.newsList = ref; }}
-        keyExtractor={(item,index)=> {
-          return item.id;
-          }}
-        renderItem={({item,index}) => this.renderItemNext(item,index)}
-       />
-       </View>
+       </View>:
+          <View style={{flex:1,alignItems:"center",justifyContent:"center"}}>
+            
+            <ActivityIndicator size="large"/>
+          </View>}
       </View>
     );
 	}

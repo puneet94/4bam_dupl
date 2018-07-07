@@ -108,7 +108,6 @@ class DrawerContainer extends React.Component {
 		});
 		OneSignal.sendTag("group", pushgroup);
 		OneSignal.getPermissionSubscriptionState(async (status)=>{
-			console.log("status check",status);
 
 			if(!status.notificationsEnabled){
 				//OneSignal.setSubscription(true);
@@ -159,17 +158,13 @@ class DrawerContainer extends React.Component {
 					if(event.url){
 						this.handleURL(event.url);
 					}
+
 				});
 			}
 	}
 	componentDidMount = async ()=>{
-		let pendingExercise = await store.get("PENDING_EXERCISE");
-		if(pendingExercise){
-			
-			const { navigation } = this.props;
-			navigation.navigate("Training",{exerciseRestart: true});
-			return;
-		}
+		this.openTrainingScreen("appstart");
+		
 	}
 	componentWillUnmount=()=> {
 		
@@ -209,17 +204,41 @@ class DrawerContainer extends React.Component {
         const { navigation } = this.props;
         navigation.navigate('Login');
 	}
-	checkUserAuthenticated = async (pageUrl)=>{
+	openTrainingScreen = async (appstart)=>{
+		if(appstart){
+			let pendingExercise = await store.get("PENDING_EXERCISE");
+			if(pendingExercise){
+				
+				//const { navigation } = this.props;
+				this.checkUserAuthenticated("Training",{exerciseRestart: true});
+				//navigation.navigate("Training",{exerciseRestart: true});
+				return;
+			}
+		}else{
+			let pendingExercise = await store.get("PENDING_EXERCISE");
+			if(pendingExercise){
+				
+				//const { navigation } = this.props;
+				this.checkUserAuthenticated("Training",{exerciseRestart: true});
+				//navigation.navigate("Training",{exerciseRestart: true});
+				return;
+			}else{
+				this.checkUserAuthenticated("Training",{exerciseRestart: false});
+			}
+		}
+		
+	}
+	checkUserAuthenticated = async (pageUrl,pageParams)=>{
 		let APIKEY = appVars.apiKey;
 		let userStoredID  = await store.get(appVars.STORAGE_KEY);
 		
 		if(userStoredID){
 			let authFetch  = await fetch(`https://www.app-4bam.de/api/user.html?authtoken=${[APIKEY]}&userid=${userStoredID}`);
 			let authResponse = await authFetch.json();
-			
+			console.log("auth response",authResponse);
 			if(authResponse["@status"]=="OK"){
 				const { navigation } = this.props;
-				navigation.navigate(pageUrl);
+				navigation.navigate(pageUrl,{...pageParams,isAllowToWatchVideo:authResponse.response.isAllowToWatchVideo});
 			}else{
 				this.logout();
 			}
@@ -293,7 +312,7 @@ class DrawerContainer extends React.Component {
 
 			<View style={appStyles.drawerSeperator} />
 			
-			<TouchableWithoutFeedback onPress={() => this.checkUserAuthenticated('Training')} style={this.isActiveClass('settings')}>
+			<TouchableWithoutFeedback onPress={() => this.openTrainingScreen()} style={this.isActiveClass('settings')}>
 				<View style={[appStyles.drawerItem,this.isActiveClass('training')]}>
 				<MaterialCommunityIcons style={appStyles.drawerIcon} name="view-carousel" />
 				
