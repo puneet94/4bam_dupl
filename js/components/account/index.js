@@ -1,6 +1,6 @@
 "use strict"
 import React, { Component } from 'react';
-import {Text,View,Button,Alert,TextInput,Picker,TouchableHighlight,ActivityIndicator} from "react-native";
+import {Text,View,Switch,Button,Alert,TextInput,Picker,TouchableHighlight,ActivityIndicator} from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import DatePicker from "react-native-datepicker";
 import appVars from '../../appVars';
@@ -16,19 +16,28 @@ export default class AccountScreen extends Component {
             error: null,
             genderChange:null,
         }
-        
     }
-
 
     componentDidMount = async ()=>{
         this.fetchdata();
-     }
-   
-   
+
+    }
+    changeNoVideos = (params)=>{
+        
+        this.setState({
+            noVideos: !params
+        });
+        store.save(appVars.NO_VIDEOS,!params);  
+    }
+
+
+
    fetchdata = async () => {
      const navParams = this.props.navigation.state.params;
      let userid = await store.get(appVars.STORAGE_KEY);
+     let noVideos = await store.get(appVars.NO_VIDEOS);
      const api = `${appVars.apiUrl}/user.html?authtoken=${appVars.apiKey}&userid=${userid}`;
+   
      
      this.setState({ loading: true});
    
@@ -40,11 +49,13 @@ export default class AccountScreen extends Component {
              error: res.error || null,
              loading : false,
              refreshing: false,
+             noVideos
            })
          })
          .catch(error => {
            this.setState({ error, loading: false });
          })
+         
    };
 
     render(){
@@ -73,6 +84,10 @@ export default class AccountScreen extends Component {
                 <View style={appStyles.contentElement}>
                     <TextInput defaultValue={this.state.data.email} placeholder={'E-Mail-Adressse'} returnKeyType={"next"} editable={false} />
                 </View>
+                {this.state.data.isAllowToWatchVideo && <View style={appStyles.contentElement}>
+                    <Text>{"Play Videos"}</Text>
+                    <Switch onValueChange={(params)=>this.changeNoVideos(params)} value={!this.state.noVideos}/>
+                </View>}
                 <View style={appStyles.contentElement}>
                 <DatePicker
                         style={{width: 300}}

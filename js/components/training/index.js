@@ -22,8 +22,10 @@ export default class Training extends PureComponent{
             currentExercise: 0,
             exerciseLoading: true,
             exercises: this.fetchExercises(),
-            totalDuration: 0
+            totalDuration: 0,
+            isAllowToWatchVideo: props.navigation.state.params.isAllowToWatchVideo
         }
+        
     }
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
@@ -44,8 +46,8 @@ export default class Training extends PureComponent{
         
         let exerciseTime = parseInt(this.currentTime.split(":")[0],10)*60 +  parseInt(this.currentTime.split(":")[1],10);
         
-        //Store only when user opens pending exercise. Using localNotification-true from DraweContainer
-        (this.state.localNotification || this.state.exerciseRestart) && store.save("PENDING_EXERCISE",{
+        //Store only when user opens pending exercise. 
+        store.save("PENDING_EXERCISE",{
             totalDuration: this.state.totalDuration+exerciseTime,
             currentExercise: this.state.currentExercise+1
         });
@@ -63,7 +65,7 @@ export default class Training extends PureComponent{
                 totalDuration: this.state.totalDuration + exerciseTime
                 
             });
-            this.resetStopwatch();
+            this.resetStopwatch("nextExercise");
           }
           
       }
@@ -105,8 +107,30 @@ export default class Training extends PureComponent{
     this.setState({stopwatchStart: !this.state.stopwatchStart, stopwatchReset: false});
   }
  
-  resetStopwatch=() =>{
-    this.setState({stopwatchStart: false, stopwatchReset: true});
+  resetStopwatch=(nextExercise) =>{
+      if(nextExercise){
+        this.setState({
+            stopwatchStart: false, 
+            stopwatchReset: true})
+      }else{
+        Alert.alert("RESET STOP WATCH","IF YOU RESET, ALL CONTENT REFRESH",[
+        
+            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {
+                text: 'OK', 
+                onPress: () => {
+                    this.setState({
+                        stopwatchStart: false, 
+                        stopwatchReset: true,
+                        currentExercise: 0,
+                        totalDuration: 0,
+                    })
+                }
+            }
+          ],
+          { cancelable: false });
+      }
+      
   }
   
   getFormattedTime=(time) =>{
@@ -139,8 +163,22 @@ export default class Training extends PureComponent{
         let apiHitPoint = appVars.apiUrl+"/exercise.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
         const response = await fetch(apiHitPoint);
         const json = await response.json();
+        console.log("exercise response",json.response);
         if(json["@status"]=="OK"){
-            this.setState({exercises: json.response,exerciseLoading:false});
+            if(this.state.isAllowToWatchVideo){
+                let userNotWantsVideo = await store.get(appVars.NO_VIDEOS);
+                if(!userNotWantsVideo){
+                    console.log("user can and wants to watch");
+                    this.setState({exercises: json.response,exerciseLoading:false});
+                }else{
+                    console.log("user can and doesnt want to watch");
+                    this.setState({exercises: json.response.filter((exercise)=>!exercise.video),exerciseLoading:false});
+                }
+            }else{
+                console.log("user cant");
+                this.setState({exercises: json.response.filter((exercise)=>!exercise.video),exerciseLoading:false});
+            }
+            
         }else{
             
             this.logout();
@@ -181,11 +219,11 @@ export default class Training extends PureComponent{
                                     <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>{!this.state.stopwatchStart ? "START" : "PAUSE"}</Text>
                                 </View>
                             </TouchableHighlight>
-                            <TouchableHighlight onPress={this.selectNextExercise} style={{backgroundColor:appVars.colorLightGray,padding:10,width:140,borderRadius:5}}>
-                            <View style={{flex:1,flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
+                            <TouchableHighlight disabled={this.state.stopwatchStart } onPress={this.selectNextExercise} style={{backgroundColor:appVars.colorLightGray,padding:10,width:140,borderRadius:5}}>
+                                <View style={{flex:1,flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
                                     <View style={{flex:7,flexDirection:"row",alignItems:"center"}}>
                                         <Octicons name="arrow-right" style={{fontSize:18,color:appVars.colorMain}}/>
-                                        <Text style={{fontSize: 16,color:"black", fontFamily: appVars.fontMain, textAlign:"center",color:appVars.colorMain}}>WEITER</Text>
+                                        <Text style={{fontSize: 16,fontFamily: appVars.fontMain, textAlign:"center",color:(this.state.stopwatchStart?"white":appVars.colorMain)}}>WEITER</Text>
                                     </View>
                                     <View style={{flex:3,alignItems:"center",justifyContent:"center",flexDirection:"row"}}>
                                         <Text>{"("+this.state.exercises[this.state.currentExercise].index}</Text>
@@ -195,7 +233,7 @@ export default class Training extends PureComponent{
                                 </View>
 
                             </TouchableHighlight>
-                            <TouchableHighlight onPress={this.resetStopwatch} style={{backgroundColor:appVars.colorLightGray,padding:10,width:90,marginRight: 15, height:35, borderRadius:5}}>
+                            <TouchableHighlight onPress={()=>this.resetStopwatch()} style={{backgroundColor:appVars.colorLightGray,padding:10,width:90,marginRight: 15, height:35, borderRadius:5}}>
                                 <View style={{flex:1,flexDirection:"row",alignItems: "center"}}>
                                     <MaterialIcons name="replay" style={{fontSize:18}}/>
                                     <Text style={{fontSize: 16,color:"black", fontFamily: appVars.fontMain}}>RESET</Text>

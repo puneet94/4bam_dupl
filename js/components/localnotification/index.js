@@ -29,9 +29,43 @@ export default class LocalNotificationScreen extends PureComponent{
             }
         }
     }
+    
+    logOut = ()=>{
+
+        Alert.alert(
+            'Abmelden?',
+            'Möchtest Du dich wirklich abmelden?',
+            [
+              {text: 'Abbrechen', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+              {text: 'Abmelden', onPress: () => this.performLogout()},
+            ],
+            { cancelable: false }
+          )
+    }
+
+    start= async  (pageParams)=>{
+        let APIKEY = appVars.apiKey;
+        let userStoredID  = await store.get(appVars.STORAGE_KEY);
+		
+		if(userStoredID){
+			let authFetch  = await fetch(`https://www.app-4bam.de/api/user.html?authtoken=${[APIKEY]}&userid=${userStoredID}`);
+			let authResponse = await authFetch.json();
+			if(authResponse["@status"]=="OK"){
+				const { navigation } = this.props;
+				navigation.navigate('Training',{...pageParams,isAllowToWatchVideo:authResponse.response.isAllowToWatchVideo});
+			}else{
+				this.logout();
+			}
+		}else{
+			this.logout();
+		}
+
+    }
+
+
     redirectTraining(){
-        const { navigation } = this.props;
-        navigation.navigate('Training',{localNotification:true,alarmID:this.alarmValue.alarmID});
+        this.start({localNotification:true,alarmID:this.alarmValue.alarmID})
+        
     }
     async snoozeAlarm(){
         let alarmDate = moment().add(this.state.snoozeTime,"minutes").format(NOTIFICATION_DATE_TIME_FORMAT);

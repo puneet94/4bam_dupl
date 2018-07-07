@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,ScrollView,Button,Dimensions,BackHandler,Platform,Alert,TouchableOpacity, PixelRatio,TouchableHighlight} from "react-native";
+import {StyleSheet,Text,View,ScrollView,ActivityIndicator,BackHandler,Platform,Alert,TouchableOpacity,TouchableHighlight} from "react-native";
 import store from "react-native-simple-store";
 import appVars from "../../appVars";
 import appStyles from "../../appStyles";
@@ -17,7 +17,8 @@ export default class Home extends Component{
         this.state = {
             position: 'bottom',
             dayMessages: [],
-            weekPlan: {}
+            weekPlan: {},
+            homeLoading: true
         }
     }
 
@@ -69,13 +70,9 @@ export default class Home extends Component{
 
     componentWillMount = async()=>{
         this._mounted = true;
-        this.fetchWeekView();
-        this.fetchDayMessage();
-        /*let ALARM_TIMES = await store.get("ALARM_TIMES");
-                let ALARM_DAYS = await store.get("ALARM_DAYS");
-                if(ALARM_DAYS && ALARM_TIMES){
-                    const {alarmTime,dayName}=getNextAlarm(ALARM_DAYS,ALARM_TIMES);
-                }*/
+        await this.fetchWeekView();
+        await this.fetchDayMessage();
+        
         let firstName = await store.get("FIRSTNAME");
         this._mounted && this.setState({
             firstName
@@ -85,7 +82,10 @@ export default class Home extends Component{
 
         this.props.navigation.setParams({ 
             handleLogout: this.logOut
-        });    
+        });   
+        this.setState({
+            homeLoading: false
+        }) 
 
     }
 
@@ -109,9 +109,24 @@ export default class Home extends Component{
           )
     }
 
-    start(){
-        const { navigation } = this.props;
-        navigation.navigate('Training');
+    start= async  (pageParams)=>{
+        let APIKEY = appVars.apiKey;
+        let userStoredID  = await store.get(appVars.STORAGE_KEY);
+		console.log(userStoredID);
+		if(userStoredID){
+			let authFetch  = await fetch(`https://www.app-4bam.de/api/user.html?authtoken=${[APIKEY]}&userid=${userStoredID}`);
+			let authResponse = await authFetch.json();
+			console.log("auth response",authResponse.response);
+			if(authResponse["@status"]=="OK"){
+				const { navigation } = this.props;
+				navigation.navigate('Training',{...pageParams,isAllowToWatchVideo:authResponse.response.isAllowToWatchVideo});
+			}else{
+				this.logout();
+			}
+		}else{
+			this.logout();
+		}
+
     }
 
     performLogout = ()=> {
@@ -215,45 +230,22 @@ export default class Home extends Component{
     }
         render(){
             return (
-                <View style={{flex:1, backgroundColor: appVars.colorWhite}}>
-                    
+                !this.state.homeLoading?<View style={{flex:1, backgroundColor: appVars.colorWhite}}>
                     <View style={appStyles.contentElement}>
-    
                         <View style={{height:150}}>
-                    
-                    
+                            {
+                                this.state.dayMessages.map((dayMessage)=>{    
+                                    return <ScrollView key={dayMessage.id}>
+                                        <Text style={appStyles.headline}>{dayMessage.title}</Text>
     
-                    
-                        {
-                            this.state.dayMessages.map((dayMessage)=>{    
-                             
-    
-                            return <ScrollView key={dayMessage.id}>
-                                    
-    
-                                    <Text style={appStyles.headline}>{dayMessage.title}</Text>
-    
-                                    <HTMLView addLineBreaks={false} value={dayMessage.text} 
-    
-                                    stylesheet={appStyles}
-    
-                                    onLinkPress={(url) => handleExternalUrl(url)} />
-    
-    
-                                </ScrollView>
+                                        <HTMLView addLineBreaks={false} value={dayMessage.text} stylesheet={appStyles} onLinkPress={(url) => handleExternalUrl(url)} />
+                                    </ScrollView>
+                                })
                             }
-                            
-                            )
-                        }
-                        
                         </View>
                     </View>
-
-                <ScrollView style={appStyles.contenContainer}>
-                <View style={appStyles.contentElement}>
-                        {
-                            this.renderWeekPlan()
-                        }
+                    <ScrollView style={appStyles.contenContainer}>
+                        <View style={appStyles.contentElement}>{this.renderWeekPlan()}
                         </View>
                 </ScrollView>
                 
@@ -262,18 +254,15 @@ export default class Home extends Component{
                 <View style={{marginBottom:5, paddingTop: 5}}>
 
 
-                <TouchableHighlight onPress={this.start.bind(this)}style={{backgroundColor:appVars.colorMain,padding:10, marginRight: 10,marginLeft: 10, height:35, borderRadius:5}}>
+                <TouchableHighlight onPress={()=>this.start()}style={{backgroundColor:appVars.colorMain,padding:10, marginRight: 10,marginLeft: 10, height:35, borderRadius:5}}>
                     <View style={{flex:1,flexDirection:"row",alignItems: "center", justifyContent: "center"}}>
                         <MaterialCommunityIcons name="view-carousel" style={{fontSize:18,color: "white",marginRight: 5}}/>
                         <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>JETZT TRAINIEREN</Text>
                     </View>
                 </TouchableHighlight>
                 </View>     
-
-
-
                 <Toast ref="toast" position={this.state.position}/>
-            </View>
+            </View>:<View style={{flex:1,justifyContent:"center",alignItems:"center"}}><ActivityIndicator size="large"/></View>
         )
     }
 }
