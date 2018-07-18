@@ -23,11 +23,27 @@ export default class TrainingFinish extends PureComponent{
             day: "",
             totalDuration: 0,
             ratingVisible: false,
+            
         }
     }
-
-    onRating=(rating)=>{
-        //Alert.alert(`Thanks for the ${rating} rating`);
+    navigateHomePage = ()=>{
+        const { navigation } = this.props;
+        navigation.navigate("Home");
+    }
+    onRating=async (rating)=>{
+        //Alert.alert(`Thanks for the ${JSON.stringify(rating)} rating`);
+        let userStoredID  = await store.get(appVars.STORAGE_KEY);
+        let apiHitPoint = appVars.apiUrl+"/rating.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
+        const response = await fetch(apiHitPoint, {
+            method: 'post',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(rating)
+        });
+        const response2 = await response.json();
+        
+        if(response2["@status"]=="OK"){
+            this.navigateHomePage();
+        }
     }
     
     async fetchRating() {
@@ -42,10 +58,13 @@ export default class TrainingFinish extends PureComponent{
 
     componentWillMount = async ()=>{
         await this.fetchRating();
+                     
+                
         if(this.props.navigation.state.params){
             const totalDuration = this.props.navigation.state.params.totalDuration;
                 let ALARM_TIMES = await store.get("ALARM_TIMES");
                 let ALARM_DAYS = await store.get("ALARM_DAYS");
+                console.log("alarm_check",ALARM_TIMES,ALARM_DAYS);
                 const {alarmTime,dayName}=getNextAlarm(ALARM_DAYS,ALARM_TIMES);
                 this.setState({time:alarmTime,day:dayName,totalDuration});             
                 Alert.alert("total duration",totalDuration+"-");
@@ -58,6 +77,15 @@ export default class TrainingFinish extends PureComponent{
                 {this.state.ratingVisible===true?<Rating onRating={this.onRating}/>: null }
                 
                 {this.state.day?<Text style={{color: 'black'}}>Dein nächstes Training am {GERMAN_DAYS_MAPPING[ this.state.day.toUpperCase()]} um {this.state.time} Uhr</Text>: null }
+
+
+  <Button
+  onPress={this.navigateHomePage}
+  
+  title="Skip"
+  color="#841584"
+  accessibilityLabel="Learn more about this purple button"
+/>
 
 
             </View>

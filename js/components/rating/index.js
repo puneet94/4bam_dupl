@@ -1,5 +1,5 @@
 import React,{PureComponent} from 'react';
-import {Text,View,Button,Alert,Slider} from "react-native";
+import {Text,View,Button,Alert,Slider,TouchableOpacity} from "react-native";
 import appVars from "../../appVars";
 import appStyles from "../../appStyles";
 import StarRating from 'react-native-star-rating';
@@ -11,12 +11,14 @@ export default  class Rating extends PureComponent {
       starCount: 0
     };
   }
-
+  onSubmitRating = ()=>{
+    this.props.onRating({stars: this.state.starCount,slider1:this.state.userDidWorkout,slider2:this.state.userTriedWorkout});
+  }
   onStarRatingPress(rating) {
     this.setState({
       starCount: rating
     });
-    this.props.onRating(rating);
+    
   }
 
   render() {
@@ -55,6 +57,18 @@ export default  class Rating extends PureComponent {
 
       <Text>{this.state.userTriedWorkout}</Text>
       </View>
+</View>
+
+<View style={appStyles.contentElement}>
+
+
+  <Button
+  onPress={this.onSubmitRating}
+  disabled={!(this.state.starCount>=0 && this.state.userDidWorkout>=0 && this.state.userTriedWorkout>=0)}
+  title="Submit"
+  color="#841584"
+  accessibilityLabel="Learn more about this purple button"
+/>
 </View>
 </View>
     );
