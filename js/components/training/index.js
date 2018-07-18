@@ -70,7 +70,7 @@ export default class Training extends PureComponent{
           
       }
     componentWillMount = async ()=>{
-
+        console.log("nav_params",this.props.navigation.state.params);
         if(this.props.navigation.state.params){
             const localNotification = this.props.navigation.state.params.localNotification;
             const exerciseRestart = this.props.navigation.state.params.exerciseRestart;
@@ -119,6 +119,7 @@ export default class Training extends PureComponent{
             {
                 text: 'OK', 
                 onPress: () => {
+                    store.delete("PENDING_EXERCISE");
                     this.setState({
                         stopwatchStart: false, 
                         stopwatchReset: true,
