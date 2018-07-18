@@ -262,7 +262,7 @@ export default class Home extends Component{
                 </TouchableHighlight>
                 </View>     
                 <Toast ref="toast" position={this.state.position}/>
-            </View>:<View style={{flex:1,justifyContent:"center",alignItems:"center"}}><ActivityIndicator size="large"/></View>
+            </View>:<View style={{flex:1,justifyContent:"center", backgroundColor: appVars.colorWhite, alignItems:"center"}}><ActivityIndicator size="large"/></View>
         )
     }
 }

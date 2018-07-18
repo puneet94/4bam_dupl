@@ -15,13 +15,16 @@ import {
     ListView,
     Alert,
     ActivityIndicator,
-    Image
+    Image,
+    TouchableHighlight,
+    Linking
 } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import AwseomeIcon from 'react-native-vector-icons/FontAwesome';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import appStyles from '../../appStyles';
 import appVars from '../../appVars';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NavigationActions } from 'react-navigation';
 
 import store from 'react-native-simple-store';
@@ -118,8 +121,11 @@ fetchdata = async () => {
     }
 }
 
- renderItem = (item) =>{
 
+
+
+
+ renderItem = (item) =>{
 
     return(
       <View>
@@ -127,9 +133,33 @@ fetchdata = async () => {
                   source={{uri: appVars.serverUrl +"/"+item.picture.sources[this.densi()].src} }
                   />
 
-      <View style={appStyles.contentElement}>
+
+
+
+
+<View>
+    {
+    item.voteurl
+       ?
+      <View><View style={appStyles.contentSeperator} />
+      <View style={{marginBottom:5, paddingTop: 5}}>
+      <TouchableHighlight onPress={ ()=>{ Linking.openURL(item.voteurl)}}  style={{backgroundColor:appVars.colorMain,padding:10, marginRight: 10,marginLeft: 10, height:35, borderRadius:5}}>
+        <View style={{flex:1,flexDirection:"row",alignItems: "center", justifyContent: "center"}}>
+        <MaterialCommunityIcons name="link" style={{fontSize:18,color: "white",marginRight: 5}}/>
+        <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>FRAGEBOGEN ÖFFNEN</Text>
+        </View>
+      </TouchableHighlight>
+      </View><View style={appStyles.contentSeperator} /></View> 
+       :
+      <View></View>
+    }
+</View>
+
 
       
+      
+      <View style={appStyles.contentElement}>
+
         <Text style={appStyles.headline}>{item.title}</Text>
 
           <HTMLView addLineBreaks={false} value={item.text} 
@@ -162,10 +192,17 @@ fetchdata = async () => {
           onLinkPress={(url) => handleExternalUrl(url)} />
             </View>
           </View>
-
+        
+      
 
 
         </View>
+
+
+
+
+
+
 
       </View>
 

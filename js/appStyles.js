@@ -357,26 +357,10 @@ drawerLabel: {
     backgroundColor: appVars.colorDrawerSeperatorBackgroundColor,
   },
 
-  //settings 
-  settingsWrapper: {
-    flexDirection:'row',
-    justifyContent: 'space-between'
-  },
+  //slider rating 
 
-  settingsColStart: {
-    justifyContent: 'flex-start',
-    width: (x * .50),
-    fontFamily: appVars.fontMain,
-    color: appVars.colorBlack,
-    fontSize: em(0.875),
-  },
-
-  settingsColEnd: {
-    justifyContent: 'flex-end', 
-  },
-
-  settingsSlider: {
-    width: (x * .40),
+  ratingSlider: {
+    width: (x * .90),
   },
 
   // generall stuff
@@ -552,6 +536,6 @@ startButtonText: {
     fontSize: em(0.750),
     fontFamily: appVars.fontText,
     color: appVars.colorMain,
-},
+  },
 
 });
