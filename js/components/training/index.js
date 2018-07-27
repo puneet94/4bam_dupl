@@ -5,11 +5,10 @@ import StopWatch from '../stopwatch/timer';
 import Exercise from "../exercise";
 import appVars from "../../appVars";
 import appStyles from '../../appStyles';
-import {getExercises} from "../../services/storeService";
 import Entypo from "react-native-vector-icons/Entypo";
 import Octicons from "react-native-vector-icons/Octicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-
+import moment from "moment";
 export default class Training extends PureComponent{
     constructor(props){
         super(props);
@@ -48,6 +47,7 @@ export default class Training extends PureComponent{
         
         //Store only when user opens pending exercise. 
         store.save("PENDING_EXERCISE",{
+            previousExerciseTime : moment().format('DD-MM-YYYY'),
             totalDuration: this.state.totalDuration+exerciseTime,
             currentExercise: this.state.currentExercise+1
         });
@@ -70,12 +70,14 @@ export default class Training extends PureComponent{
           
       }
     componentWillMount = async ()=>{
-        console.log("nav_params",this.props.navigation.state.params);
+        
+        console.log("moment time check",moment().format('DD-MM-YYYY'));
         if(this.props.navigation.state.params){
             const localNotification = this.props.navigation.state.params.localNotification;
             const exerciseRestart = this.props.navigation.state.params.exerciseRestart;
             const alarmID = this.props.navigation.state.params.alarmID;
             if(localNotification){
+                
                 let ALARM_TIMES = await store.get("ALARM_TIMES");
                 if(ALARM_TIMES){
                     const alarmValue = ALARM_TIMES[alarmID];
@@ -83,9 +85,14 @@ export default class Training extends PureComponent{
                     this.setState({alarmValue,localNotification});
                 }
 
-                store.save("PENDING_EXERCISE",{currentExercise:0,totalDuration:0});
+                store.save("PENDING_EXERCISE",{
+                    currentExercise:0,
+                    totalDuration:0,
+                    previousExerciseTime : moment().format('DD-MM-YYYY'),
+                });
             }
-            if(exerciseRestart){
+            else if(exerciseRestart){
+                
                 const pendingExercise = await store.get("PENDING_EXERCISE");
                 if(pendingExercise){
                     this.setState({
