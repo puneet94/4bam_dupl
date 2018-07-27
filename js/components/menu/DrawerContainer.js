@@ -1,16 +1,16 @@
 import React from 'react'
-import { StyleSheet,Text, View, PushNotificationIOS,ScrollView, TouchableWithoutFeedback, Image, Platform, Linking, Alert, ImageBackground} from 'react-native';
+import { Text, View, PushNotificationIOS,ScrollView, TouchableWithoutFeedback, Image, Platform, Linking, Alert} from 'react-native';
 import OpenSettings from 'react-native-open-settings';
 import appVars from '../../appVars';
 import appStyles from '../../appStyles';
 
-import { NavigationActions } from 'react-navigation'
+
 import PushNotification from 'react-native-push-notification';
 import OneSignal from 'react-native-onesignal';
 import store from 'react-native-simple-store';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image'
-
+import moment from "moment";
 
 class DrawerContainer extends React.Component {
 	constructor(props){
@@ -194,37 +194,51 @@ class DrawerContainer extends React.Component {
 		}
 		
 	}
-
 	onRegistered(notifData) {
 		console.log("on registered",notifData);
 	}
 	logout = ()=>{
-		
         store.delete(appVars.STORAGE_KEY)
         const { navigation } = this.props;
         navigation.navigate('Login');
 	}
+
+
 	openTrainingScreen = async (appstart)=>{
-		if(appstart){
-			let pendingExercise = await store.get("PENDING_EXERCISE");
-			if(pendingExercise){
+		var currentTime = moment();
+		//console.log("date diff",moment().diff(moment("28-07-2018","DD-MM-YYYY"), 'days'));
+		let pendingExercise = await store.get("PENDING_EXERCISE");
+		let exerciseRestart = false;
+		if(pendingExercise){
+			
+			let {previousExerciseTime} = pendingExercise;
+			if(previousExerciseTime){
+
+				previousExerciseTime = moment(previousExerciseTime,"DD-MM-YYYY");
+				var currentTime = moment();
 				
-				//const { navigation } = this.props;
-				this.checkUserAuthenticated("Training",{exerciseRestart: true});
-				//navigation.navigate("Training",{exerciseRestart: true});
-				return;
+				if(currentTime.diff(previousExerciseTime, 'days')>0){
+					exerciseRestart = false;
+				} else{
+					exerciseRestart = true
+				}
+			}else{
+				exerciseRestart = false;
 			}
 		}else{
-			let pendingExercise = await store.get("PENDING_EXERCISE");
-			if(pendingExercise){
+			exerciseRestart = false;
+		}
+		if(appstart){
+			if(exerciseRestart){
 				
-				//const { navigation } = this.props;
-				this.checkUserAuthenticated("Training",{exerciseRestart: true});
-				//navigation.navigate("Training",{exerciseRestart: true});
-				return;
-			}else{
-				this.checkUserAuthenticated("Training",{exerciseRestart: false});
+				this.checkUserAuthenticated("Training",{exerciseRestart});
 			}
+				return;
+			
+		}else{
+			
+				this.checkUserAuthenticated("Training",{exerciseRestart});			
+		
 		}
 		
 	}
