@@ -64,28 +64,32 @@ export default class TrainingFinish extends PureComponent{
             const totalDuration = this.props.navigation.state.params.totalDuration;
                 let ALARM_TIMES = await store.get("ALARM_TIMES");
                 let ALARM_DAYS = await store.get("ALARM_DAYS");
-                console.log("alarm_check",ALARM_TIMES,ALARM_DAYS);
+                //console.log("alarm_check",ALARM_TIMES,ALARM_DAYS);
                 const {alarmTime,dayName}=getNextAlarm(ALARM_DAYS,ALARM_TIMES);
                 this.setState({time:alarmTime,day:dayName,totalDuration});             
-                Alert.alert("total duration",totalDuration+"-");
+                //Alert.alert("total duration",totalDuration+"-");
         }        
     }
     render(){
         return (
             <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"white"}}>
+            
+            <Text style={{color: 'black'}}>Du bist Super! Hier Bild einfügen.</Text>
 
                 {this.state.ratingVisible===true?<Rating onRating={this.onRating}/>: null }
+
+                  {this.state.ratingVisible===true?<Button
+  onPress={this.navigateHomePage}
+  
+  title="Skip Rating"
+  color="#841584"
+  accessibilityLabel="Learn more about this purple button"
+/>: null }
                 
                 {this.state.day?<Text style={{color: 'black'}}>Dein nächstes Training am {GERMAN_DAYS_MAPPING[ this.state.day.toUpperCase()]} um {this.state.time} Uhr</Text>: null }
 
 
-  <Button
-  onPress={this.navigateHomePage}
-  
-  title="Skip"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>
+
 
 
             </View>
