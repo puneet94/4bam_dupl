@@ -22,13 +22,6 @@ export default class AccountScreen extends Component {
         this.fetchdata();
 
     }
-    changeNoVideos = (params)=>{
-        
-        this.setState({
-            noVideos: !params
-        });
-        store.save(appVars.NO_VIDEOS,!params);  
-    }
 
 
 
@@ -44,7 +37,7 @@ export default class AccountScreen extends Component {
        fetch(api)
          .then(res => res.json())
          .then(res => {
-             //console.log("user_data",res.response);
+             console.log("user_data",res.response);
            this.setState({
              data: res.response || [],
              error: res.error || null,
@@ -134,14 +127,11 @@ export default class AccountScreen extends Component {
                 <View style={appStyles.contentElement}>
                     <TextInput defaultValue={this.state.data.email} placeholder={'E-Mail-Adressse'} returnKeyType={"next"} editable={false} />
                 </View>
-                {this.state.data.isAllowToWatchVideo && <View style={appStyles.contentElement}>
-                    <Text>{"Play Videos"}</Text>
-                    <Switch onValueChange={(params)=>this.changeNoVideos(params)} value={!this.state.noVideos}/>
-                </View>}
+                
                 <View style={appStyles.contentElement}>
                 <DatePicker
                         style={{width: 300}}
-                        
+
                         mode="date"
                         placeholder="Geburtsdatum"
                         confirmBtnText="Confirm"

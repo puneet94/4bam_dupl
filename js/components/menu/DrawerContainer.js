@@ -232,8 +232,10 @@ class DrawerContainer extends React.Component {
 			if(exerciseRestart){
 				
 				this.checkUserAuthenticated("Training",{exerciseRestart});
+			}else{
+				store.delete("PENDING_EXERCISE");
 			}
-				return;
+			return;
 			
 		}else{
 			
