@@ -24,10 +24,46 @@ class SettingsScreen extends Component {
     constructor(props){
             super(props);
             this.state = {
+                data: {},
                 userPushnotification: true,
             }
         }
+
+        fetchdata = async () => {
+            
+            let userid = await store.get(appVars.STORAGE_KEY);
+            let noVideos = await store.get(appVars.NO_VIDEOS);
+            const api = `${appVars.apiUrl}/user.html?authtoken=${appVars.apiKey}&userid=${userid}`;
+          
+            
+            this.setState({ loading: true});
+          
+              fetch(api)
+                .then(res => res.json())
+                .then(res => {
+                    console.log("user_data",res.response);
+                  this.setState({
+                    data: res.response || [],
+                    error: res.error || null,
+                    loading : false,
+                    refreshing: false,
+                    noVideos
+                  })
+                })
+                .catch(error => {
+                  this.setState({ error, loading: false });
+                })
+                
+          };
+    changeNoVideos = (params)=>{
+        
+        this.setState({
+            noVideos: !params
+        });
+        store.save(appVars.NO_VIDEOS,!params);  
+    }
       componentWillMount = async()=>{
+        this.fetchdata();
         let fontSize = Number.parseInt(await store.get('fontSize'),10);
         if(fontSize){
           this.setState({
@@ -35,6 +71,7 @@ class SettingsScreen extends Component {
           });
         }
         OneSignal.getPermissionSubscriptionState((status)=>{
+            console.log("subscription status",status);
             this.setState({
                 userPushnotification: status.subscriptionEnabled
             });
@@ -65,8 +102,8 @@ class SettingsScreen extends Component {
 
       changePushNotification = (value)=>{
         this.setState({userPushnotification: value});
+        console.log("subscription value",value);
         OneSignal.setSubscription(value);
-
         if(Platform.OS === 'android') {        
             ToastAndroid.show(`Benachrichtigungen ${value?"eingeschaltet":"ausgeschaltet"}`, ToastAndroid.SHORT);
             } else {
@@ -100,12 +137,21 @@ class SettingsScreen extends Component {
             <View style={appStyles.contentElement}>
                 <Text style={appStyles.contentHeadline}>{appVars.textVideosettingHeadline} VIDEOSSETTIING</Text>
                 <Text style={appStyles.contentText}>{appVars.textVideosetting}</Text>
-                <View style={appStyles.settingsWrapper}>
+                {
+                        this.state.data.isAllowToWatchVideo &&<View style={appStyles.settingsWrapper}>
                     <Text style={appStyles.settingsColStart}>VIDEO ON / OFF</Text>
                     <View style={appStyles.settingsColEnd}>
-                        <Switch onValueChange={ this.changePushNotification} value={this.state.userPushnotification} />
+                    <Switch onValueChange={(params)=>this.changeNoVideos(params)} value={!this.state.noVideos}/>
                     </View>
-               </View>
+
+
+                     
+                       
+                            
+                     
+                    
+
+               </View>}
             </View>
 
             <View style={appStyles.contentSeperator} />
