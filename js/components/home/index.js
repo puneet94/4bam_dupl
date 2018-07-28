@@ -3,7 +3,8 @@ import {StyleSheet,Text,View,ScrollView,ActivityIndicator,BackHandler,Platform,A
 import store from "react-native-simple-store";
 import appVars from "../../appVars";
 import appStyles from "../../appStyles";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';import Toast, {DURATION} from 'react-native-easy-toast'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Toast, {DURATION} from 'react-native-easy-toast'
 import {getNextAlarm} from "../../services/dateService";
 import HTMLView from 'react-native-htmlview';
 import { NavigationActions } from 'react-navigation'
@@ -30,8 +31,12 @@ export default class Home extends Component{
               <MaterialCommunityIcons name="account" style={{color: appVars.colorMain,fontSize:24,marginRight:10}} />
         </TouchableOpacity>
           
-          <TouchableOpacity onPress={() => params.handleLogout()}>
-              <MaterialCommunityIcons name="power-settings" style={{color: appVars.colorMain,fontSize:24,marginRight:10}} />
+          <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+              <MaterialCommunityIcons name="settings" style={{color: appVars.colorMain,fontSize:24,marginRight:5}} />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.navigate('Inprint')}>
+              <MaterialCommunityIcons name="dots-vertical" style={{color: appVars.colorMain,fontSize:24,marginRight:10}} />
             </TouchableOpacity>
     
         </View>
@@ -96,18 +101,7 @@ export default class Home extends Component{
         }
     }
 
-    logOut = ()=>{
 
-        Alert.alert(
-            'Abmelden?',
-            'Möchtest Du dich wirklich abmelden?',
-            [
-              {text: 'Abbrechen', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-              {text: 'Abmelden', onPress: () => this.performLogout()},
-            ],
-            { cancelable: false }
-          )
-    }
 
     start= async  (pageParams)=>{
         let APIKEY = appVars.apiKey;
@@ -129,12 +123,6 @@ export default class Home extends Component{
 
     }
 
-    performLogout = ()=> {
-        store.save("LOGGED_IN",false);
-            store.delete(appVars.STORAGE_KEY)
-            const { navigation } = this.props;
-            navigation.navigate('Login');
-    }
 
     async fetchDayMessage(){
         let userStoredID  = await store.get(appVars.STORAGE_KEY);

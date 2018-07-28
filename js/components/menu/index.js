@@ -9,6 +9,8 @@ import LocalNotificationScreen from "../localnotification";
 import HomeScreen from "../home";
 import LoginScreen from "../login";
 import AccountScreen from "../account";
+import SettingsScreen from "../settings";
+import InprintScreen from "../inprint";
 
 import NewsScreen from "../newslist";
 import DrawerContainer from "./DrawerContainer";
@@ -60,6 +62,18 @@ const Menu = DrawerNavigator({
     screen: AccountScreen,
     navigationOptions : ({ navigation, screenProps }) => ({
       headerTitle:  <Text style={ appStyles.headerTitle }>{appVars.labelAccount.toUpperCase()}</Text>,
+    }),
+  },
+  Settings: {
+    screen: SettingsScreen,
+    navigationOptions : ({ navigation, screenProps }) => ({
+      headerTitle:  <Text style={ appStyles.headerTitle }>{appVars.labelSettings.toUpperCase()}</Text>,
+    }),
+  },
+  Inprint: {
+    screen: InprintScreen,
+    navigationOptions : ({ navigation, screenProps }) => ({
+      headerTitle:  <Text style={ appStyles.headerTitle }>{appVars.labelInprint.toUpperCase()}</Text>,
     }),
   },
 },

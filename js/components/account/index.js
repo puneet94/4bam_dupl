@@ -44,7 +44,7 @@ export default class AccountScreen extends Component {
        fetch(api)
          .then(res => res.json())
          .then(res => {
-             console.log("user_data",res.response);
+             //console.log("user_data",res.response);
            this.setState({
              data: res.response || [],
              error: res.error || null,
@@ -59,7 +59,7 @@ export default class AccountScreen extends Component {
          
    };
    titelChange = (titel)=>{
-        console.log("titel value");
+        //console.log("titel value");
         
         this.setState({
             data: {...this.state.data,titel:titel}
@@ -93,22 +93,21 @@ export default class AccountScreen extends Component {
     }
    userAccountUpdate = async()=>{
     
+        var dataUpdate = new FormData();
+        dataUpdate.append( "formDataUpdate",  JSON.stringify(this.state.data));
 
-    
-        //Alert.alert(`Thanks for the ${JSON.stringify(rating)} rating`);
         let userid = await store.get(appVars.STORAGE_KEY);
         
         const api = `${appVars.apiUrl}/user.html?authtoken=${appVars.apiKey}&userid=${userid}`;
         const response = await fetch(api, {
             method: 'post',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(this.state.data)
+            body: dataUpdate
         });
         const response2 = await response.json();
         console.log("user_update",response2);
         if(response2["@status"]=="OK"){
             //this.navigateHomePage();
-            Alert.alert("success");
+            Alert.alert("OK","Deine Daten wurden gespeichert.");
         }
     }
    
@@ -122,10 +121,7 @@ export default class AccountScreen extends Component {
           }  else{
         return (
             	<View style={appStyles.container}>
-                
-                <View style={appStyles.contentElement}>
-                    <TextInput defaultValue={this.state.data.titel} placeholder={'Titel'} returnKeyType={"next"} onSubmitEditing={this.onSubmitEditing} style={appStyles.formInput} keyboardType={'default'} autoCapitalize={'none'} autoCorrect={false} onChangeText={this.titelChange}/>
-                </View>
+            
 
                 <View style={appStyles.contentElement}>
                     <TextInput defaultValue={this.state.data.firstname} placeholder={'Vorname'} returnKeyType={"next"} onSubmitEditing={this.onSubmitEditing} style={appStyles.formInput} keyboardType={'default'} autoCapitalize={'none'} autoCorrect={false} onChangeText={this.firstnameChange}/>
@@ -151,8 +147,8 @@ export default class AccountScreen extends Component {
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
                         iconComponent = {<View/>}
-                        format="YYYY-MM-DD"
-                        date={this.state.data.dateOfBirth||"2018-05-06"}
+                        format="DD.MM.YYYY"
+                        date={this.state.data.dateOfBirth}
                         onDateChange={this.dateOfBirthChange}
                         customStyles={{
                         dateInput: {
@@ -165,11 +161,11 @@ export default class AccountScreen extends Component {
                 </View>
                 <View style={appStyles.contentElement}>
                 <Picker
-                selectedValue={this.state.data.gender||"male"}
+                selectedValue={this.state.data.gender}
                 onValueChange={(itemValue, itemIndex) => {this.genderChange(itemValue)}} 
                 style={{ height: 50, width: 200 }}
                 >
-                    <Picker.Item label="Unsicher" value="unsicher" />
+                    <Picker.Item label="Nicht definiert" value="" />
                     <Picker.Item label="Männlich" value="male" />
                     <Picker.Item label="Weiblich" value="female" />
                     </Picker>
