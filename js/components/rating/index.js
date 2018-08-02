@@ -16,32 +16,12 @@ export default  class Rating extends PureComponent {
   onSubmitRating = ()=>{
     this.props.onRating(
       {
-      stars: this.state.starCount,
-      training:this.state.userDidWorkout,
-      wantedtraing:this.state.userTriedWorkout}
+        stars: this.state.starCount,
+        training:this.state.userDidWorkout,
+        wantedtraing:this.state.userTriedWorkout
+        }
       );
   }
-
-  onSubmitRating = async()=>{
-    
-    var dataPost = new FormData();
-    dataPost.append( "formDataInsert",  JSON.stringify(this.state.data));
-
-    let userid = await store.get(appVars.STORAGE_KEY);
-    
-    const api = `${appVars.apiUrl}/rating.html?authtoken=${appVars.apiKey}&userid=${userid}`;
-    const response = await fetch(api, {
-        method: 'post',
-        body: dataPost
-    });
-    const response2 = await response.json();
-    console.log("rating",response2);
-    if(response2["@status"]=="OK"){
-        //this.navigateHomePage();
-        Alert.alert("OK","Deine Daten wurden gespeichert.");
-    }
-}
-
 
   onStarRatingPress(rating) {
     this.setState({

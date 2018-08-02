@@ -32,12 +32,13 @@ export default class TrainingFinish extends PureComponent{
     }
     onRating=async (rating)=>{
         //Alert.alert(`Thanks for the ${JSON.stringify(rating)} rating`);
+        var dataPost = new FormData();
+        dataPost.append( "formDataInsert",  JSON.stringify(rating));
         let userStoredID  = await store.get(appVars.STORAGE_KEY);
         let apiHitPoint = appVars.apiUrl+"/rating.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
         const response = await fetch(apiHitPoint, {
             method: 'post',
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(rating)
+            body: dataPost
         });
         const response2 = await response.json();
         
@@ -46,6 +47,8 @@ export default class TrainingFinish extends PureComponent{
         }
     }
     
+
+
     async fetchRating() {
       let userStoredID  = await store.get(appVars.STORAGE_KEY);
       let apiHitPoint = appVars.apiUrl+"/rating.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
