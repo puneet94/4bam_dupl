@@ -32,7 +32,7 @@ export default  class Rating extends PureComponent {
     const api = `${appVars.apiUrl}/rating.html?authtoken=${appVars.apiKey}&userid=${userid}`;
     const response = await fetch(api, {
         method: 'post',
-        body: dataUpdate
+        body: dataPost
     });
     const response2 = await response.json();
     console.log("rating",response2);
