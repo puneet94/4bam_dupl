@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import {Text,View,Button,Alert,Slider} from "react-native";
+import {Text,View,Button,Alert,Slider,Image,ScrollView} from "react-native";
 import appVars from "../../appVars";
 import appStyles from "../../appStyles";
 import store from "react-native-simple-store";
@@ -72,9 +72,11 @@ export default class TrainingFinish extends PureComponent{
     }
     render(){
         return (
-            <View style={{flex:1,justifyContent:"center",alignItems:"center",backgroundColor:"white"}}>
+            <ScrollView style={{flex:1, backgroundColor:"white"}}>
             
             <Text style={{color: 'black'}}>Du bist Super! Hier Bild einfügen.</Text>
+
+            <Image source={require ('../../../assets/images/thumb.jpg') } style={{width: appVars.screenX, height: appVars.screenX}} />
 
                 {this.state.ratingVisible===true?<Rating onRating={this.onRating}/>: null }
 
@@ -85,14 +87,15 @@ export default class TrainingFinish extends PureComponent{
   color="#841584"
   accessibilityLabel="Learn more about this purple button"
 />: null }
-                
+<View style={appStyles.contentSeperator} />
+
                 {this.state.day?<Text style={{color: 'black'}}>Dein nächstes Training am {GERMAN_DAYS_MAPPING[ this.state.day.toUpperCase()]} um {this.state.time} Uhr</Text>: null }
 
 
 
 
 
-            </View>
+            </ScrollView>
         );
     }
 }
