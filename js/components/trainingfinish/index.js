@@ -1,18 +1,18 @@
 import React, { PureComponent } from 'react';
-import {Text,View,Button,Alert,Slider,Image,ScrollView} from "react-native";
+import {Text,View,Button,Alert,Slider,Image,ScrollView,TouchableHighlight} from "react-native";
 import appVars from "../../appVars";
 import appStyles from "../../appStyles";
 import store from "react-native-simple-store";
 import Rating from "../rating";
 import {getNextAlarm2,getNextAlarm} from "../../services/dateService";
 const GERMAN_DAYS_MAPPING = {
-    MONDAY: "MONTAG",
-    TUESDAY: "DIENSTAG",
-    WEDNESDAY: "MITTWOCH",
-    THURSDAY: "DONNERSTAG",
-    FRIDAY: "FREITAG",
-    SATURDAY: "SAMSTAG",
-    SUNDAY: "SONNTAG"
+    MONDAY: "Montag",
+    TUESDAY: "Dienstag",
+    WEDNESDAY: "Mittwoch",
+    THURSDAY: "Donnerstag",
+    FRIDAY: "Freitag",
+    SATURDAY: "Samstag",
+    SUNDAY: "Sonntag"
 }
 export default class TrainingFinish extends PureComponent{
     
@@ -87,28 +87,26 @@ export default class TrainingFinish extends PureComponent{
     render(){
         return (
             <ScrollView style={{flex:1, backgroundColor:"white"}}>
-            
-            <Text style={{color: 'black'}}>Du bist Super! Hier Bild einfügen.</Text>
+                        <View style={appStyles.contentElement}>
+            <Text style={appStyles.headline}>Super gemacht!</Text>
+            <Image source={require ('../../../assets/images/thumbup.png') } style={{width: appVars.screenX, height: appVars.screenX}} />
+        
+            {this.state.day && this.state.time && this.state.ratingVisible!=true?<Text style={appStyles.h3}>Dein nächstes Training ist am {GERMAN_DAYS_MAPPING[this.state.day]} um {this.state.time} Uhr.</Text>: null }
 
-            <Image source={require ('../../../assets/images/thumb.jpg') } style={{width: appVars.screenX, height: appVars.screenX}} />
+
+            </View>
+
+            {this.state.ratingVisible===true?<View style={appStyles.contentSeperator} />: null }
 
                 {this.state.ratingVisible===true?<Rating onRating={this.onRating}/>: null }
 
-                  {this.state.ratingVisible===true?<Button
-  onPress={this.navigateHomePage}
-  
-  title="Skip Rating"
-  color="#841584"
-  accessibilityLabel="Learn more about this purple button"
-/>: null }
-<View style={appStyles.contentSeperator} />
-
-                {this.state.day?<Text style={{color: 'black'}}>Dein nächstes Training am {GERMAN_DAYS_MAPPING[ this.state.day.toUpperCase()]} um {this.state.time} Uhr</Text>: null }
-
-
-
-
-
+                  {this.state.ratingVisible===true?<TouchableHighlight onPress={this.navigateHomePage} style={{backgroundColor:appVars.colorLightGray, padding:10, marginRight: 10,marginLeft: 10, height:35, borderRadius:5,marginBottom:10,}} >
+   <View style={{flex:1,flexDirection:"row",alignItems: "center", justifyContent: "center"}}>
+       <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>BEWERTUNG ÜBERSPRINGEN</Text>
+   </View>
+</TouchableHighlight>: null }
+            
+            
             </ScrollView>
         );
     }

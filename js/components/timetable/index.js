@@ -21,49 +21,49 @@ export default class TimeTable extends PureComponent{
                 dayName: "MONDAY",
                 dayID: "111111",
                 dayID2: "1111111",
-                text: "Monday alarm",
+                text: "4BAM Montag",
                 alarmDate1: null,                 
                 alarmDate2: null
             },{
                 dayName: "TUESDAY",
                 dayID: "222222",
                 dayID2: "2222222",
-                text: "Tuesday alarm",
+                text: "4BAM Dienstag",
                 alarmDate1: null,                 
                 alarmDate2: null
             },{
                 dayName: "WEDNESDAY",
                 dayID: "333333",
                 dayID2: "3333333",
-                text: "Wednesday alarm",
+                text: "4BAM Mittwoch",
                 alarmDate1: null,                 
                 alarmDate2: null
             },{
                 dayName: "THURSDAY",
                 dayID: "444444",
                 dayID2: "4444444",
-                text: "Thursday alarm",
+                text: "4BAM Donnerstag",
                 alarmDate1: null,                 
                 alarmDate2: null
             },{
                 dayName: "FRIDAY",
                 dayID: "555555",
                 dayID2: "5555555",
-                text: "Friday alarm",
+                text: "4BAM Freitag",
                 alarmDate1: null,                 
                 alarmDate2: null
             },{
                 dayName: "SATURDAY",
                 dayID: "666666",
                 dayID2: "6666666",
-                text: "Saturday alarm",
+                text: "4BAM Samstag",
                 alarmDate1: null,                 
                 alarmDate2: null
             },{
                 dayName: "SUNDAY",
                 dayID: "777777",
                 dayID2: "7777777",
-                text: "Sunday alarm",
+                text: "4BAM Sonntag",
                 alarmDate1: null,
                 alarmDate2: null
             }]
@@ -189,8 +189,8 @@ export default class TimeTable extends PureComponent{
                 <View style={{flex:1}}>
                     <Button
                         onPress={()=>this.openTimeTableTextModal(timeTable)}
-                        title="Edit"
-                        color="#09437f"
+                        title="Bearbeiten"
+                        color={appVars.colorMain}
                     />
                 </View>
             </View>
@@ -214,9 +214,9 @@ export default class TimeTable extends PureComponent{
                 />
                 <Button
                     onPress={() => this.closeModal()}
-                    title="Close"
-                    color="#09437f"
-                >
+                    title="Schließen"
+                    color={appVars.colorMain}
+                    >
                 </Button>
               </View>
             </View>

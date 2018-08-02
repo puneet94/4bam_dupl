@@ -98,6 +98,9 @@ import {
     labelFromCamera: "Kamera",
     labelFromLib: "Album",
     labelMsg: "Nachricht",
+
+    labelVideoMode: "Video-Modus aktivieren?",
+
       
     //text
     textDownloadAllreadRunning: "Bitte warten Sie bis der aktuelle Download abgeschlossen ist.",
@@ -109,6 +112,9 @@ import {
     textFontsizeHeadline: "Nachrichten Schriftgröße",
     textFontsize: "Hier können Sie die Schriftgröße nach Ihren Bedürfnissen anpassen.",
   
+    textVideoSettingsHeadline: "Video-Einstellung",
+    textVideoSettings: "Über diese Einstellung können Sie den Video-Modus bei den Übungen aktivieren oder deaktivieren.",
+
     textLogin: "Anmelden",
     textLoginFollowup: "Um auf die 4BAM-App zuzugreifen, loggen Sie sich bitte mit Ihrer Benutzer-E-Mail-Adresse und Ihrem Passwort ein.",
     textLogout: "Sie sind angemeldet!",

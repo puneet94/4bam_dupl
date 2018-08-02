@@ -155,11 +155,20 @@ export default class AlarmSceen extends PureComponent{
         
         alarmID  = alarmID?(Number(alarmID)+1) : 1;
         await store.save("ALARM_ID",alarmID);
-        
+        const GERMAN_DAYS_MAPPING = {
+            MONDAY: "Montag: ",
+            TUESDAY: "Dienstag: ",
+            WEDNESDAY: "Mittwoch: ",
+            THURSDAY: "Donnerstag: ",
+            FRIDAY: "Freitag: ",
+            SATURDAY: "Samstag: ",
+            SUNDAY: "Sonntag: "
+        }
+
         let newAlarm = {
             dayName: item,
             alarmID,
-            alarmText: item+" alarm",
+            alarmText: GERMAN_DAYS_MAPPING[item]+" 4BAM Erinnerung",
             alarmDate: null,
             alarmTime: null
         };
@@ -248,8 +257,8 @@ export default class AlarmSceen extends PureComponent{
                             />
                             <Button
                                 onPress={() => this.closeModal()}
-                                title="Close"
-                                color="#09437f"
+                                title="Schließen"
+                                color={appVars.colorMain}
                             />    
                         </View>
                     </View>

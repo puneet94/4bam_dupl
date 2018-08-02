@@ -60,7 +60,12 @@ class SettingsScreen extends Component {
         this.setState({
             noVideos: !params
         });
-        store.save(appVars.NO_VIDEOS,!params);  
+        store.save(appVars.NO_VIDEOS,!params);
+        if(Platform.OS === 'android') {        
+            ToastAndroid.show(`Video-Modus ${params?"eingeschaltet":"ausgeschaltet"}`, ToastAndroid.SHORT);
+            } else {
+            this.refs.toast.show(`Video-Modus ${params?"eingeschaltet":"ausgeschaltet"}`, 2000);
+          }
     }
       componentWillMount = async()=>{
         this.fetchdata();
@@ -135,11 +140,11 @@ class SettingsScreen extends Component {
       
             <Toast ref="toast" style={appStyles.iOSToast} textStyle={appStyles.iOSToastText}/>
             <View style={appStyles.contentElement}>
-                <Text style={appStyles.contentHeadline}>{appVars.textVideosettingHeadline} VIDEOSSETTIING</Text>
-                <Text style={appStyles.contentText}>{appVars.textVideosetting}</Text>
+                <Text style={appStyles.contentHeadline}>{appVars.textVideosettingHeadline} {appVars.textVideoSettingsHeadline}</Text>
+                <Text style={appStyles.contentText}>{appVars.textVideoSettings}</Text>
                 {
                         this.state.data.isAllowToWatchVideo &&<View style={appStyles.settingsWrapper}>
-                    <Text style={appStyles.settingsColStart}>VIDEO ON / OFF</Text>
+                    <Text style={appStyles.settingsColStart}>{appVars.labelVideoMode}</Text>
                     <View style={appStyles.settingsColEnd}>
                     <Switch onValueChange={(params)=>this.changeNoVideos(params)} value={!this.state.noVideos}/>
                     </View>
@@ -154,8 +159,6 @@ class SettingsScreen extends Component {
                </View>}
             </View>
 
-            <View style={appStyles.contentSeperator} />
-
 
         <View style={appStyles.contentSeperator} />
                 
@@ -165,7 +168,7 @@ class SettingsScreen extends Component {
                 <TouchableHighlight onPress={()=>this.logOut()} style={{backgroundColor:appVars.colorMain,padding:10, marginRight: 10,marginLeft: 10, height:35, borderRadius:5}}>
                     <View style={{flex:1,flexDirection:"row",alignItems: "center", justifyContent: "center"}}>
                         <MaterialCommunityIcons name="power-settings" style={{fontSize:18,color: "white",marginRight: 5}}/>
-                        <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>ABMELDEN</Text>
+                        <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>AUS DER APP ABMELDEN</Text>
                     </View>
                 </TouchableHighlight>
                 </View>    

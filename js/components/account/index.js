@@ -117,25 +117,31 @@ export default class AccountScreen extends Component {
             
 
                 <View style={appStyles.contentElement}>
+                <Text style={appStyles.settingsColStart}>Vorname:</Text>
+
                     <TextInput defaultValue={this.state.data.firstname} placeholder={'Vorname'} returnKeyType={"next"} onSubmitEditing={this.onSubmitEditing} style={appStyles.formInput} keyboardType={'default'} autoCapitalize={'none'} autoCorrect={false} onChangeText={this.firstnameChange}/>
                 </View>
 
                 <View style={appStyles.contentElement}>
+                <Text style={appStyles.settingsColStart}>Nachname:</Text>
+
                     <TextInput defaultValue={this.state.data.lastname} placeholder={'Nachname'} returnKeyType={"next"} onSubmitEditing={this.onSubmitEditing} style={appStyles.formInput} keyboardType={'default'} autoCapitalize={'none'} autoCorrect={false} onChangeText={this.lastnameChange}/>
                 </View>
-
                 <View style={appStyles.contentElement}>
-                    <TextInput defaultValue={this.state.data.email} placeholder={'E-Mail-Adressse'} returnKeyType={"next"} editable={false} />
+                <Text style={appStyles.settingsColStart}>E-Mail-Adresse:</Text>
+                <TextInput defaultValue={this.state.data.email} placeholder={'E-Mail-Adressse'} returnKeyType={"next"} editable={false} />
                 </View>
                 
                 <View style={appStyles.contentElement}>
+                <Text style={appStyles.settingsColStart}>Geburtsdatum:</Text>
+
                 <DatePicker
-                        style={{width: 300}}
+                        style={{width: appVars.screenX-20,}}
 
                         mode="date"
                         placeholder="Geburtsdatum"
-                        confirmBtnText="Confirm"
-                        cancelBtnText="Cancel"
+                        confirmBtnText="OK"
+                        cancelBtnText="Abbrechen"
                         iconComponent = {<View/>}
                         format="DD.MM.YYYY"
                         date={this.state.data.dateOfBirth}
@@ -150,10 +156,11 @@ export default class AccountScreen extends Component {
                     />
                 </View>
                 <View style={appStyles.contentElement}>
+                <Text style={appStyles.settingsColStart}>Geschlecht:</Text>
                 <Picker
                 selectedValue={this.state.data.gender}
                 onValueChange={(itemValue, itemIndex) => {this.genderChange(itemValue)}} 
-                style={{ height: 50, width: 200 }}
+                style={{ height: 50, width: appVars.screenX-20 }}
                 >
                     <Picker.Item label="Nicht definiert" value="" />
                     <Picker.Item label="Männlich" value="male" />
