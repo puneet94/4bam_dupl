@@ -32,18 +32,29 @@ export default class TrainingFinish extends PureComponent{
     }
     onRating=async (rating)=>{
         //Alert.alert(`Thanks for the ${JSON.stringify(rating)} rating`);
+        console.log(rating);
         var dataPost = new FormData();
         dataPost.append( "formDataInsert",  JSON.stringify(rating));
         let userStoredID  = await store.get(appVars.STORAGE_KEY);
         let apiHitPoint = appVars.apiUrl+"/rating.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
         const response = await fetch(apiHitPoint, {
             method: 'post',
-            body: dataPost
+            body: dataPost  
         });
         const response2 = await response.json();
-        
+        //console.log(response2);
         if(response2["@status"]=="OK"){
-            this.navigateHomePage();
+            
+            Alert.alert(
+                'OK',
+                'Vielen Dank für die Teilnahme',
+                [
+                  {text: 'OK', onPress: () => this.navigateHomePage()},
+                ],
+                { cancelable: false }
+              )
+
+
         }
     }
     

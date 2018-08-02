@@ -18,7 +18,7 @@ export default  class Rating extends PureComponent {
       {
         stars: this.state.starCount,
         training:this.state.userDidWorkout,
-        wantedtraing:this.state.userTriedWorkout
+        wantedtraining:this.state.userTriedWorkout
         }
       );
   }
