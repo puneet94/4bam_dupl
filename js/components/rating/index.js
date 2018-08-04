@@ -1,5 +1,5 @@
 import React,{PureComponent} from 'react';
-import {Text,View,Button,Alert,Slider,TouchableOpacity,TouchableHighlight} from "react-native";
+import {Text,View,Button,Alert,Slider,TouchableOpacity,TouchableHighlight,Picker} from "react-native";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import appVars from "../../appVars";
 import appStyles from "../../appStyles";
@@ -9,7 +9,11 @@ export default  class Rating extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      starCount: 0
+      starCount: 0,
+      starCountTwo: 0,
+      starCountThree: 0,
+      regel: 0,
+      empfohlen: 0,
     };
   }
 
@@ -17,8 +21,10 @@ export default  class Rating extends PureComponent {
     this.props.onRating(
       {
         stars: this.state.starCount,
-        training:this.state.userDidWorkout,
-        wantedtraining:this.state.userTriedWorkout
+        gesundheit: this.state.starCountTwo,
+        energie: this.state.starCountThree,
+        regel: this.state.regel,
+        empfohlen: this.state.empfohlen,
         }
       );
   }
@@ -30,16 +36,31 @@ export default  class Rating extends PureComponent {
     
   }
 
+  onStarRatingPressTwo(rating) {
+    this.setState({
+      starCountTwo: rating
+    });
+    
+  }
+
+  onStarRatingPressThree(rating) {
+    this.setState({
+      starCountThree: rating
+    });
+    
+  }
+
   render() {
     return (
       <View>
       <View style={appStyles.contentElement}>
-                                    
-      <Text style={appStyles.h3}>Wie viele Sterne gibst du dem Wochenplan?</Text>
+      <Text style={appStyles.ratingHeadline}>Wie viele Sterne gibst Du ...</Text>                             
+      <Text style={appStyles.ratingSubheadline}>dem Wochenplan?</Text>
 
         <StarRating
           disabled={false}
           maxStars={6}
+          starSize={28}
           rating={this.state.starCount}
           fullStarColor={appVars.colorMain}
           selectedStar={(rating) => this.onStarRatingPress(rating)}
@@ -49,37 +70,79 @@ export default  class Rating extends PureComponent {
 <View style={appStyles.contentElement}>
 
 
-      <Text style={appStyles.h3}>Wie häufig wolltest du in dieser Woche trainieren?</Text>
-      <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
-      <Slider style={appStyles.ratingSlider} value={this.state.userDidWorkout} minimumValue={0} maximumValue={14} onValueChange={(itemValue, itemIndex) => {this.setState({userDidWorkout: Math.round(itemValue)});}}/>
-      <Text style={{color: appVars.colorMain,fontFamily: appVars.fontMain, fontSize: 14,  textAlign: 'center',}}>{this.state.userDidWorkout||0}</Text>
-      </View>
-
-</View>
-
-<View style={appStyles.contentElement}>
-
-      <Text style={appStyles.h3}>Wie häufig hast du es wirklich geschafft?</Text>
-      <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
-      <Slider style={appStyles.ratingSlider} value={this.state.userTriedWorkout} minimumValue={0} maximumValue={14} onValueChange={(itemValue, itemIndex) => {this.setState({userTriedWorkout: Math.round(itemValue)});}}/>
+      <Text style={appStyles.ratingSubheadline}>deinem allgemeinen Gesundheitszustand?</Text>
       
+      <StarRating
+          disabled={false}
+          maxStars={6}
+          starSize={28}
+          rating={this.state.starCountTwo}
+          fullStarColor={appVars.colorMain}
+          selectedStar={(rating) => this.onStarRatingPressTwo(rating)}
+      />
 
-      <Text style={{color: appVars.colorMain,fontFamily: appVars.fontMain, fontSize: 14, textAlign: 'center',}}>{this.state.userTriedWorkout||0}</Text>
-      </View>
-</View> 
+</View>
 
 <View style={appStyles.contentElement}>
 
+      <Text style={appStyles.ratingSubheadline}>deinem Energieniveau?</Text>
+      
+      <StarRating
+          disabled={false}
+          maxStars={6}
+          starSize={28}
+          rating={this.state.starCountThree}
+          fullStarColor={appVars.colorMain}
+          selectedStar={(rating) => this.onStarRatingPressThree(rating)}
+      />
 
+</View> 
+<View style={appStyles.contentSeperator} />
+
+<View style={appStyles.contentElement}>
+<Text style={appStyles.ratingHeadline}>Machst du die Übungen regelmäßig?</Text>                             
+
+
+<Picker
+  selectedValue={this.state.regel}
+  style={{width: appVars.screenX-20,}}
+  onValueChange={(itemValue, itemIndex) => this.setState({regel: itemValue})}>
+  <Picker.Item label="immer" value="1" />
+  <Picker.Item label="meistens" value="2" />
+  <Picker.Item label="ab und zu" value="3" />
+  <Picker.Item label="nie" value="4" />
+</Picker>
+
+</View>
+
+<View style={appStyles.contentElement}>
+<Text style={appStyles.ratingHeadline}>Hast Du die 4BAM-App weiterempfohlen?</Text>                             
+
+
+<Picker
+  selectedValue={this.state.empfohlen}
+  style={{width: appVars.screenX-20,}}
+  onValueChange={(itemValue, itemIndex) => this.setState({empfohlen: itemValue})}>
+  <Picker.Item label="ja" value="1" />
+  <Picker.Item label="nein" value="2" />
+  <Picker.Item label="erst in dieser Woche" value="3" />
+
+</Picker>
 
 
 </View>
+
+
+
+
+
+<View style={appStyles.contentSeperator} />
+
 <View style={{marginBottom:5, paddingTop: 5}}>
-    {(this.state.starCount>=0 && this.state.userDidWorkout>=0 && this.state.userTriedWorkout>=0)?
+    {(this.state.starCount>=1 && this.state.starCountTwo>=1 && this.state.starCountThree>=1 && this.state.regel>=1 && this.state.empfohlen>=1)?
 
 
-<TouchableHighlight disabled={!(this.state.starCount>=0 && this.state.userDidWorkout>=0 && this.state.userTriedWorkout>=0)}
- onPress={this.onSubmitRating} style={{backgroundColor:appVars.colorMain, padding:10, marginRight: 10,marginLeft: 10, height:35, borderRadius:5}} >
+<TouchableHighlight onPress={this.onSubmitRating} style={{backgroundColor:appVars.colorMain, padding:10, marginRight: 10,marginLeft: 10, height:35, borderRadius:5}} >
     <View style={{flex:1,flexDirection:"row",alignItems: "center", justifyContent: "center"}}>
         <MaterialCommunityIcons name="view-carousel" style={{fontSize:18,color: "white",marginRight: 5}}/>
         <Text style={{fontSize: 16,color:"white", fontFamily: appVars.fontMain}}>ABSENDEN</Text>

@@ -563,4 +563,19 @@ text: {
     color: appVars.colorMain,
   },
 
+  ratingHeadline: {
+    fontSize: em(1.250),
+    lineHeight: lineHeight(1.250,120),
+    fontFamily: appVars.fontHeadline,
+    color: appVars.colorMain,
+    marginBottom: em(0.2),
+  },
+
+  ratingSubheadline: {
+    fontSize: em(1),
+    lineHeight: lineHeight(1,120),
+    fontFamily: appVars.fontHeadline,
+    color: appVars.colorBlack,
+    marginBottom: em(0.5), 
+  },
 });

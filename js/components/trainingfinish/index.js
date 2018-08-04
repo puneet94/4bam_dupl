@@ -39,7 +39,7 @@ export default class TrainingFinish extends PureComponent{
         let apiHitPoint = appVars.apiUrl+"/rating.html?authtoken="+appVars.apiKey+"&userid="+userStoredID;
         const response = await fetch(apiHitPoint, {
             method: 'post',
-            body: dataPost  
+            body: dataPost
         });
         const response2 = await response.json();
         //console.log(response2);
