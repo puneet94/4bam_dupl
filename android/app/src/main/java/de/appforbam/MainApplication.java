@@ -1,4 +1,4 @@
-package com.backgroundcheck;
+package de.appforbam;
 
 import android.app.Application;
 

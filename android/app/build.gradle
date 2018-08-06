@@ -100,7 +100,7 @@ android {
     buildToolsVersion "25.0.2"
 
     defaultConfig {
-        applicationId "com.backgroundcheck"
+        applicationId "de.appforbam"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 10
