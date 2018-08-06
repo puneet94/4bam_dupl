@@ -12,8 +12,8 @@ import {
     var fontText = "OpenSans-Regular";
   } else {
     // ios
-    var fontMain= "OpenSans";//"BrandonGrotesque-Bold";//"MafraCondensedDeck"; //cause error in ios
-    var fontText = "OpenSans";
+    var fontMain= "BrandonGrotesque-Bold";
+    var fontText = "Open Sans";
   }
   const htmlContentUpload ='';
 
