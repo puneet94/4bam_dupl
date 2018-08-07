@@ -160,7 +160,7 @@ export default class AccountScreen extends Component {
                 <Picker
                 selectedValue={this.state.data.gender}
                 onValueChange={(itemValue, itemIndex) => {this.genderChange(itemValue)}} 
-                style={{ height: 50, width: appVars.screenX-20 }}
+                style={{ width: appVars.screenX-20 }}
                 >
                     <Picker.Item label="Nicht definiert" value="" />
                     <Picker.Item label="Männlich" value="male" />
