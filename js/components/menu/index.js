@@ -55,7 +55,7 @@ const Menu = DrawerNavigator({
   LocalNotification: {
     screen: LocalNotificationScreen,
     navigationOptions : ({ navigation, screenProps }) => ({
-      headerTitle:  <Text style={ appStyles.headerTitle }>{"notification".toUpperCase()}</Text>,
+      headerTitle:  <Text style={ appStyles.headerTitle }>{"benachrichtigung".toUpperCase()}</Text>,
     }),
   },
   Account: {

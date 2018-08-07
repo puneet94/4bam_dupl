@@ -1,4 +1,4 @@
-package com.backgroundcheck;
+package de.appforbam;
 
 import com.facebook.react.ReactActivity;
 

@@ -357,6 +357,26 @@ drawerLabel: {
     backgroundColor: appVars.colorDrawerSeperatorBackgroundColor,
   },
 
+
+
+  //settings 
+  settingsWrapper: {
+    flexDirection:'row',
+    justifyContent: 'space-between'
+  },
+
+  settingsColStart: {
+    justifyContent: 'flex-start',
+    width: (x * .50),
+    fontFamily: appVars.fontMain,
+    color: appVars.colorBlack,
+    fontSize: em(0.875),
+  },
+
+  settingsColEnd: {
+    justifyContent: 'flex-end', 
+  },
+
   //slider rating 
 
   ratingSlider: {
@@ -508,7 +528,12 @@ startButtonText: {
   fontSize: 18,
   color: appVars.colorWhite,
 },
-
+text: {
+    fontSize: em(0.875),
+    lineHeight: lineHeight(0.875,150),
+    fontFamily: appVars.fontText,
+    color: appVars.colorBlack,
+},
   p: {
     fontSize: em(0.875),
     lineHeight: lineHeight(0.875,150),
@@ -538,4 +563,19 @@ startButtonText: {
     color: appVars.colorMain,
   },
 
+  ratingHeadline: {
+    fontSize: em(1.250),
+    lineHeight: lineHeight(1.250,120),
+    fontFamily: appVars.fontHeadline,
+    color: appVars.colorMain,
+    marginBottom: em(0.2),
+  },
+
+  ratingSubheadline: {
+    fontSize: em(1),
+    lineHeight: lineHeight(1,120),
+    fontFamily: appVars.fontHeadline,
+    color: appVars.colorBlack,
+    marginBottom: em(0.5), 
+  },
 });

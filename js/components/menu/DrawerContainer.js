@@ -106,11 +106,15 @@ class DrawerContainer extends React.Component {
 		this.setState({
             logo
 		});
-		OneSignal.sendTag("group", pushgroup);
+		
+
+		
 		OneSignal.getPermissionSubscriptionState(async (status)=>{
 
 			if(!status.notificationsEnabled){
 				//OneSignal.setSubscription(true);
+				OneSignal.sendTag("group", pushgroup);
+
 			Alert.alert(
 				'Push notification',
 				'If push notification are not enabled the app wont work properly. Do you want to enable?',

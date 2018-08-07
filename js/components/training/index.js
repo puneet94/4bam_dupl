@@ -1,5 +1,5 @@
 import React, { PureComponent,Component } from 'react';
-import {Text,Alert,View,Button,StyleSheet,TouchableHighlight,ActivityIndicator} from "react-native";
+import {Text,Alert,View,Button,StyleSheet,TouchableHighlight,ActivityIndicator,Image} from "react-native";
 import store from "react-native-simple-store";
 import StopWatch from '../stopwatch/timer';
 import Exercise from "../exercise";
@@ -22,6 +22,7 @@ export default class Training extends PureComponent{
             exerciseLoading: true,
             exercises: this.fetchExercises(),
             totalDuration: 0,
+            randomImage: 0,
             isAllowToWatchVideo: props.navigation.state.params.isAllowToWatchVideo
         }
         
@@ -40,6 +41,8 @@ export default class Training extends PureComponent{
         </View>
         };
         };
+
+
 
       selectNextExercise = ()=>{
         
@@ -70,7 +73,6 @@ export default class Training extends PureComponent{
           
       }
     componentWillMount = async ()=>{
-        
         console.log("moment time check",moment().format('DD-MM-YYYY'));
         if(this.props.navigation.state.params){
             const localNotification = this.props.navigation.state.params.localNotification;
@@ -120,11 +122,11 @@ export default class Training extends PureComponent{
             stopwatchStart: false, 
             stopwatchReset: true})
       }else{
-        Alert.alert("RESET STOP WATCH","IF YOU RESET, ALL CONTENT REFRESH",[
+        Alert.alert("Traing Abbrechen","Wenn Sie das Training arbechen, müssen Sie wieder neu anfangen.",[
         
-            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: 'Weitermachen', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
             {
-                text: 'OK', 
+                text: 'Training abbrechen', 
                 onPress: () => {
                     store.delete("PENDING_EXERCISE");
                     this.setState({
@@ -248,10 +250,17 @@ export default class Training extends PureComponent{
             </View>
         )
         } else {
-            return <View style={{flex:1, backgroundColor:'white',alignItems:"center",justifyContent:"center",}}>
+            var randomImages = [
+                require('../../../assets/images/familie.png'),
+                require('../../../assets/images/lesen.png'),
+                require('../../../assets/images/sport.png'),
+            ];
+            return <View style={{flex:1, backgroundColor:"white",alignItems:"center",justifyContent:"center",}}>
+           
                 <Text style={appStyles.contentHeadline}>Heute kein Training!</Text>
                 <Text style={appStyles.h3}>Genieße den Tag – genieße dein Leben.</Text>
-            </View>    
+                <Image source={randomImages[Math.floor(Math.random()*randomImages.length)]} style={{width: appVars.screenX, height: appVars.screenX}}/>
+                </View>   
         }
 
     }
