@@ -122,7 +122,7 @@ export default class Training extends PureComponent{
             stopwatchStart: false, 
             stopwatchReset: true})
       }else{
-        Alert.alert("Traing Abbrechen","Wenn Sie das Training arbechen, müssen Sie wieder neu anfangen.",[
+        Alert.alert("Traing Abbrechen","Wenn Sie das Training abbrechen, müssen Sie wieder neu anfangen.",[
         
             {text: 'Weitermachen', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
             {
