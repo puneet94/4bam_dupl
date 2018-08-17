@@ -34,6 +34,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
+  self.oneSignal = [[RCTOneSignal alloc] initWithLaunchOptions:launchOptions
+                                                         appId:@"ba9a26ee-c5da-44cd-8db4-ea431f848431"];
     NSURL *jsCodeLocation;
   
   for (NSString* family in [UIFont familyNames])
