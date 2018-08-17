@@ -4,6 +4,7 @@ import {View, PixelRatio,Alert,StyleSheet, Dimensions, Platform,Text,Image,Scrol
 import appVars from '../../appVars';
 import appStyles from '../../appStyles';
 import VideoPlayer from 'react-native-video-player';
+import Video from 'react-native-video';
 import { NavigationActions } from 'react-navigation';
 import HTMLView from 'react-native-htmlview';
 import TestGallery from "../testGallery";
@@ -138,29 +139,24 @@ export default  class Exercise extends PureComponent {
         <View style={{flex:1}}>
                     <View style={{height: appVars.screenX,marginBottom:10,}}>
 
+<Video 
+    source={{ isNetwork: true, uri: this.props.exercise.video }}   // Can be a URL or a local file.
+       ref={(ref) => {
+         this.player = ref
+       }}             
+                                // Store reference
+       onBuffer={this.onBuffer}                // Callback when remote video is buffering
+       onEnd={this.onEnd}                      // Callback when playback finishes
+       onError={this.videoError}               // Callback when video cannot be loaded
+       onLoadStart={this.onLoadStart}
+       onLoad={this.onLoad}
+       style={styles.backgroundVideo}
+       resizeMode="cover"
+       repeat={true}
+       />
+       
                     
-                    <VideoPlayer
-                        video={{ uri: this.props.exercise.video }}
-                        videoWidth={appVars.screenX}
-                        videoHeight={appVars.screenX}
-                        muted={true}
-                        disableFullscreen={true}
-                        loop={true}
-                        autoplay={true}
-                        onBuffer={this.onBuffer}
-                        onLoadStart={this.onLoadStart}
-                        onLoad={this.onLoad}
-                        customStyles={{
-                            seekBarProgress:{
-                              backgroundColor: appVars.colorMain,
-                            },
-                            seekBarKnob:{
-                                backgroundColor: appVars.colorMain,
-                            },
-
-                          }}
-                        ref={r => this.player = r}
-                        />
+                   
 
                     <View style={{position: 'absolute', padding: 5,width: appVars.screenX,alignItems:"center",justifyContent:"center"}}>
                         <Text style={appStyles.blockText}>{this.props.exercise.block.toUpperCase()}</Text>
@@ -251,8 +247,14 @@ export default  class Exercise extends PureComponent {
 
 }  
 }
+
+
+
 const styles=  StyleSheet.create({
- 
+    backgroundVideo: {
+        width: appVars.screenX,
+        height: appVars.screenX,
+      },
         child: {
           height: appVars.screenX-50,
           width: appVars.screenX-50,
@@ -287,3 +289,4 @@ const styles=  StyleSheet.create({
         },
 
 });
+
