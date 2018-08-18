@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,ScrollView,ActivityIndicator,BackHandler,Platform,Alert,TouchableOpacity,TouchableHighlight} from "react-native";
+import {Text,View,ScrollView,ActivityIndicator,BackHandler,Platform,Alert,TouchableOpacity,TouchableHighlight} from "react-native";
 import store from "react-native-simple-store";
 import appVars from "../../appVars";
 import appStyles from "../../appStyles";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Toast, {DURATION} from 'react-native-easy-toast'
-import {getNextAlarm} from "../../services/dateService";
+import Toast from 'react-native-easy-toast'
+
 import HTMLView from 'react-native-htmlview';
-import { NavigationActions } from 'react-navigation'
+
 
 export default class Home extends Component{
     constructor(props){

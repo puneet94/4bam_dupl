@@ -1,6 +1,6 @@
 'use strict';
 import React, { Component } from 'react';
-import{Image,ScrollView,Text} from "react-native";
+import{Text} from "react-native";
 import { DrawerNavigator } from 'react-navigation';
 import TrainingScreen from "../training";
 import AlarmScreen from "../alarm";
@@ -18,9 +18,9 @@ import appVars from '../../appVars';
 import appStyles from '../../appStyles';
 
 const Menu = DrawerNavigator({
-  Login: {
+  /*Login: {
     screen: LoginScreen,
-  },
+  },*/
   Home: {
     screen: HomeScreen,
     navigationOptions : ({ navigation, screenProps }) => ({

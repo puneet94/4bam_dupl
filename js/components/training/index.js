@@ -167,7 +167,7 @@ export default class Training extends PureComponent{
       }
       logout = ()=>{
 		
-        store.delete(appVars.STORAGE_KEY);
+        store.delete(appVars.STORAGE_KEY);      
         const { navigation } = this.props;
         navigation.navigate('Login');
 	}

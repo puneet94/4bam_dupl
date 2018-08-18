@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  Text,
   View,
   TouchableWithoutFeedback
 } from 'react-native';
@@ -9,25 +7,30 @@ import {
 import { StackNavigator } from 'react-navigation';
 import appVars from './appVars';
 import appStyles from './appStyles';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MenuScreen from './components/menu';
-import LoginScreen from "./components/login";
+
 import NewsDetailScreen from './components/newsdetail';
 import ExerciseGalleryScreen from './components/exerciseGallery';
 import OneSignal from 'react-native-onesignal';
 import store from 'react-native-simple-store';
-
+import LoginScreen from "../js/components/login";
 
 OneSignal.addEventListener('opened', async (values)=>{   
-  console.log("without newsid");  
-  console.log(values);
+  
     if(values.notification.payload.additionalData && values.notification.payload.additionalData.newsid){
         await store.save('deepLinkNewsId',values.notification.payload.additionalData.newsid);
     }
     
 });
+
+
+
 const bamApp = StackNavigator({
+  Login: {
+    screen: LoginScreen,
+  },
     Menu : {
       screen: MenuScreen,
       navigationOptions: ({navigation}) => ({

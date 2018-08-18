@@ -1,16 +1,12 @@
 "use strict"
 import React, { Component } from 'react';
 import { 
-    StyleSheet,
     TouchableHighlight,
-    Dimensions,
     View,
     Text,
     Alert,
     Switch,
-    Picker,
     ToastAndroid,
-    Slider,
     Platform
 } from 'react-native'
 import store from 'react-native-simple-store';
@@ -18,7 +14,7 @@ import appStyles from '../../appStyles';
 import appVars from '../../appVars';
 import OneSignal from 'react-native-onesignal';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Toast, {DURATION} from 'react-native-easy-toast';
+import Toast from 'react-native-easy-toast';
 
 class SettingsScreen extends Component {
     constructor(props){
@@ -41,7 +37,7 @@ class SettingsScreen extends Component {
               fetch(api)
                 .then(res => res.json())
                 .then(res => {
-                    console.log("user_data",res.response);
+                    
                   this.setState({
                     data: res.response || [],
                     error: res.error || null,
@@ -98,11 +94,28 @@ class SettingsScreen extends Component {
     }
 
       
-    performLogout = ()=> {
+    performLogout = async ()=> {
+
         store.save("LOGGED_IN",false);
-            store.delete(appVars.STORAGE_KEY)
-            const { navigation } = this.props;
-            navigation.navigate('Login');
+        store.delete(appVars.STORAGE_KEY);
+
+        store.delete(appVars.NO_VIDEOS);
+
+        store.delete("FIRSTNAME");
+		store.delete("GROUPTITLE");
+        
+        
+        store.delete("GROUPS");
+
+		store.delete("GROUPLOGO");
+        
+        OneSignal.deleteTag("group");
+
+        OneSignal.setSubscription(false);
+        
+        const { navigation } = this.props;
+        navigation.navigate('Login');
+
     }
 
       changePushNotification = (value)=>{

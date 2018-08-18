@@ -107,13 +107,15 @@ class DrawerContainer extends React.Component {
             logo
 		});
 		
-
+		if(pushgroup) {
+			OneSignal.sendTag("group", pushgroup);
+		}
 		
 		OneSignal.getPermissionSubscriptionState(async (status)=>{
 
 			if(!status.notificationsEnabled){
 				//OneSignal.setSubscription(true);
-				OneSignal.sendTag("group", pushgroup);
+				//OneSignal.sendTag("group", pushgroup);
 
 			Alert.alert(
 				'Push notification',

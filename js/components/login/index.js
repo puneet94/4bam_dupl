@@ -2,15 +2,15 @@ import React,{PureComponent} from "react";
 import {
 	Text,
 	View,
-	ScrollView,
-    TextInput,
-    Button, Alert, Image,          
+		TextInput,
+		Button, Alert, Image,          
 		ActivityIndicator,
 		Linking,
 		Dimensions,
 		ImageBackground,
 		StyleSheet,
 		Modal,
+		BackHandler,Platform,
 		TouchableHighlight
 } from "react-native";
 import appStyles from '../../appStyles';
@@ -19,6 +19,7 @@ import store from "react-native-simple-store";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {NavigationActions} from "react-navigation";
 
+import Toast from 'react-native-easy-toast'
 
 
 export default class LoginScreen extends PureComponent{
@@ -27,26 +28,71 @@ export default class LoginScreen extends PureComponent{
 	};
 	constructor(props){
 		super(props);
+
+		this.exitApp = 0;
 		this.state={
-            email: '',
-            pass: '',
-            loading: false,
+						email: '',
+						pass: '',
+						loading: true,
 						loggedIn: false,
-        }
+						position: 'bottom'
+				}
 	}
+
+	onClick=(text, position, duration,withStyle)=>{
+		this._mounted && this.setState({
+				position: position,
+		});
+		if(withStyle){
+				this.refs.toastWithStyle.show(text, duration);
+		}else {
+				this.refs.toast.show(text, duration);
+		}
+}
+
+
+
+	backHandlerListener = ()=>{
+		// this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
+		// Typically you would use the navigator here to go to the last state.
+		this.exitApp++;
+		if(this.exitApp==1){
+			this.onClick('Press again to exit', 'bottom', 1000);
+		}
+		else if(this.exitApp==2){
+			BackHandler.exitApp();
+		}
+		setTimeout(() => {this.exitApp = 0}, 1000);
+			return true;	
+		}
+		attachBackHandler = ()=>{
+				if(Platform.OS === 'android') {
+						this.backButtonListener = BackHandler.addEventListener('hardwareBackPress', this.backHandlerListener);
+				}
+}
+
+
 	componentWillMount = async()=>{
+		this.attachBackHandler();
 		try {
 			const token = await store.get(appVars.STORAGE_KEY)
 			if (token !== null) {
-			  this.setState({
-				  loggedIn: true,
-			  });
-				const { navigation } = this.props;
-				navigation.navigate('Home');
+				this.setState({
+					loggedIn: true,
+					
+				},()=>{
+					const { navigation } = this.props;
+					navigation.navigate('Home');
+				});
+				
 			}
-		  } catch (e) {
+			} catch (e) {
 			console.log(e);
-		  }
+			}finally{
+				this.setState({
+					loading:false
+				});
+			}
 
 
 	}
@@ -56,26 +102,26 @@ export default class LoginScreen extends PureComponent{
 			loggedIn: false,
 			loading: false,
 		})
-        store.delete(appVars.STORAGE_KEY)
-        
-    }
+				store.delete(appVars.STORAGE_KEY)
+				
+		}
 	storeToken = async (name) => {
-        try {
-          await store.save(appVars.STORAGE_KEY, name)
-          this.setState({
-              loggedIn: true,
-              loading: false,
-          })
-        } catch (e) {
-          console.log(e)
-        }
+				try {
+					await store.save(appVars.STORAGE_KEY, name)
+					this.setState({
+							loggedIn: true,
+							loading: false,
+					})
+				} catch (e) {
+					console.log(e)
+				}
 			}
 	
 
-    onSubmit=async  ()=>{
-        	//Alert.alert("email: "+ this.state.email + "pass: " + this.state.pass);
-        this.setState({
-            loading: true,
+		onSubmit=async  ()=>{
+					//Alert.alert("email: "+ this.state.email + "pass: " + this.state.pass);
+				this.setState({
+						loading: true,
 				});
 				
 				const payload = {
@@ -86,7 +132,7 @@ export default class LoginScreen extends PureComponent{
 				var data = new FormData();
 				data.append( "formData",  JSON.stringify(payload));
 			
-        try{
+				try{
 					const response = await fetch(appVars.apiUrl+"/user.html?authtoken="+appVars.apiKey, {
 						method: 'POST',
 						body: data
@@ -94,7 +140,7 @@ export default class LoginScreen extends PureComponent{
 
 						const json = await response.json();
 
-            if(json["@status"] === "OK"){
+						if(json["@status"] === "OK"){
 							await this.storeToken(json["response"].id);
 							store.save("FIRSTNAME",json["response"].firstname);
 							store.save("GROUPS",json["response"].group);
@@ -103,22 +149,22 @@ export default class LoginScreen extends PureComponent{
 							this.logIn();
 						}
 			
-            else{
-                this.setState({
+						else{
+								this.setState({
 										loading: false,
 								})
 								
 								Alert.alert(appVars.textErrorLogin);
-            }
+						}
 
-        }
-        catch(e){
-            console.log(e);
-            this.setState({
+				}
+				catch(e){
+						console.log(e);
+						this.setState({
 								loading: false,
-            })
+						})
 						Alert.alert(appVars.textErrorLogin);
-        }
+				}
 
 	};
 	
@@ -126,12 +172,12 @@ export default class LoginScreen extends PureComponent{
 		const resetAction = NavigationActions.reset({
 			index: 0,
 			actions: [
-			  NavigationActions.navigate({
+				NavigationActions.navigate({
 				routeName: "Menu",
-			  })
+				})
 			]
-		  });
-		  this.props.navigation.dispatch(resetAction);
+			});
+			this.props.navigation.dispatch(resetAction);
 		/*const { navigation } = this.props;
 		navigation.navigate('Menu');*/
 	}
@@ -141,12 +187,12 @@ export default class LoginScreen extends PureComponent{
 
 	onForgot=  ()=>{
 		Linking.canOpenURL(appVars.forgotpasswordurl).then(supported => {
-			  if (supported) {
+				if (supported) {
 				Linking.openURL(appVars.forgotpasswordurl);
-			  } else {
+				} else {
 				console.log("Don't know how to open URI: " + appVars.forgotpasswordurl);
-			  }
-		  });
+				}
+			});
 	};
 	emailChange = (value)=> this.setState({email: value});
 	passChange = (value)=> this.setState({pass: value});
@@ -162,31 +208,31 @@ export default class LoginScreen extends PureComponent{
 		if(this.state.loggedIn){
 			return(
 				<View style={appStyles.contenContainer}>
-				  <View style={appStyles.contentElement}>
-					  
-					  <Text style={appStyles.contentText}>{"You are already logged in"}</Text>
-				  </View>
-				  <View style={appStyles.contentSeperator} />
-				  
-				  <View style={appStyles.contentElement}>
-					  <Button color={appVars.colorMain} style={appStyles.submit} title={appVars.labelLogoutButton} onPress={this.logOut} />
-				  </View>
-				  <View style={appStyles.contentElement}>
-					  <Button color={appVars.colorMain} style={appStyles.submit} title={"Home"} onPress={this.logIn} />
-				  </View>
-  
+					<View style={appStyles.contentElement}>
+						
+						<Text style={appStyles.contentText}>{"You are already logged in"}</Text>
+					</View>
+					<View style={appStyles.contentSeperator} />
+					
+					<View style={appStyles.contentElement}>
+						<Button color={appVars.colorMain} style={appStyles.submit} title={appVars.labelLogoutButton} onPress={this.logOut} />
+					</View>
+					<View style={appStyles.contentElement}>
+						<Button color={appVars.colorMain} style={appStyles.submit} title={"Home"} onPress={this.logIn} />
+					</View>
+	
 				</View>
 			);
 		}
-	  return (
+		return (
 			<View style={styles.mainContainer}>
 			<Image source={require ('../../../assets/images/app_bg_login.png')} style={styles.fakebackground} />
 
 
-          
-                <View style={styles.content}>
+					
+								<View style={styles.content}>
  
-                    <View style={styles.loginbox}>
+										<View style={styles.loginbox}>
 
 										<Image style={{'width': Dimensions.get('window').width-80, 'height': 100, }} resizeMode='contain' source={require('../../../assets/images/app_logo.png')} />
 										
@@ -196,11 +242,11 @@ export default class LoginScreen extends PureComponent{
 												
 
 												<TextInput placeholder={'Benutzername'} returnKeyType={"next"} onSubmitEditing={this.onSubmitEditing} style={appStyles.formInput} keyboardType={'email-address'} autoCapitalize={'none'} autoCorrect={false} onChangeText={this.emailChange}/>
-                        </View>
+												</View>
 
-                        <View>
+												<View>
 												<TextInput placeholder={'Passwort'} returnKeyType={"next"} ref='SecondInput' style={appStyles.formInput} secureTextEntry={true} autoCapitalize={'none'} autoCorrect={false} onChangeText={this.passChange}/>
-                        </View>
+												</View>
 
 												
 					
@@ -218,10 +264,12 @@ export default class LoginScreen extends PureComponent{
 
 											
 
-                    </View>
+										</View>
 								</View>
+
+								<Toast ref="toast" position={this.state.position}/>
 						</View>
-	  )
+		)
 	}
 }
 
@@ -247,7 +295,7 @@ content:{
 		alignItems:'center',
 		justifyContent:'center',
 },
-  loginbox:{
+	loginbox:{
 		backgroundColor:appVars.colorWhite,
 		width:appVars.screenX-40,
 		paddingTop:10,
